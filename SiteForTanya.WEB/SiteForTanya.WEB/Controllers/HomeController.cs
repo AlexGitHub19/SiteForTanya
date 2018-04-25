@@ -13,18 +13,33 @@ namespace SiteForTanya.WEB.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Work()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "My work";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Contacts()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "My    contact page.";
 
             return View();
         }
+
+        public ActionResult Blog()
+        {
+            ViewBag.Message = "My Blog";
+
+            return View();
+        }
+
+        public ActionResult Product(string productName)
+        {
+            ViewBag.Message = "Pruduct page";
+
+            return View(productName);
+        }
+
     }
 }
