@@ -10,35 +10,16 @@ namespace SiteForTanya.WEB.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.ViewName = "HomeIndex";
             return View();
         }
 
-        public ActionResult Work()
+        public ActionResult Product(string id)
         {
-            ViewBag.Message = "My work";
-
-            return View();
-        }
-
-        public ActionResult Contacts()
-        {
-            ViewBag.Message = "My    contact page.";
-
-            return View();
-        }
-
-        public ActionResult Blog()
-        {
-            ViewBag.Message = "My Blog";
-
-            return View();
-        }
-
-        public ActionResult Product(string productName)
-        {
+            ViewBag.ViewName = "HomeProduct";
             ViewBag.Message = "Pruduct page";
 
-            return View(productName);
+            return View(id);
         }
 
     }
