@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "AddSet";
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Adding Set</h2>
+
+<p>
+    <b class="SetName">Enter Set's name: </b>
+    <input type="text" size="80">
+</p>
+<br>
+<p>
+    <b class="SetDescription">Enter Set's description: </b>
+    <textarea name="comment" cols="80" rows="3"></textarea>
+</p>
+<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="upload" /><br>
+    <input type="submit" value="Загрузить" />
+}

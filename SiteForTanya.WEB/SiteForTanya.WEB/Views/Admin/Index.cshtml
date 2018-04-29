@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "AdminIndex";
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Admin info</h2>
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken();
+        <div class="logOff">
+            <button class="my-btn btn btn-default" type="submit">Log off</button>
+        </div>
+    }
+}
+
+<div class="temp">
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        @using (Html.BeginForm("AddSet", "Admin", FormMethod.Post))
+        {
+            <button class="my-btn btn btn-default" type="submit">Add set</button>
+        }
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        @using (Html.BeginForm("AddImage", "Admin", FormMethod.Post))
+        {
+            <button class="my-btn btn btn-default" type="submit">Add image</button>
+        }
+    </div>
+</div>
+
+
+
+
+

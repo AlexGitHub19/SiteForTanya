@@ -1,0 +1,27 @@
+﻿@model SiteForTanya.WEB.Models.LoginViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Sign In</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary()
+        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+        <p>
+            <label>Login</label><br />
+            @Html.EditorFor(x => x.Login)
+        </p>
+        <p>
+            <label>Password</label><br />
+            @Html.EditorFor(x => x.Password)
+        </p>
+        <p><button type="submit">Sign in</button></p>
+    </div>
+}
