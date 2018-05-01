@@ -1,0 +1,42 @@
+﻿/*body {
+}*/
+
+input, select, textarea {
+    max-width: 480px;
+}
+
+.body-content { 
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    -webkit-background-size: cover;
+      -moz-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+}
+body {
+    font-size:12px;
+}
+input {
+    font-size:12px;
+}
+.form-group {
+    margin-bottom: 5px;
+}
+.my-btn {
+    font-size:12px;
+    background-color: #f4f1e4;
+    color: black;
+    border-color: black;
+}
+    .my-btn:hover {
+        background-color: #ccc3a1;
+        border-color: black;
+    }
+    .my-btn:visited {
+        background-color: #ff0000;
+        border-color: black;
+    }
+

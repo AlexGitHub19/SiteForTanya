@@ -6,18 +6,224 @@
 
 <h2>Adding Set</h2>
 
-<p>
-    <b class="SetName">Enter Set's name: </b>
-    <input type="text" size="80">
-</p>
-<br>
-<p>
-    <b class="SetDescription">Enter Set's description: </b>
-    <textarea name="comment" cols="80" rows="3"></textarea>
-</p>
-<h3>Выберите файл для загрузки</h3>
+@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <label class="control-label float:right;">Enter Set's name: </label>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <input name ="SetName" type="text" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                <label class="control-label float:right;">Enter Set's description: </label>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <textarea name="SetDescription" rows="3" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="resultHtml">
+        <div id="imageRowX"class="result row show-border">
+            <img id="imageX" class="my-image"/>
+        </div>
+        <div id="settingsRow1" class="row show-border-bot">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <label class="margin-label">margin-left: </label>
+                    <input id="inputLeft" name="SetMarginLeft" type="text" class="form-control margin-input left">
+                </div> 
+                <div class="form-group">
+                    <label class="margin-label">margin-top: </label>
+                    <input id="inputTop" name="SetMarginTop" type="text" class="form-control margin-input top">
+                </div>
+                <div class="form-group">
+                    <label class="margin-label ">margin-right: </label>
+                    <input name="SetMarginRight" type="text" class="form-control margin-input right">
+                </div>
+                <div class="form-group">
+                    <label class="margin-label">margin-bot: </label>
+                    <input name="SetMarginBot" type="text" class="form-control margin-input bottom">
+                </div>             
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="form-group">
+                    <input id="nbv2" type="file" name="upload" style="display:none"/>
+                    <button id="nbv" class="my-btn btn addImageBtn" type="button">download image</button>
+                </div>
+                <div class="form-group">
+                    <button class="my-btn btn" type="button">float right</button>
+                </div>
+                <div class="form-group">
+                    <label>use central allignment</label>
+                    <input id="checkBox" type="checkbox" checked>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
+    </div>
+
+    <input type="submit" value="Загрузить" />
+}
+
+
+<script>
+    $(document).ready(function () {
+        var rowCount = 1;
+        
+        $('#addRowButton').on('click', function (e) {
+            $("#resultHtml").append('<div id="imageRow'+rowCount+'" class="result row show-border">'+
+            '<img id="image' + rowCount + '" class="my-image"/>' +
+        '</div>'+
+        '<div id="settingsRow' + rowCount + '" class="row show-border-bot">' +
+            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">'+
+                '<div class="form-group">'+
+                    '<label class="margin-label">margin-left: </label>'+
+                   '<input id="inputLeft' + rowCount + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
+                '</div> '+
+                '<div class="form-group">'+
+                    '<label class="margin-label">margin-top: </label>'+
+                    '<input id="inputTop' + rowCount + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="margin-label ">margin-right: </label>'+
+                    '<input id="inputRight' + rowCount + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label class="margin-label">margin-bot: </label>'+
+                    '<input id="inputBot' + rowCount + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
+                '</div>'+             
+            '</div>'+
+            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">'+
+                '<div class="form-group">'+
+                    '<input id="inputFile' + rowCount + '" type="file" class="inputFile" name="upload" style="display:none"/>' +
+                    '<button id="downloadImageBtn' + rowCount + '" class="my-btn btn addImageBtn" type="button">download image</button>' +
+                '</div>'+
+                '<div class="form-group">'+
+                    '<button id="floatRightBtn' + rowCount + '" class="my-btn btn floatRight" type="button">float right</button>' +
+                '</div>'+
+                '<div class="form-group">'+
+                    '<label>use central allignment</label>'+
+                    '<input id="useCentralAllignmentcheckBox' + rowCount + '" type="checkbox" checked>' +
+                '</div>'+
+            '</div>'+
+        '</div>');
+            rowCount++;
+        })
+
+        $('#resultHtml').on('click', '.addImageBtn', function (e) {
+            var id = $(this).attr('id');
+            var rowNumber = id[id.length-1];
+            $("#inputFile" + rowNumber).click();
+        });
+
+        $('#resultHtml').on('click', '.floatRight', function (e) {
+            var id = $(this).attr('id');
+            var rowNumber = id[id.length - 1];
+            alert($('#image' + rowNumber).css('float'));
+            if ($('#image' + rowNumber).css('float') == 'none')
+            {
+                $('#image' + rowNumber).css('float', 'right');
+                $(this).text('float left');
+            }
+            else if ($('#image' + rowNumber).css('float') == 'right')
+            {
+                $('#image' + rowNumber).css('float', 'none');
+                $(this).text('float right');
+            }
+        });
+
+        $('#resultHtml').on('click', '.floatLeft', function (e) {
+            var id = $(this).attr('id');
+            var rowNumber = id[id.length - 1];
+            alert($('#image' + rowNumber).css('float'));
+            if ($('#image' + rowNumber).css('float') == 'none') {
+                $('#image' + rowNumber).css('float', 'right');
+                $(this).text('float left');
+            }
+            else if ($('#image' + rowNumber).css('float') == 'right') {
+                $('#image' + rowNumber).css('float', 'none');
+                $(this).text('float right');
+            }
+        });
+
+        $('#resultHtml').on('change', '.inputFile', function (e) {
+            var file = this.files[0];
+            var id = $(this).attr('id');
+            var rowNumber = id[id.length - 1];
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#image" + rowNumber).attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        })
+
+        $('#resultHtml').on('keypress', '.margin-input', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13)
+            {
+                var id = $(this).attr('id');
+                var rowNumber = id[id.length - 1];
+                if ($(this).hasClass('top'))
+                {
+                    var margin = $('#inputTop' + rowNumber).val();
+                    $('#image' + rowNumber).css('margin-top', margin + 'px');                   
+                }
+                else if($(this).hasClass('left'))
+                {                    
+                    var margin = $('#inputLeft' + rowNumber).val();
+                    $('#image' + rowNumber).css('margin-left', margin + 'px');
+                }
+                else if ($(this).hasClass('right')) {
+                    var margin = $('#inputRight' + rowNumber).val();
+                    $('#image' + rowNumber).css('margin-right', margin + 'px');
+                }
+                else if ($(this).hasClass('bot')) {
+                    var margin = $('#inputBot' + rowNumber).val();
+                    $('#image' + rowNumber).css('margin-bottom', margin + 'px');
+                }
+                e.preventDefault();
+            }          
+        })
+
+    });
+</script>
+
+
+@*<p><button>button 1</button><b class="temp">ad</b> adasd</p>
+
+<div id="as">
+
+</div>*@
+
+@*<script>
+ $(document).ready(function(){
+
+   $("p").click(function () {
+     var htmlStr = $(this).html();
+     $("#as").append(htmlStr);
+   });
+
+ });
+</script>*@
+
+
+
+@*<h3>Выберите файл для загрузки</h3>
 @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="file" name="upload" /><br>
     <input type="submit" value="Загрузить" />
-}
+}*@
+

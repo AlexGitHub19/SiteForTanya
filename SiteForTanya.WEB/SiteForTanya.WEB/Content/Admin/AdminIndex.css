@@ -5,16 +5,6 @@
     margin: 5px;
 }
 
-.my-btn {
-    background-color: #f4f1e4;
-    color: black;
-    border-color: black;
-}
-    .my-btn:hover {
-        background-color: #ccc3a1;
-        border-color: black;
-    }
-
 .temp {
     height:300px;
     width:70%;

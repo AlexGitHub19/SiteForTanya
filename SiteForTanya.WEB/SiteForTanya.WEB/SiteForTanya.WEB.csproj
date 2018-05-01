@@ -210,6 +210,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\AdminLayout.css" />
+    <Content Include="Content\Admin\AdminAddSet.css" />
     <Content Include="Content\Admin\AdminIndex.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

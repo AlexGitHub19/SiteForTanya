@@ -1,0 +1,49 @@
+﻿.my-image {
+    max-width: 80%;
+    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    max-width: 250px;
+    /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+    max-height: 100%;
+    margin-top:20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.show-border {
+    border-top-style:solid;
+    border-top-width:1px;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-right-style:solid;
+    border-right-width:1px;
+}
+
+.show-border-bot {
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+}
+
+.resultHtml {
+    margin-top:20px;
+}
+
+.margin-input {
+    display:inline;
+    width:50px;
+}
+
+.margin-label {
+    text-align: right;
+    padding-top: 7px;
+    width:100px;
+}
+
+.control-label {
+    text-align: right;
+    padding-top: 7px;
+    float:right;
+}
+
+.row {
+    margin: 0px;
+}
