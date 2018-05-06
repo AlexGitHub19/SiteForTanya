@@ -6,33 +6,39 @@
 
 <h2>Adding Set</h2>
 
-@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <div class="row">
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <label class="control-label float:right;">Enter Set's name: </label>
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                <input name ="SetName" type="text" class="form-control">
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                <label class="control-label float:right;">Enter Set's description: </label>
-            </div>
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                <textarea name="SetDescription" rows="3" class="form-control"></textarea>
-            </div>
+    @*<a class="image-link" href="~/Content/Images/Balloon_Product/7.jpg">
+        <img src="/Content/Images/Balloon_Product/7.jpg" alt="Sample Photo" class="my-image" style="margin-left: 200px; margin-top: 80px; max-height:300px" />
+    </a>*@
+
+    <div class="row marg-btm">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label class="control-label float:right;">Enter Set's name: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <input id="setName" name="setName" type="text" class="form-control">
         </div>
     </div>
 
-    <div id="resultHtml">
-        <div id="imageRowX"class="result row show-border">
-            <img id="imageX" class="my-image"/>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label class="control-label float:right;">Enter Set's description: </label>
         </div>
-        <div id="settingsRow1" class="row show-border-bot">
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <textarea name="setDescription" rows="3" class="form-control"></textarea>
+        </div>
+    </div>
+
+
+
+    <div id="pageHtml">
+        @*<div id="imageRowX"class="result row show-border imageRow">
+            <img id="imageX" class="my-image"/>
+            <i class="fa fa-cog settingsBtn" aria-hidden="true"></i>
+        </div>*@
+        @*<div id="settingsRowX" class="row show-border-bot">
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                 <div class="form-group">
                     <label class="margin-label">margin-left: </label>
@@ -56,167 +62,312 @@
                 <div class="form-group">
                     <input id="nbv2" type="file" name="upload" style="display:none"/>
                     <button id="nbv" class="my-btn btn addImageBtn" type="button">download image</button>
+                    <i class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
                 </div>
                 <div class="form-group">
-                    <button class="my-btn btn" type="button">float right</button>
+                    <div class="floatContainer">
+                        <p style="font-weight: bold;">float</p>
+                        <label class="radio-inline">
+                            <input type="radio" name="floatRadio">float left
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="floatRadio" checked>float none
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="floatRadio">float right
+                        </label>
+                    </div>                 
                 </div>
                 <div class="form-group">
-                    <label>use central allignment</label>
-                    <input id="checkBox" type="checkbox" checked>
+                    <input id="showBorderCheckBoxX" class="showBorderCheckBox" type="checkbox" checked>
+                    <label>Show border</label>
+                </div>
+                <div class="form-group">
+                    <label class="max-height-label">max-height: </label>
+                    <input id="maxHeightInput" type="text" class="form-control maxHeightInput">
                 </div>
             </div>
-        </div>
+        </div>*@
     </div>
 
     <div>
         <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
     </div>
+    <input id="resultHtml" type="text" name="resultHtml"/>
 
-    <input type="submit" value="Загрузить" />
+    <input id="saveButton" class="my-btn btn" type="submit" value="Save" />
 }
 
 
 <script>
     $(document).ready(function () {
         var rowCount = 1;
+        var cellCount = 1;
         
         $('#addRowButton').on('click', function (e) {
-            $("#resultHtml").append('<div id="imageRow'+rowCount+'" class="result row show-border">'+
-            '<img id="image' + rowCount + '" class="my-image"/>' +
+            $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow">' +
+                '<i id="settigsBtn' + rowCount + '" class="fa fa-cog settingsBtn not-result" aria-hidden="true"></i>' +
+                '<i id="splitRowBtn' + rowCount + '" class="fa fa-th-large splitRowBtn not-result" aria-hidden="true"></i>' +
+                '<i id="deleteRowBtn' + rowCount + '" class="fa fa-trash-o deleteRowBtn not-result" aria-hidden="true"></i>' +
+                '<i id="showBorderBtn' + rowCount + '" class="fa fa-window-maximize showBorderBtn not-result" aria-hidden="true"></i>' +
+                '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding">' +
+                getImageRowHtml() +
+                '</div>' +
         '</div>'+
-        '<div id="settingsRow' + rowCount + '" class="row show-border-bot">' +
-            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">'+
-                '<div class="form-group">'+
-                    '<label class="margin-label">margin-left: </label>'+
-                   '<input id="inputLeft' + rowCount + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
-                '</div> '+
-                '<div class="form-group">'+
-                    '<label class="margin-label">margin-top: </label>'+
-                    '<input id="inputTop' + rowCount + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
-                '</div>'+
-                '<div class="form-group">'+
-                    '<label class="margin-label ">margin-right: </label>'+
-                    '<input id="inputRight' + rowCount + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
-                '</div>'+
-                '<div class="form-group">'+
-                    '<label class="margin-label">margin-bot: </label>'+
-                    '<input id="inputBot' + rowCount + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
-                '</div>'+             
-            '</div>'+
-            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">'+
-                '<div class="form-group">'+
-                    '<input id="inputFile' + rowCount + '" type="file" class="inputFile" name="upload" style="display:none"/>' +
-                    '<button id="downloadImageBtn' + rowCount + '" class="my-btn btn addImageBtn" type="button">download image</button>' +
-                '</div>'+
-                '<div class="form-group">'+
-                    '<button id="floatRightBtn' + rowCount + '" class="my-btn btn floatRight" type="button">float right</button>' +
-                '</div>'+
-                '<div class="form-group">'+
-                    '<label>use central allignment</label>'+
-                    '<input id="useCentralAllignmentcheckBox' + rowCount + '" type="checkbox" checked>' +
-                '</div>'+
-            '</div>'+
+            '<div id="settingsRow' + rowCount + '" class="row settingsRow not-result">' +
+            '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">' +
+            getSettingsRowHtml() +
+            '</div>' +
         '</div>');
             rowCount++;
+            cellCount++;
         })
 
-        $('#resultHtml').on('click', '.addImageBtn', function (e) {
-            var id = $(this).attr('id');
-            var rowNumber = id[id.length-1];
-            $("#inputFile" + rowNumber).click();
+        function getImageRowHtml()
+        {
+            return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding">' +
+                   '<img id="image' + cellCount + '" class="image"/>' +
+                   '</div>';
+        }
+
+        function getSettingsRowHtml()
+        {
+           return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
+                '<div class="form-group">' +
+                    '<label class="margin-label">margin-left: </label>' +
+                   '<input id="inputLeft' + cellCount + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
+                '</div> ' +
+                '<div class="form-group">' +
+                    '<label class="margin-label">margin-top: </label>' +
+                    '<input id="inputTop' + cellCount + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
+                '</div>' +
+                '<div class="form-group">' +
+                    '<label class="margin-label ">margin-right: </label>' +
+                    '<input id="inputRight' + cellCount + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
+                '</div>' +
+                '<div class="form-group">' +
+                    '<label class="margin-label">margin-bot: </label>' +
+                    '<input id="inputBot' + cellCount + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
+                '</div>' +
+            '</div>' +
+            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
+                '<div class="form-group">' +
+                    '<input id="inputFile' + cellCount + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
+                    '<i id="downloadImageBtn' + cellCount + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
+                '</div>' +
+                '<div class="form-group">' +
+                    //'<div class="floatContainer">' +                    
+                        '<i id="floatLeftBtn' + cellCount + '" class="fa fa-align-left fa-lg floatLeftBtn marg-r" aria-hidden="true"></i>' +
+                        '<i id="floatCentertBtn' + cellCount + '" class="fa fa-align-center fa-lg floatCentertBtn marg-r" aria-hidden="true"></i>' +
+                        '<i id="floatRightBtn' + cellCount + '" class="fa fa-align-right fa-lg floatRightBtn" aria-hidden="true"></i>' +
+                    //'</div>' +
+                '</div>' +
+                //'<div class="form-group">' +
+                //    '<input id="showBorderCheckBox' + cellCount + '" class="showBorderCheckBox" type="checkbox" checked>' +
+                //    '<label>Show border</label>' +
+                //'</div>' +
+                '<div class="form-group">' +
+                    '<label class="max-height-label">max-height: </label>' +
+                    '<input id="maxHeightInput' + cellCount + '" type="text" class="form-control maxHeightInput">' +
+                '</div>' +
+            '</div>';
+        }
+
+        $('#pageHtml').on('click', '.downloadImageBtn', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            $("#inputFile" + cellNumber).click();
         });
 
-        $('#resultHtml').on('click', '.floatRight', function (e) {
-            var id = $(this).attr('id');
-            var rowNumber = id[id.length - 1];
-            alert($('#image' + rowNumber).css('float'));
-            if ($('#image' + rowNumber).css('float') == 'none')
+        $('#pageHtml').on('click', '.floatLeftBtn', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            $('#image' + cellNumber).css('float', 'left');
+        })
+
+        $('#pageHtml').on('click', '.floatCentertBtn', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            $('#image' + cellNumber).css('float', 'none');
+        })
+
+        $('#pageHtml').on('click', '.floatRightBtn', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            $('#image' + cellNumber).css('float', 'right');
+        })
+
+
+        $('#pageHtml').on('click', '.settingsBtn', function (e) {
+            var rowNumber = getRowOrCellNumber(this);
+            $("#settingsRow" + rowNumber).toggle();
+        });
+
+        $('#pageHtml').on('click', '.splitRowBtn', function (e) {
+            var rowNumber = getRowOrCellNumber(this);
+            var userRowCount = prompt("Please enter row count");
+            if (userRowCount != "" && userRowCount != null) {
+                if (userRowCount != 2 && userRowCount != 3 && userRowCount != 4 && userRowCount != 6)
+                {
+                    alert('Row count should be 2,3,4 or 6!');
+                    return;
+                }
+                var newImageRowHtml = '<i id="settigsBtn' + rowNumber + '" class="fa fa-cog settingsBtn not-result" aria-hidden="true"></i>' +
+                    '<i id="splitRowBtn' + rowNumber + '" class="fa fa-th-large splitRowBtn not-result" aria-hidden="true"></i>' +
+                    '<i id="deleteRowBtn' + rowNumber + '" class="fa fa-trash-o deleteRowBtn not-result" aria-hidden="true"></i>' +
+                    '<i id="showBorderBtn' + rowNumber + '" class="fa fa-window-maximize showBorderBtn not-result" aria-hidden="true"></i>';
+                var newSettingsRowHtml = '';
+                for (i = 0; i < userRowCount; i++) {
+                    newImageRowHtml += '<div class="col-xs-' + 12 / userRowCount + ' col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding">' +
+                               getImageRowHtml() +
+                               '</div>';
+                    newSettingsRowHtml += '<div class="col-xs-' + 12 / userRowCount + ' col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding">' +
+                               getSettingsRowHtml() +
+                               '</div>';
+                    cellCount++;
+                }
+                $('#imageRow' + rowNumber).html(newImageRowHtml);
+                $('#settingsRow' + rowNumber).html(newSettingsRowHtml);
+            }
+        });
+
+        $('#pageHtml').on('click', '.deleteRowBtn', function (e) {
+            var rowNumber = getRowOrCellNumber(this);
+            var action = confirm('do you want to delete the row?');
+            if (action) {
+                $("#imageRow" + rowNumber).remove();
+                $("#settingsRow" + rowNumber).remove();
+            }           
+        });
+
+        $('#pageHtml').on('click', '.showBorderBtn', function (e) {
+            var rowNumber = getRowOrCellNumber(this);
+            if ($('#imageRow' + rowNumber).hasClass('border'))
             {
-                $('#image' + rowNumber).css('float', 'right');
-                $(this).text('float left');
+                $('#imageRow' + rowNumber).removeClass('border');
+                $('#imageRow' + rowNumber).find('.imageContainer').each(function (index, element) {
+                    if ($(element).hasClass('imageAdded')) {
+                        $(element).removeClass('border');
+                    }
+                });
             }
-            else if ($('#image' + rowNumber).css('float') == 'right')
+            else
             {
-                $('#image' + rowNumber).css('float', 'none');
-                $(this).text('float right');
+                $('#imageRow' + rowNumber).addClass('border');
+                $('#imageRow' + rowNumber).find('.imageContainer').each(function (index, element) {
+                    if ($(element).hasClass('imageAdded')) {
+                        $(element).addClass('border');
+                    }
+                });
             }
         });
 
-        $('#resultHtml').on('click', '.floatLeft', function (e) {
-            var id = $(this).attr('id');
-            var rowNumber = id[id.length - 1];
-            alert($('#image' + rowNumber).css('float'));
-            if ($('#image' + rowNumber).css('float') == 'none') {
-                $('#image' + rowNumber).css('float', 'right');
-                $(this).text('float left');
-            }
-            else if ($('#image' + rowNumber).css('float') == 'right') {
-                $('#image' + rowNumber).css('float', 'none');
-                $(this).text('float right');
-            }
-        });
-
-        $('#resultHtml').on('change', '.inputFile', function (e) {
+        $('#pageHtml').on('change', '.inputFile', function (e) {
             var file = this.files[0];
-            var id = $(this).attr('id');
-            var rowNumber = id[id.length - 1];
+            var cellNumber = getRowOrCellNumber(this);
 
             var reader = new FileReader();
             reader.onload = function (e) {
-                $("#image" + rowNumber).attr('src', e.target.result);
+                $('#image' + cellNumber).attr('src', e.target.result);
+                $('#image' + cellNumber).addClass('srcChanged');
             }
-
             reader.readAsDataURL(this.files[0]);
+
+            $('#imageContainer' + cellNumber).addClass('border');
+            $('#imageContainer' + cellNumber).addClass('imageAdded');
         })
 
-        $('#resultHtml').on('keypress', '.margin-input', function (e) {
+        $('#pageHtml').on('keypress', '.margin-input', function (e) {
             var code = e.keyCode || e.which;
             if (code == 13)
             {
-                var id = $(this).attr('id');
-                var rowNumber = id[id.length - 1];
+                var cellNumber = getRowOrCellNumber(this);
                 if ($(this).hasClass('top'))
                 {
-                    var margin = $('#inputTop' + rowNumber).val();
-                    $('#image' + rowNumber).css('margin-top', margin + 'px');                   
+                    var margin = $(this).val();
+                    $('#imageContainer' + cellNumber).css('margin-top', margin + 'px');
                 }
                 else if($(this).hasClass('left'))
                 {                    
-                    var margin = $('#inputLeft' + rowNumber).val();
-                    $('#image' + rowNumber).css('margin-left', margin + 'px');
+                    var margin = $(this).val();
+                    $('#imageContainer' + cellNumber).css('margin-left', margin + 'px');
                 }
                 else if ($(this).hasClass('right')) {
-                    var margin = $('#inputRight' + rowNumber).val();
-                    $('#image' + rowNumber).css('margin-right', margin + 'px');
+                    var margin = $(this).val();
+                    $('#imageContainer' + cellNumber).css('margin-right', margin + 'px');
                 }
                 else if ($(this).hasClass('bot')) {
-                    var margin = $('#inputBot' + rowNumber).val();
-                    $('#image' + rowNumber).css('margin-bottom', margin + 'px');
+                    var margin = $(this).val();
+                    $('#imageContainer' + cellNumber).css('margin-bottom', margin + 'px');
                 }
                 e.preventDefault();
             }          
         })
 
+        $('#pageHtml').on('keypress', '.maxHeightInput', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                var cellNumber = getRowOrCellNumber(this);
+                var maxHeight = $(this).val();
+                $('#image' + cellNumber).css('max-height', maxHeight + 'px');
+                e.preventDefault();
+            }
+        })
+
+        $('#saveButton').on('click', function (e) {
+            var setName = $('#setName').val();
+            if (setName == '')
+            {
+                alert('please fill set name!');
+                e.preventDefault();
+                return;
+            }
+            var result = $('#pageHtml').clone();
+            result = changeSrcs(result, setName, e);
+            var html = result.html();
+            var encodedHtml = encodeHtml(html);
+            $('#resultHtml').val(encodedHtml);
+        });
+
+        function changeSrcs(resultHtml, setName, e)
+        {
+            resultHtml.find('.image').each(function (index, element, e) {
+                var cellNumber = getRowOrCellNumber(element);
+                if ($('#imageContainer' + cellNumber).hasClass('imageAdded'))
+                {
+                    var filename = $('#inputFile' + cellNumber)[0].files[0].name;
+                    $(element).attr('src', '/Content/Images/' + setName + '/' + filename);
+                }                
+            });
+            return resultHtml;
+        }
+
+        function getRowOrCellNumber(element)
+        {
+            var id = $(element).attr('id');
+            var number = 0;
+            if ($.isNumeric(id.substring(id.length - 3)))
+            {
+                number = id.substring(id.length - 3);
+            }
+            else if ($.isNumeric(id.substring(id.length - 2)))
+            {
+                number = id.substring(id.length - 2);
+            }
+            else
+            {
+                number = id.substring(id.length - 1);
+            }
+            return number;
+        }
+
+        function encodeHtml(string)
+        {
+            //var replaceLefArrow = string.replace(/</g, "&lt;");
+            //var result = replaceLefArrow.replace(/>/g, "&gt;");
+            return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
     });
 </script>
 
 
-@*<p><button>button 1</button><b class="temp">ad</b> adasd</p>
-
-<div id="as">
-
-</div>*@
-
-@*<script>
- $(document).ready(function(){
-
-   $("p").click(function () {
-     var htmlStr = $(this).html();
-     $("#as").append(htmlStr);
-   });
-
- });
-</script>*@
 
 
 

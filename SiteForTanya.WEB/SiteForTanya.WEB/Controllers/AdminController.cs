@@ -20,5 +20,14 @@ namespace SiteForTanya.WEB.Controllers
             ViewBag.ViewName = "AdminAddSet";
             return View();
         }
+
+        public ActionResult SaveSet(string setName, string setDescription, string resultHtml, IEnumerable<HttpPostedFileBase> uploads)
+        {
+            ViewBag.ViewName = "AdminSuccessfulSetSaving";
+
+            string html = Server.HtmlDecode(resultHtml);
+            ViewBag.Alex = html;
+            return View("SuccessfulSetSaving");
+        }
     }
 }

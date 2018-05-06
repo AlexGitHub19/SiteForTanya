@@ -35,8 +35,14 @@ input {
         background-color: #ccc3a1;
         border-color: black;
     }
-    .my-btn:visited {
-        background-color: #ff0000;
+
+    .my-btn:focus {
+        outline: none;
         border-color: black;
     }
+
+    /*.my-btn:active {
+        outline: none;
+        border: none;
+    }*/
 
