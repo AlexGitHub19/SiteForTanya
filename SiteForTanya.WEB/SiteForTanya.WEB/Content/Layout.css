@@ -211,8 +211,6 @@ body {
     #languageSelector {
         display:none;
     }
-
-    /*Далее остальные стили*/
 }
 
 @media (min-width:601px){
@@ -220,6 +218,4 @@ body {
     #nav-icon {
         display:none;
     }
-
-    /*Далее остальные стили*/
 }

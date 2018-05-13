@@ -5,7 +5,7 @@
 }
 
 <h2>Admin info</h2>
-@if (Request.IsAuthenticated)
+@*@if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
@@ -14,7 +14,7 @@
             <button class="my-btn btn btn-default" type="submit">Log off</button>
         </div>
     }
-}
+}*@
 
 <div class="temp">
 </div>

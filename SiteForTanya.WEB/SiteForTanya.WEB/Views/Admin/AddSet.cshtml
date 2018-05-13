@@ -9,13 +9,9 @@
 @using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 
-    @*<a class="image-link" href="~/Content/Images/Balloon_Product/7.jpg">
-        <img src="/Content/Images/Balloon_Product/7.jpg" alt="Sample Photo" class="my-image" style="margin-left: 200px; margin-top: 80px; max-height:300px" />
-    </a>*@
-
     <div class="row marg-btm">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label class="control-label float:right;">Enter Set's name: </label>
+            <label class="control-label">Enter Set's name: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <input id="setName" name="setName" type="text" class="form-control">
@@ -24,7 +20,7 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label class="control-label float:right;">Enter Set's description: </label>
+            <label class="control-label">Enter Set's description: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
             <textarea name="setDescription" rows="3" class="form-control"></textarea>
@@ -33,69 +29,15 @@
 
 
 
-    <div id="pageHtml">
-        @*<div id="imageRowX"class="result row show-border imageRow">
-            <img id="imageX" class="my-image"/>
-            <i class="fa fa-cog settingsBtn" aria-hidden="true"></i>
-        </div>*@
-        @*<div id="settingsRowX" class="row show-border-bot">
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <label class="margin-label">margin-left: </label>
-                    <input id="inputLeft" name="SetMarginLeft" type="text" class="form-control margin-input left">
-                </div> 
-                <div class="form-group">
-                    <label class="margin-label">margin-top: </label>
-                    <input id="inputTop" name="SetMarginTop" type="text" class="form-control margin-input top">
-                </div>
-                <div class="form-group">
-                    <label class="margin-label ">margin-right: </label>
-                    <input name="SetMarginRight" type="text" class="form-control margin-input right">
-                </div>
-                <div class="form-group">
-                    <label class="margin-label">margin-bot: </label>
-                    <input name="SetMarginBot" type="text" class="form-control margin-input bottom">
-                </div>             
-            </div>
+    <div id="pageHtml"></div>
 
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="form-group">
-                    <input id="nbv2" type="file" name="upload" style="display:none"/>
-                    <button id="nbv" class="my-btn btn addImageBtn" type="button">download image</button>
-                    <i class="fa fa-paperclip fa-lg" aria-hidden="true"></i>
-                </div>
-                <div class="form-group">
-                    <div class="floatContainer">
-                        <p style="font-weight: bold;">float</p>
-                        <label class="radio-inline">
-                            <input type="radio" name="floatRadio">float left
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="floatRadio" checked>float none
-                        </label>
-                        <label class="radio-inline">
-                            <input type="radio" name="floatRadio">float right
-                        </label>
-                    </div>                 
-                </div>
-                <div class="form-group">
-                    <input id="showBorderCheckBoxX" class="showBorderCheckBox" type="checkbox" checked>
-                    <label>Show border</label>
-                </div>
-                <div class="form-group">
-                    <label class="max-height-label">max-height: </label>
-                    <input id="maxHeightInput" type="text" class="form-control maxHeightInput">
-                </div>
-            </div>
-        </div>*@
-    </div>
-
-    <div>
+    @*<div>
         <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
-    </div>
+    </div>*@
     <input id="resultHtml" type="text" name="resultHtml"/>
 
-    <input id="saveButton" class="my-btn btn" type="submit" value="Save" />
+    <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
+    <input id="saveButton" class="my-btn btn" type="submit" value="Save set" />
 }
 
 
@@ -155,17 +97,11 @@
                     '<input id="inputFile' + cellCount + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
                     '<i id="downloadImageBtn' + cellCount + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
                 '</div>' +
-                '<div class="form-group">' +
-                    //'<div class="floatContainer">' +                    
+                '<div class="form-group">' +                 
                         '<i id="floatLeftBtn' + cellCount + '" class="fa fa-align-left fa-lg floatLeftBtn marg-r" aria-hidden="true"></i>' +
                         '<i id="floatCentertBtn' + cellCount + '" class="fa fa-align-center fa-lg floatCentertBtn marg-r" aria-hidden="true"></i>' +
                         '<i id="floatRightBtn' + cellCount + '" class="fa fa-align-right fa-lg floatRightBtn" aria-hidden="true"></i>' +
-                    //'</div>' +
                 '</div>' +
-                //'<div class="form-group">' +
-                //    '<input id="showBorderCheckBox' + cellCount + '" class="showBorderCheckBox" type="checkbox" checked>' +
-                //    '<label>Show border</label>' +
-                //'</div>' +
                 '<div class="form-group">' +
                     '<label class="max-height-label">max-height: </label>' +
                     '<input id="maxHeightInput' + cellCount + '" type="text" class="form-control maxHeightInput">' +
@@ -318,6 +254,12 @@
                 e.preventDefault();
                 return;
             }
+            if (checkIfStNameIsUnique(setName) == false)
+            {
+                e.preventDefault();
+                alert('Set with name: ' + setName + ' already exists. Choose another name, please');
+            }          
+
             var result = $('#pageHtml').clone();
             result = changeSrcs(result, setName, e);
             var html = result.html();
@@ -332,7 +274,7 @@
                 if ($('#imageContainer' + cellNumber).hasClass('imageAdded'))
                 {
                     var filename = $('#inputFile' + cellNumber)[0].files[0].name;
-                    $(element).attr('src', '/Content/Images/' + setName + '/' + filename);
+                    $(element).attr('src', '/Content/Images/Sets/' + setName + '/' + filename);
                 }                
             });
             return resultHtml;
@@ -357,24 +299,34 @@
             return number;
         }
 
+        function checkIfStNameIsUnique(setName)
+        {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/Admin/CheckSetName?setName=' + setName, false);
+            xhr.send();
+            if (xhr.status != 200)
+            {
+                alert('Error' + xhr.status + ': ' + xhr.statusText);
+                return false
+            }
+            else
+            {
+                var jsonElement = JSON.parse(xhr.responseText);
+                if (jsonElement.result == 'True')
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         function encodeHtml(string)
         {
-            //var replaceLefArrow = string.replace(/</g, "&lt;");
-            //var result = replaceLefArrow.replace(/>/g, "&gt;");
             return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
 
     });
 </script>
-
-
-
-
-
-@*<h3>Выберите файл для загрузки</h3>
-@using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="upload" /><br>
-    <input type="submit" value="Загрузить" />
-}*@
-

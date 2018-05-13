@@ -11,9 +11,18 @@
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
     }
-    @if (ViewBag.ViewName == "AdminAddSet")
+    else if (ViewBag.ViewName == "AdminSets")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminSets.css" />
+    }
+    else if (ViewBag.ViewName == "AdminImages")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminImages.css" />
+    }
+    else if (ViewBag.ViewName == "AdminAddSet")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/Set.css" />
         <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     }
 
@@ -21,14 +30,100 @@
 
 </head>
 <body>
+     <div class="mobile-menu">  
+        <ul>
+            <li><a href="/Admin/Index">Home</a></li>
+            <li><a href="/Admin/Sets">Sets</a></li>
+            <li><a href="/Admin/Images">Images</a></li>
+            <li><a href="/Admin/Blog">Blog</a></li>
+            @*<li><a href="/Account/LogOff">LogOff</a></li>*@                   
+        </ul>
+         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+            {
+             @Html.AntiForgeryToken();
+             <div class="logOff-mobile">
+                 <button class="my-btn btn btn-default" type="submit">Log off</button>
+             </div>
+            }        
+    </div>
+    <div class="row">
+        <div class="main-menu col-lg-11 col-md-11 col-sm-11 col-xs-11">
+            <div style="display:inline-block; width: 100%;">
+                <ul>
+                    <li><a href="/Admin/Index">Home</a></li>
+                    <li><a href="/Admin/Sets">Sets</a></li>
+                    <li><a href="/Admin/Images">Images</a></li>
+                    <li><a href="/Admin/Blog">Blog</a></li>
+                </ul>
+            </div>                           
+        </div>
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken();
+            <div class="logOff">
+                <button class="my-btn btn btn-default" type="submit">Log off</button>
+            </div>
+        }
+    </div>
+    <div id="nav-icon">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     <div class="body-content">
         @RenderBody()
-        <hr />
-
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application sd  efwer werqw   sasdasd  asdfasfa f awqrqwr  </p>
-        </footer>
     </div>
+
+    <script>
+                $(document).ready(function () {
+                    $('#nav-icon').click(function () {
+                        $(this).toggleClass('open');
+                        var windowWidth = $(window).width();
+                        if ($(this).hasClass('open')) {
+                            $('.mobile-menu').animate({
+                                width: windowWidth*0.78
+                            }, 200);
+                            $('body').animate({
+                                left: -windowWidth * 0.78
+                            }, 200);
+                        }
+                        else {
+                            $('.mobile-menu').animate({
+                                width: 0
+                            }, 200);
+                            $('body').animate({
+                                left: '0px'
+                            }, 200);
+                        }
+                    });
+
+                    $(window).resize(function () {
+                        if ($(this).width() >= 600 && $('#nav-icon').first().hasClass('open'))
+                        {
+                            $('#nav-icon').first().removeClass('open');
+                            $('.mobile-menu').animate({
+                                width: 0
+                            }, 200);
+                            $('body').animate({
+                                left: '0px'
+                            }, 200);
+                        }
+
+                        if ($('#nav-icon').first().hasClass('open'))
+                        {
+                            var windowWidth = $(window).width();
+                            $('.mobile-menu').width(windowWidth*0.78);
+                            $('body').animate({
+                            left: -windowWidth * 0.78
+                            }, 0);
+
+                        }
+
+                    });
+
+                });
+    </script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

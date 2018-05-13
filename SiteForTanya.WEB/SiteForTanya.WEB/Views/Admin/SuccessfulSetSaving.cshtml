@@ -1,19 +1,27 @@
 ﻿
 @{
-    Layout = null;
+    ViewBag.Title = "SuccessSetSaving";
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>SuccessfulSetSaving</title>
-</head>
-<body>
-    <div> 
-        <h2>SuccessfulSetSaving</h2>
-    </div>
-    <p>@ViewBag.Alex</p>
-</body>
-</html>
+<div>
+    <h2>SuccessfulSetSaving</h2>
+</div>
+<div id="result">
+</div>
+
+<script>
+    $(document).ready(function () {
+        var setHtml = '@ViewBag.Alex';
+        alert(decodeHtml(setHtml));
+        $('#result').html(decodeHtml(setHtml));
+    });
+
+    function decodeHtml(string)
+    {
+        return string.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
+    }
+    //&quot;
+</script>

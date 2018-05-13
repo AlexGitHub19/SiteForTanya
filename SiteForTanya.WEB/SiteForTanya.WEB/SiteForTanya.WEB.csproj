@@ -212,9 +212,13 @@
   <ItemGroup>
     <Content Include="Content\AdminLayout.css" />
     <Content Include="Content\Admin\AdminAddSet.css" />
+    <Content Include="Content\Admin\AdminBlog.css" />
+    <Content Include="Content\Admin\AdminImages.css" />
     <Content Include="Content\Admin\AdminIndex.css" />
+    <Content Include="Content\Admin\AdminSets.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\Balloon_Product\1.jpg" />
@@ -228,6 +232,7 @@
     <Content Include="Content\Layout.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
+    <Content Include="Content\Set.css" />
     <Content Include="Content\Work\WorkIndex.css" />
     <Content Include="Content\Work\WorkSets.css" />
     <Content Include="Content\Work\WorkSingleImages.css" />
@@ -286,6 +291,9 @@
     <Content Include="Views\Admin\AddSet.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\SuccessfulSetSaving.cshtml" />
+    <Content Include="Views\Admin\Sets.cshtml" />
+    <Content Include="Views\Admin\Images.cshtml" />
+    <Content Include="Views\Admin\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -293,6 +301,8 @@
     <Folder Include="Content\Blog\" />
     <Folder Include="Content\Contacts\" />
     <Folder Include="Content\Home\" />
+    <Folder Include="Content\Images\Sets\" />
+    <Folder Include="Content\Images\SingleImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
