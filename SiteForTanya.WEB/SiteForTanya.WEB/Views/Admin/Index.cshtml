@@ -5,17 +5,6 @@
 }
 
 <h2>Admin info</h2>
-@*@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-        @Html.AntiForgeryToken();
-        <div class="logOff">
-            <button class="my-btn btn btn-default" type="submit">Log off</button>
-        </div>
-    }
-}*@
-
 <div class="temp">
 </div>
 <div class="row">
