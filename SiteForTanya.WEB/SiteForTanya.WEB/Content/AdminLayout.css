@@ -35,6 +35,7 @@ input {
     background-color: #f4f1e4;
     color: black;
     border-color: black;
+    height:32px;
 }
     .my-btn:hover {
         background-color: #ccc3a1;

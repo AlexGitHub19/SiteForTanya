@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.AntiForgeryToken();
 
     <div class="row marg-btm">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -35,6 +36,7 @@
         <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
     </div>*@
     <input id="resultHtml" type="text" name="resultHtml"/>
+    <input id="resultHtmlWithoutNotResultElements" type="text" name="resultHtmlWithoutNotResultElements" />
 
     <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
     <input id="saveButton" class="my-btn btn" type="submit" value="Save set" />
@@ -254,10 +256,11 @@
                 e.preventDefault();
                 return;
             }
-            if (checkIfStNameIsUnique(setName) == false)
+            if (checkIfSetNameIsUnique(setName) == false)
             {
                 e.preventDefault();
                 alert('Set with name: ' + setName + ' already exists. Choose another name, please');
+                return;
             }          
 
             var result = $('#pageHtml').clone();
@@ -265,6 +268,13 @@
             var html = result.html();
             var encodedHtml = encodeHtml(html);
             $('#resultHtml').val(encodedHtml);
+
+            var result2 = $('#pageHtml').clone();
+            result2 = changeSrcs(result2, setName, e);
+            result2.find('.not-result').remove();
+            var html2 = result2.html();
+            var encodedHtml2 = encodeHtml(html2);
+            $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);          
         });
 
         function changeSrcs(resultHtml, setName, e)
@@ -299,7 +309,7 @@
             return number;
         }
 
-        function checkIfStNameIsUnique(setName)
+        function checkIfSetNameIsUnique(setName)
         {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', '/Admin/CheckSetName?setName=' + setName, false);
@@ -321,6 +331,20 @@
                     return false;
                 }
             }
+        }
+
+        function setHtmlWithoutNotResultElements()
+        {
+            var result = $('#pageHtml').clone();
+            result = changeSrcs(result, setName, e);
+            var html = result.html();
+            $('#resultHtmlWithoutNotResultElements').val(html);
+            $('#resultHtmlWithoutNotResultElements').remove('.notResult');
+            var readyHtml = $('#resultHtmlWithoutNotResultElements').clone();
+            var encodedHtml = encodeHtml(readyHtml.html());
+
+            $('#resultHtmlWithoutNotResultElements').val(encodedHtml);
+            alert(encodedHtml);
         }
 
         function encodeHtml(string)

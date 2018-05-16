@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 
 namespace SiteForTanya.WEB.Models
 {
-    public class DbInitializer : DropCreateDatabaseAlways<ApplicationContext>
+    public class DbInitializer : DropCreateDatabaseIfModelChanges<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {

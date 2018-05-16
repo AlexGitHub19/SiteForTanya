@@ -1,0 +1,16 @@
+﻿@model SelectList
+@{
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("DeleteSet", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+    <div class="page-content">
+        <h2>Deliting Set</h2>
+        @Html.DropDownList("setName", Model, new { @class = "form-control dropdawn" })
+        <input id="deleteButton" class="my-btn btn" type="submit" value="Delete set" />
+    </div>
+
+}

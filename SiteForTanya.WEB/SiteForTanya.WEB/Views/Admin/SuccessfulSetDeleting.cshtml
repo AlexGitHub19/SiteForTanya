@@ -1,6 +1,5 @@
 ﻿
 @{
-    ViewBag.Title = "SuccessSetSaving";
     Layout = null;
 }
 
@@ -9,32 +8,22 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>SuccessfulSetSaving</title>
+    <title>SuccessfulSetDeleting</title>
     <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
 </head>
 <body>
     <div style="margin-top:100px; text-align:center;">
-        <h2>Set is saved!</h2>
-    </div>
-    <div id="result">
+        <h2>Set is Deleted!</h2>
     </div>
 
     <script>
         $(document).ready(function () {
-            @*var setHtml = '@ViewBag.Alex';
-        alert(decodeHtml(setHtml));
-        $('#result').html(decodeHtml(setHtml));*@
             setTimeout(redirectToIndex, 1500);
 
             function redirectToIndex() {
                 $(location).attr('href', 'Index');
             }
-         });
-
-    //function decodeHtml(string)
-    //{
-    //    return string.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"');
-    //}
+        });
     </script>
 </body>
 </html>

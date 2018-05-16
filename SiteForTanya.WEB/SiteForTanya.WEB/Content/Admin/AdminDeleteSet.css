@@ -1,0 +1,15 @@
+﻿.dropdawn {
+    display:inline;
+    width:200px;
+    height:32px;
+}
+
+h2 {
+    margin-bottom:20px;
+}
+.page-content {
+    margin-top:70px;
+    padding:10px;
+    background-color:#f4f1e4;
+    height:200px;
+}

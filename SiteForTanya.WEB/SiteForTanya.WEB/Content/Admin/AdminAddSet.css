@@ -6,6 +6,10 @@
     display:none;
 }
 
+#resultHtmlWithoutNotResultElements{
+    display:none;
+}
+
 
 @media (max-width:768px){
 .control-label {

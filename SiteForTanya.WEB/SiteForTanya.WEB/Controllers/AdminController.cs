@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SiteForTanya.WEB.Models;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -43,9 +44,39 @@ namespace SiteForTanya.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
         [Authorize]
-        public ActionResult SaveSet(string setName, string setDescription, string resultHtml, IEnumerable<HttpPostedFileBase> uploads)
+        public ActionResult DeleteSet()
         {
+            ViewBag.ViewName = "AdminDeleteSet";
+            Repository<SetEntity> repository = new Repository<SetEntity>();
+            IEnumerable<SetEntity> sets =  repository.GetList();
+            List<string> names = sets.Select(set=>set.Name).ToList();
+            SelectList setNames = new SelectList(names);
+            return View(setNames);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSet(string setName)
+        {
+            Repository<SetEntity> repository = new Repository<SetEntity>();
+            SetEntity set = repository.GetList().Where(s => s.Name == setName).FirstOrDefault();
+            repository.Delete(set.Id);
+
+            string path = Server.MapPath("~/Content/Images/Sets/" + setName);
+            DirectoryInfo setDirectory = new DirectoryInfo(path);
+            setDirectory.Delete(true);
+
+            return View("SuccessfulSetDeleting");
+        }
+
+        [HttpPost]       
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveSet(string setName, string setDescription, string resultHtml, string resultHtmlWithoutNotResultElements, IEnumerable<HttpPostedFileBase> uploads)
+        {           
             string path = Server.MapPath("~/Content/Images/Sets/"+ setName);
             DirectoryInfo setDirectory = new DirectoryInfo(path);
             setDirectory.Create();
@@ -59,10 +90,13 @@ namespace SiteForTanya.WEB.Controllers
                         file.SaveAs(Server.MapPath("~/Content/Images/Sets/" + setName + "/" + fileName));
                     }
                 }
-            }            
-            ViewBag.ViewName = "AdminSuccessfulSetSaving";
-            string html = resultHtml.Replace("&lt;" , "<").Replace("&gt;" , ">"); ;
+            }                        
+            string html = resultHtmlWithoutNotResultElements.Replace("&lt;" , "<").Replace("&gt;" , ">");
+            SetEntity set = new SetEntity { Name = setName, Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements};
+            Repository<SetEntity> repository = new Repository<SetEntity>();
+            repository.Create(set);
             ViewBag.Alex = html;
+            ViewBag.ViewName = "AdminSuccessfulSetSaving";
             return View("SuccessfulSetSaving");
         }
 

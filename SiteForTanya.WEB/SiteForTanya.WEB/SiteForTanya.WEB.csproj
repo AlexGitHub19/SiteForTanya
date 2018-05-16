@@ -206,13 +206,17 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\DbInitializer.cs" />
+    <Compile Include="Models\ImageEntity.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
+    <Compile Include="Models\Repository.cs" />
+    <Compile Include="Models\SetEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminLayout.css" />
     <Content Include="Content\Admin\AdminAddSet.css" />
     <Content Include="Content\Admin\AdminBlog.css" />
+    <Content Include="Content\Admin\AdminDeleteSet.css" />
     <Content Include="Content\Admin\AdminImages.css" />
     <Content Include="Content\Admin\AdminIndex.css" />
     <Content Include="Content\Admin\AdminSets.css" />
@@ -294,6 +298,8 @@
     <Content Include="Views\Admin\Sets.cshtml" />
     <Content Include="Views\Admin\Images.cshtml" />
     <Content Include="Views\Admin\Blog.cshtml" />
+    <Content Include="Views\Admin\DeleteSet.cshtml" />
+    <Content Include="Views\Admin\SuccessfulSetDeleting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

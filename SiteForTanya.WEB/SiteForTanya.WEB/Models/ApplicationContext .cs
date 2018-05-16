@@ -7,6 +7,9 @@ namespace SiteForTanya.WEB.Models
     {
         public ApplicationContext() : base("DbConnection") { }
 
+        public DbSet<SetEntity> SetEntities { get; set; }
+        public DbSet<ImageEntity> ImageEntities { get; set; }
+
         public static ApplicationContext Create()
         {
             return new ApplicationContext();
