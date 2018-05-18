@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.ViewName</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link type="text/css" rel="stylesheet" href="~/Content/AdminLayout.css" />
@@ -11,7 +11,7 @@
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
     }
-    else if (ViewBag.ViewName == "AdminSets")
+    else if (ViewBag.ViewName == "AdminSets" || ViewBag.ViewName ==  "AdminImages")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminSets.css" />
     }
@@ -24,6 +24,7 @@
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/Set.css" />
         <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+        <script type="text/javascript" src='~/JavaScriptSpellCheck/include.js'></script>
     }
     else if (ViewBag.ViewName == "AdminDeleteSet")
     {

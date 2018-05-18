@@ -30,6 +30,7 @@ namespace SiteForTanya.WEB.Controllers
             ViewBag.ViewName = "AdminImages";
             return View();
         }
+
         [Authorize]
         public ActionResult Blog()
         {
@@ -69,7 +70,8 @@ namespace SiteForTanya.WEB.Controllers
             DirectoryInfo setDirectory = new DirectoryInfo(path);
             setDirectory.Delete(true);
 
-            return View("SuccessfulSetDeleting");
+            ViewBag.Text = "Set is Deleted!";
+            return View("ShowInfo");
         }
 
         [HttpPost]       
@@ -97,7 +99,8 @@ namespace SiteForTanya.WEB.Controllers
             repository.Create(set);
             ViewBag.Alex = html;
             ViewBag.ViewName = "AdminSuccessfulSetSaving";
-            return View("SuccessfulSetSaving");
+            ViewBag.Text = "Set is saved!";
+            return View("ShowInfo");
         }
 
         public JsonResult CheckSetName(string setName)
@@ -112,6 +115,23 @@ namespace SiteForTanya.WEB.Controllers
             {
                 return Json(new { result = "True" }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public JsonResult Upload()
+        {
+            foreach (string file in Request.Files)
+            {
+                //var upload = Request.Files[file];
+                //if (upload != null)
+                //{
+                //    // получаем имя файла
+                //    string fileName = System.IO.Path.GetFileName(upload.FileName);
+                //    // сохраняем файл в папку Files в проекте
+                //    upload.SaveAs(Server.MapPath("~/Files/" + fileName));
+                //}
+            }
+            return Json("файл загружен");
         }
 
 

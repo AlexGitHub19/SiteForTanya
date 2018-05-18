@@ -1,5 +1,66 @@
 ﻿
 @{
-    ViewBag.Title = "Sets";
+    ViewBag.Title = "Images";
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+<div>
+    <input type="file" name="upload" id="uploadFile" /><br />
+    <button id="submit">Загрузить</button>
+</div>
+
+    <script type="text/javascript">
+
+    $('#submit').on('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('uploadFile').files;
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Upload", "Home")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Браузер не поддерживает загрузку файлов HTML5!");
+            }
+        }
+    });
+    </script>
+
+
+@*<div class="content">
+    <div class="row">
+        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <a href="AddImage" style="display:block">
+                <div class="item item-left">
+                    <div class="item-content">  
+                        <h3 class="text">ADD IMAGE</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <a href="DeleteImage" style="display:block">
+                <div class="item item-right">
+                    <div class="item-content">
+                        <h3 class="text">DELETE IMAGE</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>*@
