@@ -4,63 +4,79 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div>
-    <input type="file" name="upload" id="uploadFile" /><br />
-    <button id="submit">Загрузить</button>
+<div class="addImage">
+    <input type="file" name="images" id="uploadImages" multiple/>
+    <button id="addmageBtn" class="my-btn btn btn-default">Add images</button>
+    <div id="loading">
+        <i class="fa fa-spinner fa-spin" style="font-size:100px"></i>
+    </div>
+    <div id="resultText">
+    </div>
+    <div class="row" id="images">
+    </div>
+    <button id="submitBtn" class="my-btn btn btn-default" style="display:none;">Upload Images</button>
 </div>
 
     <script type="text/javascript">
 
-    $('#submit').on('click', function (e) {
+        $('#addmageBtn').bind('click', function () {
+            $('#uploadImages').click();
+        });
+
+        $('#uploadImages').bind('change', function (e) {         
+            for (var i = 0; i < this.files.length; i++) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#images').append('<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 imageContainer">' +
+                       '<img src = "' + e.target.result + '" class="image"/>' +
+                       '</div>');
+                }
+                reader.readAsDataURL(this.files[i]);
+            }
+            if (this.files.length > 0)
+            {
+                $('#submitBtn').css('display', 'inline');
+                $('#images').css('display', 'block');
+            }
+            
+        })
+
+
+        $('#submitBtn').on('click', function (e) {
         e.preventDefault();
-        var files = document.getElementById('uploadFile').files;
+        var files = document.getElementById('uploadImages').files;
         if (files.length > 0) {
             if (window.FormData !== undefined) {
                 var data = new FormData();
                 for (var x = 0; x < files.length; x++) {
                     data.append("file" + x, files[x]);
                 }
-
+                $('#images').html('');
+                $('#images').css('display', 'none');
+                $('#loading').css('display', 'block');
+                $('#uploadImages').val('');
+                $('#submitBtn').css('display', 'none');
                 $.ajax({
                     type: "POST",
-                    url: '@Url.Action("Upload", "Home")',
+                    url: '@Url.Action("UploadImages", "Admin")',
                     contentType: false,
                     processData: false,
                     data: data,
-                    success: function (result) {
-                        alert(result);
+                    success: function (result) {                       
+                        $('#loading').css('display', 'none');
+                        $('#resultText').css('display', 'block');
+                        $('#resultText').html('<H3>' + result + '</H3>');
+                        setTimeout(function () {
+                            $('#resultText').css('display', 'none');
+                        }, 4000);
                     },
                     error: function (xhr, status, p3) {
                         alert(xhr.responseText);
                     }
                 });
             } else {
-                alert("Браузер не поддерживает загрузку файлов HTML5!");
+                alert("Browser doesn't provide ability to upload images!");
             }
         }
     });
     </script>
-
-
-@*<div class="content">
-    <div class="row">
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="AddImage" style="display:block">
-                <div class="item item-left">
-                    <div class="item-content">  
-                        <h3 class="text">ADD IMAGE</h3>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="DeleteImage" style="display:block">
-                <div class="item item-right">
-                    <div class="item-content">
-                        <h3 class="text">DELETE IMAGE</h3>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>*@

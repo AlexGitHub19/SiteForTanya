@@ -11,9 +11,14 @@
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
     }
-    else if (ViewBag.ViewName == "AdminSets" || ViewBag.ViewName ==  "AdminImages")
+    else if (ViewBag.ViewName == "AdminSets")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminSets.css" />
+    }
+    else if (ViewBag.ViewName == "AdminImages")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminImages.css" />
+        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     }
     else if (ViewBag.ViewName == "AdminImages")
     {
@@ -24,7 +29,6 @@
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/Set.css" />
         <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-        <script type="text/javascript" src='~/JavaScriptSpellCheck/include.js'></script>
     }
     else if (ViewBag.ViewName == "AdminDeleteSet")
     {

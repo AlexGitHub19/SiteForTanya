@@ -118,20 +118,26 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
-        public JsonResult Upload()
+        public JsonResult UploadImages()
         {
+            Repository<ImageEntity> repository = new Repository<ImageEntity>();
+            int imagesCount = repository.GetList().Count();
+            imagesCount++;
+
+
             foreach (string file in Request.Files)
             {
-                //var upload = Request.Files[file];
-                //if (upload != null)
-                //{
-                //    // получаем имя файла
-                //    string fileName = System.IO.Path.GetFileName(upload.FileName);
-                //    // сохраняем файл в папку Files в проекте
-                //    upload.SaveAs(Server.MapPath("~/Files/" + fileName));
-                //}
+                var upload = Request.Files[file];
+                if (upload != null)
+                {
+                    string fileName = "Image" + imagesCount + ".JPG";
+                    upload.SaveAs(Server.MapPath("~/Content/Images/Images/" + fileName));
+                    ImageEntity image = new ImageEntity { Name = "Image" + imagesCount, Description = "vabn" };
+                    repository.Create(image);
+                    imagesCount++;
+                }
             }
-            return Json("файл загружен");
+            return Json("files are uploaded");
         }
 
 
