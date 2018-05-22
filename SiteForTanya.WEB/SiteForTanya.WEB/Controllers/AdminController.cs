@@ -15,6 +15,7 @@ namespace SiteForTanya.WEB.Controllers
 {
     public class AdminController : Controller
     {
+        [HttpGet]
         [Authorize]
         public ActionResult Index()
         {
@@ -22,6 +23,7 @@ namespace SiteForTanya.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
         [Authorize]
         public ActionResult Sets()
         {
@@ -29,6 +31,7 @@ namespace SiteForTanya.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
         [Authorize]
         public ActionResult Images(int CountImagesOnPage = 16)
         {
@@ -44,18 +47,7 @@ namespace SiteForTanya.WEB.Controllers
             return View(viewModel);
         }
 
-        //private string GenerateHtmlForImages(List<ImageEntity> pageItems)
-        //{
-        //    string result = String.Empty;
-        //    foreach (ImageEntity item in pageItems)
-        //    {
-        //        result += "<div id = \"" + item.Name + "\" class=\"col-xs-6 col-sm-4 col-md-4 col-lg-4 imageContainer\">" +
-        //             "<img src = " + "/Content/Images/Images/" + item.Name + " class=\"image\"/>" +
-        //             "</div>";
-        //    }
-        //    return result;
-        //}
-
+        [HttpGet]
         [Authorize]
         public ActionResult Blog()
         {
@@ -63,6 +55,7 @@ namespace SiteForTanya.WEB.Controllers
             return View();
         }
 
+        [HttpGet]
         [Authorize]
         public ActionResult AddSet()
         {
@@ -128,6 +121,7 @@ namespace SiteForTanya.WEB.Controllers
             return View("ShowInfo");
         }
 
+        [HttpGet]
         public JsonResult CheckSetName(string setName)
         {
             string path = Server.MapPath("~/Content/Images/Sets/" + setName);
@@ -143,6 +137,7 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public JsonResult UploadImages()
         {
             string resultString = "files are seccessfully uploaded";
@@ -214,6 +209,7 @@ namespace SiteForTanya.WEB.Controllers
             return Json(new {type = resultType, resultString = resultString });
         }
 
+        [HttpGet]
         public ActionResult AutocompleteSearch(string term)
         {
             Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
@@ -227,6 +223,8 @@ namespace SiteForTanya.WEB.Controllers
             return Json(words, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage)
         {
             Repository<ImageEntity> imageInfoRepository = new Repository<ImageEntity>();

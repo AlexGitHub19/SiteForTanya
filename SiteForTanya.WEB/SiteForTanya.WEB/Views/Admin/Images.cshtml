@@ -4,6 +4,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="tokenContainer">
+    @Html.AntiForgeryToken();
+</div>
+
 <div id="resultInfo">
 </div>
 <div class="addImage">
@@ -18,7 +22,7 @@
 </div>
 
 <div >
-    <div id="imageSeacher">       
+    <div id="imageSeacher">     
         <input id="searchInput" name="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" @*autocomplete="off"*@ spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Admin")" >
         <button id="searchBtn" class="my-btn btn">
             <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
@@ -155,9 +159,8 @@ $(document).ready(function() {
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("GetImagesNames", "Admin")',
-                contentType: "application/json",
                 //processData: false,
-                data: JSON.stringify({ keyWords: keyWords, imagesCountOnPage: imagesCountOnPage }),
+                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage },
                 success: function (result) {
                     alert('TotalCount: ' + result.imageCount);
                     for (var i = 0; i < result.imageNames.length; i++)
@@ -171,6 +174,11 @@ $(document).ready(function() {
             });
 
         });
+
+        function getAntiForgeryToken()
+        {
+            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+        }
 
         //$('#nextBtn').bind('click', function () {
         //});
@@ -211,6 +219,7 @@ $(document).ready(function() {
                 var data = new FormData();
                 for (var x = 0; x < files.length; x++) {
                     data.append("file" + x, files[x]);
+                    data.append("__RequestVerificationToken", getAntiForgeryToken());
                 }
                 $('#images').html('');
                 $('#images').css('display', 'none');
@@ -230,9 +239,8 @@ $(document).ready(function() {
                         $('.addImage').css('background-color', '#f4f1e4');
                     },
                     error: function (xhr, status, p3) {
+                        alert('error');
                         $('#loading').css('display', 'none');
-                        $('#resultInfo').html('<div class="alert alert-' + result.type + '" role="alert">' + result.resultString + '</div>'+
-                            '<i class="fa fa-times fa-lg closeAlertBtn" aria-hidden="true"></i>');
                         $('.addImage').css('background-color', '#f4f1e4');
                     }
                 });
@@ -245,4 +253,24 @@ $(document).ready(function() {
     $('#searchInput').autocomplete({
         source: $('#searchInput').attr("data-autocomplete-source")
     });
+
+    //$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+    //    if (options.type.toUpperCase() === "POST") {
+    //        // We need to add the verificationToken to all POSTs
+    //        var token = $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']");
+    //        if (!token.length) return;
+
+    //        var tokenName = token.attr("name");
+    //        alert(tokenName);
+
+    //        // If the data is JSON, then we need to put the token in the QueryString:
+    //        if (options.contentType.indexOf('application/json') === 0) {
+    //            // Add the token to the URL, because we can't add it to the JSON data:
+    //            options.url += ((options.url.indexOf("?") === -1) ? "?" : "&") + token.serialize();
+    //        } else if (typeof options.data === 'string' && options.data.indexOf(tokenName) === -1) {
+    //            // Append to the data string:
+    //            options.data += (options.data ? "&" : "") + token.serialize();
+    //        }
+    //    }
+    //});
     </script>
