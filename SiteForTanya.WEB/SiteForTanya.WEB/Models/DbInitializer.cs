@@ -21,6 +21,9 @@ namespace SiteForTanya.WEB.Models
             var result = userManager.Create(admin, password);
             context.SaveChanges();
 
+            Repository<ImagesInfo> imageInfo = new Repository<ImagesInfo>(context);
+            imageInfo.Create(new ImagesInfo { AllTags = String.Empty});
+
             // если создание пользователя прошло успешно
             base.Seed(context);
         }

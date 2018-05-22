@@ -1,6 +1,6 @@
-﻿
-input, select, textarea {
-    max-width: 480px;
+﻿.form-control:focus {
+        border:1px solid #ccc3a1;
+        box-shadow:0 0 10px #ccc3a1;
 }
 
 .body-content { 
@@ -229,3 +229,4 @@ input {
     }
 }
 
+.

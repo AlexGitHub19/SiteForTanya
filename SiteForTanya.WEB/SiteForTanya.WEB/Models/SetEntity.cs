@@ -12,5 +12,7 @@ namespace SiteForTanya.WEB.Models
         public string Html { get; set; }
         public string HtmlWithoutNotResultElements { get; set; }
         public string Description { get; set; }
+        public string Tags { get; set; }
+        public DateTime AddingTime { get; set; }
     }
 }

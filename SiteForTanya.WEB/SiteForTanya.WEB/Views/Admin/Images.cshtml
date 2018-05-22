@@ -1,27 +1,180 @@
-﻿
+﻿@model SiteForTanya.WEB.Models.AdminVewModels.AdminImagesVewModel
 @{
     ViewBag.Title = "Images";
-    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div id="resultInfo">
+</div>
 <div class="addImage">
     <input type="file" name="images" id="uploadImages" multiple/>
-    <button id="addmageBtn" class="my-btn btn btn-default">Add images</button>
+    <button id="addmageBtn" class="my-btn btn">Add images</button>
     <div id="loading">
         <i class="fa fa-spinner fa-spin" style="font-size:100px"></i>
-    </div>
-    <div id="resultText">
-    </div>
+    </div>   
     <div class="row" id="images">
     </div>
-    <button id="submitBtn" class="my-btn btn btn-default" style="display:none;">Upload Images</button>
+    <button id="submitBtn" class="my-btn btn" style="display:none;">Upload Images</button>
 </div>
 
-    <script type="text/javascript">
+<div >
+    <div id="imageSeacher">       
+        <input id="searchInput" name="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" @*autocomplete="off"*@ spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Admin")" >
+        <button id="searchBtn" class="my-btn btn">
+            <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
+        </button>
+        <label>Show: </label>     
+        <div id="imageCountContainer">
+            <button id="imageCountBtn" class="btn my-btn btn-imageCount">
+                32
+                <i class="fa fa-caret-down" aria-hidden="true"></i>
+            </button>
+            <div id="hiddden-ImageCount">
+                <div>
+                    <button class="btn my-btn btn-imageCount hiddenBtnImageCount">60</button>
+                </div>
+                <div>
+                    <button class="btn my-btn btn-imageCount hiddenBtnImageCount">100</button>
+                </div>
+            </div>      
+        </div>          
+
+    </div>   
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+ $("#imageCountBtn").click(function () {
+     var hiddendiv = $('#hiddden-ImageCount');
+     var leftOfs = $(this).offset().left;
+     hiddendiv.offset({ left: leftOfs });
+     $(this).next().slideToggle('fast');
+ });
+   
+ $(window).resize(function () {
+     var hiddendiv = $('#hiddden-ImageCount');
+     var imageCountBtn = $('#imageCountBtn');
+     var leftOfs = imageCountBtn.offset().left;
+     hiddendiv.offset({ left: leftOfs });
+ });
+
+ $(window).click(function (e) {
+     if ($('#hiddden-ImageCount').css('display') != 'none' && e.target.id != 'imageCountBtn')
+     {
+         $('#hiddden-ImageCount').slideToggle('fast');
+     }
+ })
+
+ $('#hiddden-ImageCount').on('click', '.hiddenBtnImageCount', function (e) {
+     var thisValue = $(this).text();
+     var imageCountBtnValue = $('#imageCountBtn').text();
+     $('#imageCountBtn').text(thisValue);
+     var value1 = 60;
+     var value2 = 100;
+     if (thisValue == 60) {
+         var value1 = 32;
+         var value2 = 100;
+     }
+     else if (thisValue == 100) {
+         var value1 = 32;
+         var value2 = 60;
+     }
+
+     $('#hiddden-ImageCount').html('<div><button class="btn my-btn btn-imageCount hiddenBtnImageCount">' + value1 + '</button></div>' +
+                '<div><button class="btn my-btn btn-imageCount hiddenBtnImageCount">' + value2 + '</button></div>');
+ })
+
+});
+</script>
+
+
+<div id="existingImages">
+    @{
+        int count = 0;
+        while (count < Model.CountImagesOnPage)
+        {
+            List<string> tempImages = Model.ImageNames.Skip(count).Take(4).ToList();
+            <div class="row existingImagesRow">
+                @foreach (string imgName in tempImages)
+                {
+                <div id="@imgName" class="col-xs-6 col-sm-3 col-md-3 col-lg-3 imageContainer">
+                    <img src="/Content/Images/Images/@imgName" class="image" />
+                </div>
+                }
+            </div>
+            count += 4;
+        }
+    }
+</div>
+
+<div id="pagination">
+    @{
+        if (Model.TotalCount > Model.CountImagesOnPage)
+        {
+            <button id="prevBtn" class="my-btn btn">
+                <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+            </button>
+
+            int buttonsCount = Model.TotalCount / Model.CountImagesOnPage;
+            if (Model.TotalCount % Model.CountImagesOnPage > 0)
+            {
+                buttonsCount++;
+            }
+            for (int i = 1; i <= buttonsCount && i <= 5; i++)
+            {
+                if (i == 1)
+                {
+                    <button id="paginationBtn-@i" class="my-btn btn paginationBtn current">@i</button>
+                }
+                else
+                {
+                    <button id="paginationBtn-@i" class="my-btn btn paginationBtn">@i</button>
+                }
+            }
+
+
+            <button id="nextBtn" class="my-btn btn">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+            </button>
+        }
+    }
+</div>
+<script type="text/javascript">
 
         $('#addmageBtn').bind('click', function () {
             $('#uploadImages').click();
         });
+
+        $('#searchBtn').bind('click', function () {
+            var keyWords = $('#searchInput').val();
+            var imagesCountOnPage = parseInt($('#imageCountBtn').text());
+            var obj = {};
+            obj.keyWords = keyWords;
+            obj.imagesCountOnPage = imagesCountOnPage;
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetImagesNames", "Admin")',
+                contentType: "application/json",
+                //processData: false,
+                data: JSON.stringify({ keyWords: keyWords, imagesCountOnPage: imagesCountOnPage }),
+                success: function (result) {
+                    alert('TotalCount: ' + result.imageCount);
+                    for (var i = 0; i < result.imageNames.length; i++)
+                    {
+                        alert(result.imageNames[i].value);
+                    }
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                }
+            });
+
+        });
+
+        //$('#nextBtn').bind('click', function () {
+        //});
+
 
         $('#uploadImages').bind('change', function (e) {         
             for (var i = 0; i < this.files.length; i++) {
@@ -37,10 +190,18 @@
             {
                 $('#submitBtn').css('display', 'inline');
                 $('#images').css('display', 'block');
+                $('.addImage').css('background-color', '#2572ed');
             }
             
         })
 
+        $('#resultInfo').on('click', '.closeAlertBtn', function (e) {
+            $('#resultInfo').html('');
+        })
+
+        $('#pagination').on('click', '.paginationBtn', function (e) {
+            alert($(this).attr('id'));
+        })
 
         $('#submitBtn').on('click', function (e) {
         e.preventDefault();
@@ -64,19 +225,24 @@
                     data: data,
                     success: function (result) {                       
                         $('#loading').css('display', 'none');
-                        $('#resultText').css('display', 'block');
-                        $('#resultText').html('<H3>' + result + '</H3>');
-                        setTimeout(function () {
-                            $('#resultText').css('display', 'none');
-                        }, 4000);
+                        $('#resultInfo').html('<div class="alert alert-' + result.type + '" role="alert">' + result.resultString + '</div>'+
+                            '<i class="fa fa-times fa-lg closeAlertBtn" aria-hidden="true"></i>');
+                        $('.addImage').css('background-color', '#f4f1e4');
                     },
                     error: function (xhr, status, p3) {
-                        alert(xhr.responseText);
+                        $('#loading').css('display', 'none');
+                        $('#resultInfo').html('<div class="alert alert-' + result.type + '" role="alert">' + result.resultString + '</div>'+
+                            '<i class="fa fa-times fa-lg closeAlertBtn" aria-hidden="true"></i>');
+                        $('.addImage').css('background-color', '#f4f1e4');
                     }
                 });
             } else {
                 alert("Browser doesn't provide ability to upload images!");
             }
         }
+        });
+
+    $('#searchInput').autocomplete({
+        source: $('#searchInput').attr("data-autocomplete-source")
     });
     </script>
