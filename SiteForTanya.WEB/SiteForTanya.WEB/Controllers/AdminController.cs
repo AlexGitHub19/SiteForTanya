@@ -225,21 +225,21 @@ namespace SiteForTanya.WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage)
+        public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
         {
             Repository<ImageEntity> imageInfoRepository = new Repository<ImageEntity>();
 
             if (keyWords == String.Empty)
             {
                 var allImages = imageInfoRepository.GetList();
-                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Take(imagesCountOnPage).Select(img => new { value = img.Name });
+                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber-1)* imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
                 return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 List<string> words = keyWords.Split(' ').ToList();
                 var allImages = imageInfoRepository.GetList().Where(img => TagContainsWord(img, words));
-                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Take(imagesCountOnPage).Select(img => new { value = img.Name });
+                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber - 1) * imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
                 return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
             }
         }

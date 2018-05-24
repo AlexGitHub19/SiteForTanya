@@ -57,9 +57,23 @@
 }
 
 #pagination {
-    margin-top:20px;
+    margin-top:40px;
     margin-bottom:20px;
 }
+
+.paginationBtn {
+    margin-right:3px;
+    margin-left:3px;
+}
+
+#prevBtn {
+    margin-right:3px;
+}
+
+#nextBtn {
+    margin-left:3px;
+}
+
 .current {
     background-color: #2572ed;
 }

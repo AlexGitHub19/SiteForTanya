@@ -236,6 +236,7 @@
     <Content Include="Content\Images\Balloon_Product\7.jpg" />
     <Content Include="Content\Images\Balloon_Product\8.jpg" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\Loading.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\Set.css" />
