@@ -81,6 +81,26 @@
     margin-bottom:20px;
 }
 
+    #pagination #gotoLabel {
+        margin-right:5px;
+    }
+
+     #pagination #ofLabel {
+        margin-left:5px;
+    }
+
+#goToPageContainer {
+   margin-left:0px;
+   margin-top:15px;    
+}
+
+#inputGoToPage {
+    width: 50px;
+    display: inline;
+    font-weight: bold;
+    text-align:center;
+}
+
 .paginationBtn {
     margin-right:3px;
     margin-left:3px;
@@ -233,7 +253,8 @@ ul#menu li ul li a:hover{background: #ddd;}
     height:0px;
     width:100%;
     overflow:hidden;
-    transition: height 0.3s;
+    transition: height 0.4s;
+    z-index: 5;
 }
 
     .deleteImageInfo p {
@@ -243,6 +264,10 @@ ul#menu li ul li a:hover{background: #ddd;}
 
 .relativeClass:hover .deleteImageInfo {
     height: 60px;
+}
+
+.relativeClass:hover .blackoutAnimation {
+    opacity:0.6;
 }
 
 /*.myrow {
@@ -281,8 +306,20 @@ ul#menu li ul li a:hover{background: #ddd;}
     color: white;
     padding:20%;
     display:none;
+    z-index:6;
 }
 
     .deletingAnimation p {
         margin-top:19%;
     }
+
+.blackoutAnimation {
+    position:absolute;
+    top:0;
+    right: 0;
+    height:100%;
+    width:100%;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.4s;
+}

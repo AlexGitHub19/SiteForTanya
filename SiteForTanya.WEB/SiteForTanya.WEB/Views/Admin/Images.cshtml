@@ -4,7 +4,7 @@
 }
 
 <div class="tokenContainer">
-    @Html.AntiForgeryToken();
+    @Html.AntiForgeryToken()
 </div>
 
 <div id="resultInfo">
@@ -29,7 +29,7 @@
         <label>Show: </label>     
         <div id="imageCountContainer">
             <button id="imageCountBtn" class="btn my-btn btn-imageCount">
-                4
+                7
                 <i id ="imageCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
             </button>
             <div id="hiddden-ImageCount">
@@ -65,7 +65,7 @@
 
     $(document).ready(function () {
 
-        var pageData = null;
+        var paginationButtonsCount = null;
         showLoadingAnimation();
         getImagNamesFromServer(1);
 
@@ -89,7 +89,6 @@
                 //processData: false,
                 data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
-                    pageData = result.imageNames;
                     fillImages(result);
                     createPagination(result.imageCount, pageNumber);
                 },
@@ -139,7 +138,8 @@
                     html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
                         '<div class="relativeClass"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
-                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:80px"></i></div>' +
+                        '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
+                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
                         '</div>' +
                         '</div>';
                 }
@@ -195,7 +195,12 @@
                     }
                 }
 
+                paginationButtonsCount = buttonsCount;
                 html += '<button id="nextBtn" class="my-btn btn"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>';
+                if (buttonsCount > 5)
+                {
+                    html += '<div id = "goToPageContainer"><label id="gotoLabel">GO TO</label><input id="inputGoToPage" type="text" class="form-control"><label id="ofLabel">OF ' + buttonsCount + '</label></div>';
+                }
             }
 
             $('#pagination').html(html);
@@ -404,6 +409,18 @@
                        '<div><button class="btn my-btn btn-imageCount hiddenBtnImageCount">' + value2 + '</button></div>');
             showLoadingAnimation();
             getImagNamesFromServer(1);
+        })
+
+        $('#pagination').on('keypress', '#inputGoToPage', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                var pageNumber = parseInt($(this).val());
+                if (!isNaN(pageNumber))
+                {
+                    showLoadingAnimation();
+                    getImagNamesFromServer(pageNumber);
+                }                            
+            }
         })
 
 
