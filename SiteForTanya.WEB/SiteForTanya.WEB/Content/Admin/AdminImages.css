@@ -11,12 +11,26 @@
 
 .imageContainer {
     background-size: cover;
-    margin-top:35px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom:30px;
+    margin-bottom:10px;
+    position:relative;
+    max-height:200px;
 }
+
+/*.customBorder {
+     box-shadow: 0 0 10px rgba(0,0,0,0.5);
+     border-radius:3px;
+     -webkit-transition-duration: 0.4s;
+     -o-transition-duration: 0.4s;
+     -moz-transition-duration: 0.4s;
+     transition-duration: 0.4s;
+}*/
 
 .image {
     max-width: 100%;
-    max-height:170px;
+    max-height:200px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
@@ -38,6 +52,12 @@
     padding-left:50px;
     padding-right:50px;
 }
+
+.deleteImageBtn {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
 
 #uploadImages {
     display:none;
@@ -91,12 +111,6 @@
     padding-right:50px;
     position:relative;
 }
-
-/*.fa-search {
-    position:absolute;
-    top:13px;
-    left:30px;
-}*/
 
 #searchBtn {
     border-radius:23px;
@@ -179,21 +193,6 @@ ul#menu li ul li a:hover{background: #ddd;}
 }
 
  .ui-autocomplete {
-    /*position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    float: left;
-    display: none;
-    min-width: 160px;   
-    padding: 4px 0;
-    margin: 0 0 10px 25px;
-    list-style: none;
-    background-color: #ffffff;
-    border-color: #ccc;
-    border-color: rgba(0, 0, 0, 0.2);
-    border-style: solid;
-    border-width: 1px;*/
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
     border-radius: 10px;
@@ -206,18 +205,6 @@ ul#menu li ul li a:hover{background: #ddd;}
     *border-right-width: 2px;
     *border-bottom-width: 2px;
 }
-
-/*.ui-menu-item > a.ui-corner-all {
-    display: block;
-    padding: 3px 15px;
-    clear: both;
-    font-weight: normal;
-    line-height: 18px;
-    color: #555555;
-    white-space: nowrap;
-    text-decoration: none;
-
-}*/
 
 .ui-state-hover, .ui-state-active {
     color: #ffffff;
@@ -233,3 +220,69 @@ ul#menu li ul li a:hover{background: #ddd;}
 .ui-menu-item-wrapper {
     border-radius:10px;
 }
+
+
+.relativeClass {
+    position: relative;
+}
+.deleteImageInfo {
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #f4f1e4;
+    height:0px;
+    width:100%;
+    overflow:hidden;
+    transition: height 0.3s;
+}
+
+    .deleteImageInfo p {
+        margin-top:8px;
+        margin-bottom:3px;
+    }
+
+.relativeClass:hover .deleteImageInfo {
+    height: 60px;
+}
+
+/*.myrow {
+    width: 100%;
+    display:table;
+}
+
+.mycol {
+    display:inline-block;
+    width:25%;
+    float:left;
+}
+
+@media (max-width:600px){
+    .mycol {
+        width:50%;
+    }
+}*/
+
+.confirmDeleteBtn {
+    margin-right:72px;
+    cursor: pointer;
+}
+
+.cancelDeleteBtn {
+    cursor: pointer;
+}
+
+.deletingAnimation {
+    position:absolute;
+    top:0;
+    right: 0;
+    height:100%;
+    width:100%;
+    background-color: black;
+    color: white;
+    padding:20%;
+    display:none;
+}
+
+    .deletingAnimation p {
+        margin-top:19%;
+    }

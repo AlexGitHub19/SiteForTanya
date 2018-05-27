@@ -9,7 +9,6 @@ using SiteForTanya.WEB.Models.AdminVewModels;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Drawing;
-using System.Text.RegularExpressions;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -33,18 +32,10 @@ namespace SiteForTanya.WEB.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Images(int CountImagesOnPage = 16)
+        public ActionResult Images()
         {
             ViewBag.ViewName = "AdminImages";
-
-            AdminImagesVewModel viewModel = new AdminImagesVewModel();
-            Repository<ImageEntity> repository = new Repository<ImageEntity>();
-            List<ImageEntity> list = repository.GetList().ToList();
-            viewModel.TotalCount = list.Count;
-            //viewModel.Html = GenerateHtmlForImages(list.Take(30).ToList());
-            viewModel.CountImagesOnPage = CountImagesOnPage;
-            viewModel.ImageNames = list.Take(CountImagesOnPage).Select(img => img.Name).ToList();
-            return View(viewModel);
+            return View();
         }
 
         [HttpGet]
@@ -121,7 +112,9 @@ namespace SiteForTanya.WEB.Controllers
             return View("ShowInfo");
         }
 
-        [HttpGet]
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
         public JsonResult CheckSetName(string setName)
         {
             string path = Server.MapPath("~/Content/Images/Sets/" + setName);
@@ -137,6 +130,7 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public JsonResult UploadImages()
         {
@@ -224,21 +218,22 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
         {
-            Repository<ImageEntity> imageInfoRepository = new Repository<ImageEntity>();
+            Repository<ImageEntity> imageEntityRepository = new Repository<ImageEntity>();
 
             if (keyWords == String.Empty)
             {
-                var allImages = imageInfoRepository.GetList();
+                var allImages = imageEntityRepository.GetList();
                 var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber-1)* imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
                 return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 List<string> words = keyWords.Split(' ').ToList();
-                var allImages = imageInfoRepository.GetList().Where(img => TagContainsWord(img, words));
+                var allImages = imageEntityRepository.GetList().Where(img => TagContainsWord(img, words));
                 var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber - 1) * imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
                 return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
             }
@@ -262,5 +257,29 @@ namespace SiteForTanya.WEB.Controllers
             }
             return false;
         }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteImage(string imageName)
+        {
+            Repository<ImageEntity> imageInfoRepository = new Repository<ImageEntity>();
+
+            ImageEntity image = imageInfoRepository.GetList().Where(img => img.Name.Substring(0, img.Name.IndexOf('.')) == imageName).FirstOrDefault();
+            if (image != null)
+            {
+                imageInfoRepository.Delete(image.Id);
+                string strFileFullPath = Server.MapPath("~/Content/Images/Images/" + image.Name);
+                if (System.IO.File.Exists(strFileFullPath))
+                {
+                    System.IO.File.Delete(strFileFullPath);
+                }
+
+                return Json(new { result = "Success"}, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new {result = "Fail"}, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

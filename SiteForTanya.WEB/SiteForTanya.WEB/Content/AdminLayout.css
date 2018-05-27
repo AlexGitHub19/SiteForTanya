@@ -82,6 +82,9 @@ input {
                 letter-spacing: 1px;
                 text-decoration: none;
                 cursor: pointer;
+                -webkit-transition-duration: 0.3s;
+                -o-transition-duration: 0.3s;
+                -moz-transition-duration: 0.3s;
                 transition-duration: 0.3s;
             }
 
@@ -228,5 +231,3 @@ input {
         display: none;
     }
 }
-
-.

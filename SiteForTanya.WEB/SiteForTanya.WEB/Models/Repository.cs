@@ -28,6 +28,7 @@ namespace SiteForTanya.WEB.Models
         {
             return dbSet.Find(id);
         }
+
         public IEnumerable<TEntity> GetList()
         {
             return dbSet.ToList();
