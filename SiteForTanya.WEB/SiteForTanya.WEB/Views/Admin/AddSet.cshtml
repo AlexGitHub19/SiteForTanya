@@ -6,25 +6,38 @@
 
 <h2>Adding Set</h2>
 
+<div class="tokenContainer">
+    @Html.AntiForgeryToken()
+</div>
+
 @using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken();
 
-    <div class="row marg-btm">
+    <div class="row setInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label class="control-label">Enter Set's name: </label>
+            <label id="setNameLabel" class="setInfolabel">Enter Set's name: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <input id="setName" name="setName" type="text" class="form-control">
+            <input id="setName" name="setName" type="text" autocomplete="off" class="form-control setInfoInput">
         </div>
     </div>
 
-    <div class="row">
+    <div class="row setInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label class="control-label">Enter Set's description: </label>
+            <label id="setDescriptionLabel" class="setInfolabel">Enter Set's description: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea name="setDescription" rows="3" class="form-control"></textarea>
+            <textarea name="setDescription" rows="3" class="form-control setInfoInput"></textarea>
+        </div>
+    </div>
+
+    <div class="row setInfoRow">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label id="setTagsLabel" class="setInfolabel">Enter Set's Tags: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <textarea id ="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')"></textarea>
         </div>
     </div>
 
@@ -47,71 +60,49 @@
     $(document).ready(function () {
         var rowCount = 1;
         var cellCount = 1;
-        
+
         $('#addRowButton').on('click', function (e) {
-            $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow">' +
-                '<i id="settigsBtn' + rowCount + '" class="fa fa-cog settingsBtn not-result" aria-hidden="true"></i>' +
-                '<i id="splitRowBtn' + rowCount + '" class="fa fa-th-large splitRowBtn not-result" aria-hidden="true"></i>' +
-                '<i id="deleteRowBtn' + rowCount + '" class="fa fa-trash-o deleteRowBtn not-result" aria-hidden="true"></i>' +
-                '<i id="showBorderBtn' + rowCount + '" class="fa fa-window-maximize showBorderBtn not-result" aria-hidden="true"></i>' +
+            $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow border mainRow">' +
+                '<i id="settigsBtn' + rowCount + '" class="fa fa-cog settingsBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                '<i id="splitRowBtn' + rowCount + '" class="fa fa-th-large splitRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                '<i id="deleteRowBtn' + rowCount + '" class="fa fa-trash-o deleteRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                '<i id="showBorderBtn' + rowCount + '" class="fa fa-window-maximize showBorderBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
                 '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding">' +
                 getImageRowHtml() +
                 '</div>' +
-        '</div>'+
-            '<div id="settingsRow' + rowCount + '" class="row settingsRow not-result">' +
-            '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">' +
-            getSettingsRowHtml() +
-            '</div>' +
-        '</div>');
+                '</div>');
             rowCount++;
             cellCount++;
         })
 
         function getImageRowHtml()
         {
-            return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding">' +
+            return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding clearfix">' +
                    '<img id="image' + cellCount + '" class="image"/>' +
+                   '<div id="settingsContainer' + cellCount + '" class ="settingsContainer">' +
+                   getSettingsRowHtml(cellCount) +
+                   '</div>' +
                    '</div>';
         }
 
-        function getSettingsRowHtml()
+        function getSettingsRowHtml(cellNumber)
         {
-           return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
-                '<div class="form-group">' +
-                    '<label class="margin-label">margin-left: </label>' +
-                   '<input id="inputLeft' + cellCount + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
-                '</div> ' +
-                '<div class="form-group">' +
-                    '<label class="margin-label">margin-top: </label>' +
-                    '<input id="inputTop' + cellCount + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<label class="margin-label ">margin-right: </label>' +
-                    '<input id="inputRight' + cellCount + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<label class="margin-label">margin-bot: </label>' +
-                    '<input id="inputBot' + cellCount + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
-                '</div>' +
-            '</div>' +
-            '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
-                '<div class="form-group">' +
-                    '<input id="inputFile' + cellCount + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
-                    '<i id="downloadImageBtn' + cellCount + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
-                '</div>' +
-                '<div class="form-group">' +                 
-                        '<i id="floatLeftBtn' + cellCount + '" class="fa fa-align-left fa-lg floatLeftBtn marg-r" aria-hidden="true"></i>' +
-                        '<i id="floatCentertBtn' + cellCount + '" class="fa fa-align-center fa-lg floatCentertBtn marg-r" aria-hidden="true"></i>' +
-                        '<i id="floatRightBtn' + cellCount + '" class="fa fa-align-right fa-lg floatRightBtn" aria-hidden="true"></i>' +
-                '</div>' +
-                '<div class="form-group">' +
-                    '<label class="max-height-label">max-height: </label>' +
-                    '<input id="maxHeightInput' + cellCount + '" type="text" class="form-control maxHeightInput">' +
-                '</div>' +
-            '</div>';
+            return '<input id="inputFile' + cellNumber + '" class="inputFile" type="file" name="uploads" style="display:none"/>' +
+                    '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtnBeforeAddingImage" style="font-size:30px; aria-hidden="true"></i>' +
+                     '<div class="form-group">' +
+                     '<label id="splitToRowsLabel' + cellNumber + '" class="splitToRowsLabel">split to rows</label>' +
+                     '</div>' +
+                     '<div class="form-group">' +
+                     '<label id="splitToColumnsLabel' + cellNumber + '"class="splitToColumnsLabel">split to columns</label>' +
+                     '</div>';
         }
 
         $('#pageHtml').on('click', '.downloadImageBtn', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            $("#inputFile" + cellNumber).click();
+        });
+
+        $('#pageHtml').on('click', '.downloadImageBtnBeforeAddingImage', function (e) {
             var cellNumber = getRowOrCellNumber(this);
             $("#inputFile" + cellNumber).click();
         });
@@ -132,36 +123,79 @@
         })
 
 
-        $('#pageHtml').on('click', '.settingsBtn', function (e) {
-            var rowNumber = getRowOrCellNumber(this);
-            $("#settingsRow" + rowNumber).toggle();
-        });
+        //$('#pageHtml').on('click', '.settingsBtn', function (e) {
+        //    var rowNumber = getRowOrCellNumber(this);
+        //    $("#settingsRow" + rowNumber).toggle();
+        //});
 
         $('#pageHtml').on('click', '.splitRowBtn', function (e) {
             var rowNumber = getRowOrCellNumber(this);
-            var userRowCount = prompt("Please enter row count");
+            var userRowCount = prompt("Please enter column count");
             if (userRowCount != "" && userRowCount != null) {
                 if (userRowCount != 2 && userRowCount != 3 && userRowCount != 4 && userRowCount != 6)
                 {
                     alert('Row count should be 2,3,4 or 6!');
                     return;
                 }
-                var newImageRowHtml = '<i id="settigsBtn' + rowNumber + '" class="fa fa-cog settingsBtn not-result" aria-hidden="true"></i>' +
-                    '<i id="splitRowBtn' + rowNumber + '" class="fa fa-th-large splitRowBtn not-result" aria-hidden="true"></i>' +
-                    '<i id="deleteRowBtn' + rowNumber + '" class="fa fa-trash-o deleteRowBtn not-result" aria-hidden="true"></i>' +
-                    '<i id="showBorderBtn' + rowNumber + '" class="fa fa-window-maximize showBorderBtn not-result" aria-hidden="true"></i>';
-                var newSettingsRowHtml = '';
+                var newImageRowHtml = '<i id="settigsBtn' + rowNumber + '" class="fa fa-cog settingsBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                    '<i id="splitRowBtn' + rowNumber + '" class="fa fa-th-large splitRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                    '<i id="deleteRowBtn' + rowNumber + '" class="fa fa-trash-o deleteRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                    '<i id="showBorderBtn' + rowNumber + '" class="fa fa-window-maximize showBorderBtn not-result" style="font-size:20px;" aria-hidden="true"></i>';
                 for (i = 0; i < userRowCount; i++) {
-                    newImageRowHtml += '<div class="col-xs-' + 12 / userRowCount + ' col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding">' +
+                    newImageRowHtml += '<div class="col-xs-12 col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding">' +
                                getImageRowHtml() +
-                               '</div>';
-                    newSettingsRowHtml += '<div class="col-xs-' + 12 / userRowCount + ' col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding">' +
-                               getSettingsRowHtml() +
                                '</div>';
                     cellCount++;
                 }
                 $('#imageRow' + rowNumber).html(newImageRowHtml);
-                $('#settingsRow' + rowNumber).html(newSettingsRowHtml);
+            }
+        });
+
+        $('#pageHtml').on('click', '.splitToRowsLabel', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            var rowCount = prompt("Please enter rows count");
+            var userRowCount = parseInt(rowCount);
+            if (!isNaN(userRowCount)) {
+                var newimageContainerHtml = '';
+                for (i = 0; i < userRowCount; i++) {
+                    newimageContainerHtml += '<div class="row imageRow">' +
+                               '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding clearfix">' +
+                               getImageRowHtml() +
+                               '</div>' +
+                               '</div>';
+                    cellCount++;
+                }
+                $('#imageContainer' + cellNumber).parent().html(newimageContainerHtml);
+            }
+            else
+            {
+                alert('Count of rows should be a digit!');
+            }
+        });
+
+        $('#pageHtml').on('click', '.splitToColumnsLabel', function (e) {
+            var cellNumber = getRowOrCellNumber(this);
+            var rowCount = prompt("Please enter rows count");
+            var userRowCount = parseInt(rowCount);
+            if (!isNaN(userRowCount)) {
+                if (userRowCount != 2 && userRowCount != 3 && userRowCount != 4 && userRowCount != 6) {
+                    alert('Columns count should be 2,3,4 or 6!');
+                    return;
+                }
+
+                var newimageContainerHtml = '<div class="row imageRow">';
+                for (i = 0; i < userRowCount; i++) {
+                    newimageContainerHtml += '<div class="col-xs-12 col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding clearfix">' +
+                               getImageRowHtml() +
+                               '</div>';
+                               '</div>';
+                    cellCount++;
+                }
+                newimageContainerHtml += '</div>';
+                $('#imageContainer' + cellNumber).parent().html(newimageContainerHtml);
+            }
+            else {
+                alert('Count of rows should be a digit!');
             }
         });
 
@@ -170,30 +204,12 @@
             var action = confirm('do you want to delete the row?');
             if (action) {
                 $("#imageRow" + rowNumber).remove();
-                $("#settingsRow" + rowNumber).remove();
-            }           
+            }
         });
 
         $('#pageHtml').on('click', '.showBorderBtn', function (e) {
             var rowNumber = getRowOrCellNumber(this);
-            if ($('#imageRow' + rowNumber).hasClass('border'))
-            {
-                $('#imageRow' + rowNumber).removeClass('border');
-                $('#imageRow' + rowNumber).find('.imageContainer').each(function (index, element) {
-                    if ($(element).hasClass('imageAdded')) {
-                        $(element).removeClass('border');
-                    }
-                });
-            }
-            else
-            {
-                $('#imageRow' + rowNumber).addClass('border');
-                $('#imageRow' + rowNumber).find('.imageContainer').each(function (index, element) {
-                    if ($(element).hasClass('imageAdded')) {
-                        $(element).addClass('border');
-                    }
-                });
-            }
+            $('#imageRow' + rowNumber).toggleClass('border');
         });
 
         $('#pageHtml').on('change', '.inputFile', function (e) {
@@ -207,8 +223,15 @@
             }
             reader.readAsDataURL(this.files[0]);
 
-            $('#imageContainer' + cellNumber).addClass('border');
-            $('#imageContainer' + cellNumber).addClass('imageAdded');
+            if(!$('#imageContainer' + cellNumber).hasClass('imageAdded'))
+            {
+                $('#settingsContainer' + cellNumber + ' > .downloadImageBtnBeforeAddingImage').remove();
+                $('#splitToRowsLabel' + cellNumber).remove();
+                $('#splitToColumnsLabel' + cellNumber).remove();
+                $('#settingsContainer' + cellNumber).append(getHtmlForSettingsContainer(cellNumber));
+                $('#imageContainer' + cellNumber).addClass('imageAdded');
+                $('#imageContainer' + cellNumber).css('min-height', '1px');
+            }
         })
 
         $('#pageHtml').on('keypress', '.margin-input', function (e) {
@@ -219,23 +242,23 @@
                 if ($(this).hasClass('top'))
                 {
                     var margin = $(this).val();
-                    $('#imageContainer' + cellNumber).css('margin-top', margin + 'px');
+                    $('#imageContainer' + cellNumber).css('margin-top', margin);
                 }
                 else if($(this).hasClass('left'))
-                {                    
+                {
                     var margin = $(this).val();
-                    $('#imageContainer' + cellNumber).css('margin-left', margin + 'px');
+                    $('#imageContainer' + cellNumber).css('margin-left', margin);
                 }
                 else if ($(this).hasClass('right')) {
                     var margin = $(this).val();
-                    $('#imageContainer' + cellNumber).css('margin-right', margin + 'px');
+                    $('#imageContainer' + cellNumber).css('margin-right', margin);
                 }
                 else if ($(this).hasClass('bot')) {
                     var margin = $(this).val();
-                    $('#imageContainer' + cellNumber).css('margin-bottom', margin + 'px');
+                    $('#imageContainer' + cellNumber).css('margin-bottom', margin);
                 }
                 e.preventDefault();
-            }          
+            }
         })
 
         $('#pageHtml').on('keypress', '.maxHeightInput', function (e) {
@@ -255,26 +278,41 @@
                 alert('please fill set name!');
                 e.preventDefault();
                 return;
-            }
-            if (checkIfSetNameIsUnique(setName) == false)
-            {
-                e.preventDefault();
-                alert('Set with name: ' + setName + ' already exists. Choose another name, please');
-                return;
-            }          
+                }
 
-            var result = $('#pageHtml').clone();
-            result = changeSrcs(result, setName, e);
-            var html = result.html();
-            var encodedHtml = encodeHtml(html);
-            $('#resultHtml').val(encodedHtml);
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("CheckSetName", "Admin")',
+                data: { __RequestVerificationToken: getAntiForgeryToken(), setName: setName },
+                async: false,
+                success: function (result) {
+                    if (result.result== 'False')
+                    {
+                        e.preventDefault();
+                        alert('Set with name: ' + setName + ' already exists. Choose another name, please');
+                    }
+                    else
+                    {
+                        var result = $('#pageHtml').clone();
+                        result = changeSrcs(result, setName, e);
+                        var html = result.html();
+                        var encodedHtml = encodeHtml(html);
+                        $('#resultHtml').val(encodedHtml);
 
-            var result2 = $('#pageHtml').clone();
-            result2 = changeSrcs(result2, setName, e);
-            result2.find('.not-result').remove();
-            var html2 = result2.html();
-            var encodedHtml2 = encodeHtml(html2);
-            $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);          
+                        var result2 = $('#pageHtml').clone();
+                        result2 = changeSrcs(result2, setName, e);
+                        result2.find('.not-result').remove();
+                        var html2 = result2.html();
+                        var encodedHtml2 = encodeHtml(html2);
+                        $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);
+                    }
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                    return 'False';
+                }
+            });
+
         });
 
         function changeSrcs(resultHtml, setName, e)
@@ -285,7 +323,7 @@
                 {
                     var filename = $('#inputFile' + cellNumber)[0].files[0].name;
                     $(element).attr('src', '/Content/Images/Sets/' + setName + '/' + filename);
-                }                
+                }
             });
             return resultHtml;
         }
@@ -309,30 +347,6 @@
             return number;
         }
 
-        function checkIfSetNameIsUnique(setName)
-        {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/Admin/CheckSetName?setName=' + setName, false);
-            xhr.send();
-            if (xhr.status != 200)
-            {
-                alert('Error' + xhr.status + ': ' + xhr.statusText);
-                return false
-            }
-            else
-            {
-                var jsonElement = JSON.parse(xhr.responseText);
-                if (jsonElement.result == 'True')
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
         function setHtmlWithoutNotResultElements()
         {
             var result = $('#pageHtml').clone();
@@ -350,6 +364,53 @@
         function encodeHtml(string)
         {
             return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function getHtmlForSettingsContainer(cellNumber)
+        {
+            return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
+                 '<div class="form-group">' +
+                     '<label class="margin-label">margin-left: </label>' +
+                    '<input id="inputLeft' + cellNumber + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
+                 '</div> ' +
+                 '<div class="form-group">' +
+                     '<label class="margin-label">margin-top: </label>' +
+                     '<input id="inputTop' + cellNumber + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
+                 '</div>' +
+                 '<div class="form-group">' +
+                     '<label class="margin-label ">margin-right: </label>' +
+                     '<input id="inputRight' + cellNumber + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
+                 '</div>' +
+                 '<div class="form-group">' +
+                     '<label class="margin-label">margin-bot: </label>' +
+                     '<input id="inputBot' + cellNumber + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
+                 '</div>' +
+             '</div>' +
+             '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
+                 '<div class="form-group">' +
+                     '<input id="inputFile' + cellNumber + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
+                     '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
+                 '</div>' +
+                 '<div class="form-group">' +
+                         '<i id="floatLeftBtn' + cellNumber + '" class="fa fa-align-left fa-lg floatLeftBtn marg-r" aria-hidden="true"></i>' +
+                         '<i id="floatCentertBtn' + cellNumber + '" class="fa fa-align-center fa-lg floatCentertBtn marg-r" aria-hidden="true"></i>' +
+                         '<i id="floatRightBtn' + cellNumber + '" class="fa fa-align-right fa-lg floatRightBtn" aria-hidden="true"></i>' +
+                 '</div>' +
+                 '<div class="form-group">' +
+                     '<label class="max-height-label">max-height: </label>' +
+                     '<input id="maxHeightInput' + cellNumber + '" type="text" class="form-control maxHeightInput">' +
+                 '</div>' +
+                '<div class="form-group">' +
+                     '<label id="splitToRowsLabel' + cellNumber + '" class="splitToRowsLabel">split to rows</label>' +
+                 '</div>' +
+                '<div class="form-group">' +
+                     '<label id="splitToColumnsLabel' + cellNumber + '"class="splitToColumnsLabel">split to columns</label>' +
+                '</div>' +
+             '</div>';
+        }
+
+        function getAntiForgeryToken() {
+            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
         }
 
     });

@@ -86,7 +86,7 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]       
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveSet(string setName, string setDescription, string resultHtml, string resultHtmlWithoutNotResultElements, IEnumerable<HttpPostedFileBase> uploads)
+        public ActionResult SaveSet(string setName, string setDescription, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, IEnumerable<HttpPostedFileBase> uploads)
         {           
             string path = Server.MapPath("~/Content/Images/Sets/"+ setName);
             DirectoryInfo setDirectory = new DirectoryInfo(path);
@@ -115,7 +115,7 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult CheckSetName(string setName)
+        public ActionResult CheckSetName(string setName)
         {
             string path = Server.MapPath("~/Content/Images/Sets/" + setName);
             DirectoryInfo setDirectory = new DirectoryInfo(path);

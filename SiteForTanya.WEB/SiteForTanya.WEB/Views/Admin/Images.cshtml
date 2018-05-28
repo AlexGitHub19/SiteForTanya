@@ -22,7 +22,7 @@
 
 <div >
     <div id="imageSeacher">     
-        <input id="searchInput" name="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" @*autocomplete="off"*@ spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Admin")" >
+        <input id="searchInput" name="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Admin")" >
         <button id="searchBtn" class="my-btn btn">
             <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
         </button>
@@ -136,7 +136,7 @@
                 {
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +

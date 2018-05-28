@@ -244,6 +244,7 @@ ul#menu li ul li a:hover{background: #ddd;}
 
 .relativeClass {
     position: relative;
+    display:inline-block;
 }
 .deleteImageInfo {
     position:absolute;

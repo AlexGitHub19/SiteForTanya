@@ -6,11 +6,32 @@
 
 .imageContainer {
     background-size: cover;
+    min-height:100px;
 }
 
 .imageRow {
-    min-height:70px;
     position:relative;
+}
+
+/*.imageAndSettingsContainer {
+    position: relative;
+    display:inline-block;
+}*/
+
+    .imageContainer:hover .settingsContainer {
+        opacity:0.7;
+    }
+
+.settingsContainer {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:black;
+    opacity:0;
+    transition: opacity 0.3s;
+    color: white;
 }
 
 
@@ -24,32 +45,26 @@
 
 .margin-input, .maxHeightInput {
     display:inline;
-    width:50px;
-    height:25px;
+    width:60px;
+    height:18px;
     margin-left:5px;
+    padding:6px;
 }
 
 .margin-label {
     text-align: right;
-    padding-top: 7px;
     width:100px;
 }
 
-.control-label {
-    text-align: right;
-    padding-top: 7px;
-    float:right;
-}
-
 .row {
-    margin: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
 .settingsBtn {
     position: absolute;
     top:0;
-    right: 0;
-    margin: 5px;
+    right: -22px;
     cursor: pointer;
     z-index:100;
 }
@@ -57,9 +72,8 @@
 .splitRowBtn {
     position: absolute;
     top:0;
-    right: 0;
-    margin-right: 5px;
-    margin-top: 22px;
+    right: -22px;
+    margin-top: 25px;
     cursor: pointer;
     z-index:100;
 }
@@ -67,9 +81,8 @@
 .showBorderBtn {
     position: absolute;
     top:0;
-    right: 0;
-    margin-right: 5px;
-    margin-top: 39px;
+    right: -23px;
+    margin-top: 50px;
     cursor: pointer;
     z-index:100;
 }
@@ -77,9 +90,8 @@
 .deleteRowBtn {
     position: absolute;
     top:0;
-    right: 0;
-    margin-right: 5px;
-    margin-top: 56px;
+    right: -21px;
+    margin-top: 75px;
     cursor: pointer;
     z-index:100;
 }
@@ -97,6 +109,11 @@
     margin-right:10px;
 }
 
+.downloadImageBtnBeforeAddingImage {
+    cursor: pointer;
+    margin-top:20px;
+    margin-bottom:5px;
+}
 
 .downloadImageBtn, .floatLeftBtn, .floatCentertBtn, .floatRightBtn {
     cursor: pointer;
@@ -109,6 +126,18 @@ label {
 .noPadding {
     padding:0px;
 }
+
+.splitToRowsLabel, .splitToColumnsLabel {
+    cursor: pointer;
+}
+
+.mainRow {
+    margin-right:30px;
+    margin-left:30px;
+}
+
+
+
 
 @media (max-width:768px){
 .control-label {

@@ -1,8 +1,4 @@
-﻿.marg-btm {
-    margin-bottom:10px;
-}
-
-#resultHtml {
+﻿#resultHtml {
     display:none;
 }
 
@@ -10,14 +6,35 @@
     display:none;
 }
 
+.setInfolabel {
+    text-align: right;
+    float:right;
+}
+
+.setInfoInput{
+    max-width:600px;
+}
+
+.setInfoRow {
+    margin-bottom:10px;
+}
+
+#setNameLabel {
+    margin-top: 8.5px;
+}
+
+#setDescriptionLabel, #setTagsLabel {
+    margin-top: 23.5px;
+}
+
 
 @media (max-width:768px){
-.control-label {
+.setInfolabel {
     text-align: center;
     float:none;
 }
 
-.form-control{
+.setInfoInput{
     display:initial;
 }
 
