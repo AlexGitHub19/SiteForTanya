@@ -9,5 +9,6 @@ namespace SiteForTanya.WEB.Models
     {
         public int Id { get; set; }
         public string AllTags { get; set; }
+        public int TotalCount { get; set; }
     }
 }

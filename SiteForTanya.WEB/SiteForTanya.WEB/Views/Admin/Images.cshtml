@@ -245,8 +245,21 @@
             var finalId = id.substring(hyphenId + 1);
             var html = '<p>CONFIRM DELETING</p>' +
                        '<i id="confirmDeleteBtn-' + finalId + '" style="font-size:28px;" class="fa fa-check confirmDeleteBtn" aria-hidden="true"></i>' +
-                       '<i id="cancelDeleteBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelDeleteBtn" aria-hidden="true"></i>'
+                       '<i id="cancelDeleteBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelDeleteBtn" aria-hidden="true"></i>';
+            var blockHeight = $('#deleteImageInfo-' + finalId).width();
+
+            var ischanged = false;
+            if (blockHeight < 150)
+            {
+                ischanged = true;
+            }
             $(this).parent().html(html);
+            if (ischanged)
+            {
+                $('#confirmDeleteBtn-' + finalId).css('margin-right', '20px');
+                $('#deleteImageInfo-' + finalId + ' > p').css('margin-bottom', '0px');
+                $('#deleteImageInfo-' + finalId + ' > p').css('margin-top', '0px');
+            }
         })
 
         $('#existingImages').on('click', '.confirmDeleteBtn', function (e) {
@@ -352,6 +365,8 @@
                             $('#resultInfo').html('<div class="alert alert-' + result.type + '" role="alert">' + result.resultString + '</div>' +
                                 '<i class="fa fa-times fa-lg closeAlertBtn" aria-hidden="true"></i>');
                             $('.addImage').css('background-color', '#f4f1e4');
+                            showLoadingAnimation();
+                            getImagNamesFromServer(1);
                         },
                         error: function (xhr, status, p3) {
                             alert('error');

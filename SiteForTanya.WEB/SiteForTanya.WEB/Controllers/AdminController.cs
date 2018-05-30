@@ -134,21 +134,21 @@ namespace SiteForTanya.WEB.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult UploadImages()
         {
-            string resultString = "files are seccessfully uploaded";
+            string resultString = "Files are seccessfully uploaded";
             string resultType = "success";
 
             bool isImgInfoModified = false;
             Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
+
             ImagesInfo imgInfo = imageInfoRepository.GetList().First();
 
             Repository<ImageEntity> imageRepository = new Repository<ImageEntity>();
-            int imagesCount = imageRepository.GetList().Count();
-            imagesCount++;
 
             foreach (string file in Request.Files)
             {
+                imgInfo.TotalCount++;
                 var upload = Request.Files[file];
-                string fileName = "Image" + imagesCount + upload.FileName.Substring(upload.FileName.LastIndexOf('.'));
+                string fileName = "Image" + imgInfo.TotalCount + upload.FileName.Substring(upload.FileName.LastIndexOf('.'));
 
                 if (upload != null)
                 {
@@ -174,8 +174,7 @@ namespace SiteForTanya.WEB.Controllers
                                     if (!imgInfo.AllTags.Contains(tagsList[i].Trim().ToLower()))
                                     {
                                         imgInfo.AllTags += tagsList[i].Trim().ToLower();
-                                        imgInfo.AllTags += ",";
-                                        isImgInfoModified = true;                                       
+                                        imgInfo.AllTags += ",";                                      
                                     }
                                 }
                             }
@@ -183,7 +182,7 @@ namespace SiteForTanya.WEB.Controllers
                         // ArgumentException is thrown when GetPropertyItem(int) is not found
                         catch (ArgumentException)
                         {
-                            resultString = "No data in property \"Tag\" or Property \"Tags\" isn't found in this type of file";
+                            resultString = "No data in property \"Tag\" in some image or Property \"Tags\" isn't found in this type of file";
                             resultType = "danger";
                         }
                     }
@@ -191,7 +190,7 @@ namespace SiteForTanya.WEB.Controllers
                     upload.SaveAs(Server.MapPath("~/Content/Images/Images/" + fileName));
                     ImageEntity image = new ImageEntity { Name = fileName, Tags = resultTags != string.Empty? resultTags : null, AddingTime = DateTime.Now};
                     imageRepository.Create(image);
-                    imagesCount++;
+                    isImgInfoModified = true;
                 }
             }
 
