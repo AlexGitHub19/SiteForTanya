@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SiteForTanya.WEB.Models
 {
-    public class SetEntity
+    public class SetEntity: IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,0 +1,52 @@
+﻿#itemSeacher {
+    margin-top:20px;
+    padding-left:50px;
+    padding-right:50px;
+    position:relative;
+}
+
+#searchInput {
+    display:inline;
+    padding-left:40px;
+    padding-right:40px;
+    border-radius:23px;
+    max-width:500px;
+}
+
+#searchBtn {
+    border-radius:23px;
+    height:45px;
+    width:60px;
+}
+
+#itemsCountContainer {
+    display:inline;
+}
+
+.itemsCountBtn {
+    border-radius:23px;
+    height:45px;
+    width:70px;
+    font-size:16px;
+}
+
+#itemsCountBtn {
+    position:relative;
+}
+
+.hiddenBtnImageCount{
+    margin-top:5px;
+}
+
+#hiddden-ImageCount {
+    position:absolute;
+    z-index:100;  
+    display:none;  
+}
+
+.fa-caret-down {
+    position:absolute;
+    right:5px;
+     margin-top:2px;
+}
+

@@ -4,6 +4,37 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="tokenContainer">
+    @Html.AntiForgeryToken()
+</div>
+
+<div>
+    <div id="itemSeacher">
+        <input id="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("SetsAutocompleteSearch", "Admin")">
+        <button id="searchBtn" class="my-btn btn">
+            <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
+        </button>
+        <label>Show: </label>
+        <div id="itemsCountContainer">
+            <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
+                7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+            </button>
+            <div id="hiddden-ImageCount">
+                <div>
+                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
+                </div>
+                <div>
+                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
 <div class="content">
     <div class="row">
         <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
@@ -26,3 +57,242 @@
         </div>
     </div>
 </div>
+
+<div id="loadingAnimation" style="display:none">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#searchBtn').bind('click', function () {
+        //    showLoadingAnimation();
+        //    getImagNamesFromServer(1);
+        //});
+
+
+        function getImagNamesFromServer(pageNumber) {
+            var keyWords = $('#searchInput').val();
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetImagesNames", "Admin")',
+                //processData: false,
+                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
+                success: function (result) {
+                    fillImages(result);
+                    createPagination(result.imageCount, pageNumber);
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                }
+            });
+        }
+
+        function showLoadingAnimation() {
+            $('#existingImages').css('margin-top', '130px');
+            $('#existingImages').css('margin-bottom', '130px');
+            var LoaderHtmml = $("#loadingAnimation").html();
+            $('#existingImages').html(LoaderHtmml);
+        }
+
+        function fillImages(result) {
+            if (result.imageCount == 0) {
+                $('#existingImages').css('margin-top', '70px');
+                $('#existingImages').css('margin-bottom', '50px');
+                $('#existingImages').html('<h4>No images are found by this search criteria</h4>');
+                return;
+            }
+
+            var html = '';
+            var count = 0;
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+            while (count < result.imageNames.length) {
+                var endValue = count + 4;
+                if (count + 4 > result.imageNames.length) {
+                    endValue = result.imageNames.length;
+                }
+                var imageArray = new Array(0);
+                for (var i = count; i < endValue; i++) {
+                    imageArray.push(result.imageNames[i].value);
+                }
+                html += '<div class="row existingImagesRow">';
+                for (var i = 0; i < imageArray.length; i++) {
+                    var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
+                    html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
+                        '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
+                        '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
+                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
+                        '</div>' +
+                        '</div>';
+                }
+                html += '</div>';
+                count += 4;
+            }
+            $('#existingImages').css('margin-top', '20px');
+            $('#existingImages').css('margin-bottom', '0px');
+            $('#existingImages').html(html);
+        }
+
+        function createPagination(totalIageCount, pageNumber) {
+            var html = '';
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+            if (totalIageCount > imagesCountOnPage) {
+                html += '<button id="prevBtn" class="my-btn btn"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>';
+
+                var buttonsCount = parseInt(totalIageCount / imagesCountOnPage);
+                if (totalIageCount % imagesCountOnPage > 0) {
+                    buttonsCount++;
+                }
+
+                if (buttonsCount <= 5) {
+                    for (var i = 1; i <= buttonsCount; i++) {
+                        html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                    }
+                }
+                else {
+                    if (pageNumber <= 3) {
+                        for (var i = 1; i <= 5; i++) {
+                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                        }
+                    }
+                    else if (pageNumber >= buttonsCount - 1) {
+                        for (var i = buttonsCount - 4; i <= buttonsCount; i++) {
+                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                        }
+                    }
+                    else {
+                        for (var i = pageNumber - 2; i <= (parseInt(pageNumber) + parseInt(2)) ; i++) {
+                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                        }
+                    }
+                }
+
+                paginationButtonsCount = buttonsCount;
+                html += '<button id="nextBtn" class="my-btn btn"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>';
+                if (buttonsCount > 5) {
+                    html += '<div id = "goToPageContainer"><label id="gotoLabel">GO TO</label><input id="inputGoToPage" type="text" class="form-control"><label id="ofLabel">OF ' + buttonsCount + '</label></div>';
+                }
+            }
+
+            $('#pagination').html(html);
+            $('#paginationBtn-' + pageNumber).addClass('current');
+        }
+
+        function getAntiForgeryToken() {
+            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+        }
+
+        $('#pagination').on('click', '.paginationBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var pageNumber = id.substring(hyphenId + 1);
+            showLoadingAnimation;
+            getImagNamesFromServer(pageNumber);
+        })
+
+        $('#pagination').on('click', '.paginationBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var pageNumber = id.substring(hyphenId + 1);
+            showLoadingAnimation;
+            getImagNamesFromServer(pageNumber);
+        })
+
+        $('#pagination').on('click', '#nextBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            var lastId = $('#pagination > .paginationBtn').last().attr('id')
+            var lastHyphenId = lastId.indexOf('-');
+            var lastPageNumber = lastId.substring(hyphenId + 1);
+            if (currentPageNumber == lastPageNumber) {
+                e.preventDefault();
+                return;
+            }
+            showLoadingAnimation;
+            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+        })
+
+        $('#pagination').on('click', '#prevBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            if (currentPageNumber == 1) {
+                e.preventDefault();
+                return;
+            }
+            showLoadingAnimation;
+            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+        })
+
+        $('#searchInput').autocomplete({
+            source: $('#searchInput').attr("data-autocomplete-source")
+        });
+
+
+        $("#itemsCountBtn").click(function () {
+            var hiddendiv = $('#hiddden-ImageCount');
+            var leftOfs = $(this).offset().left;
+            hiddendiv.offset({ left: leftOfs });
+            $(this).next().slideToggle('fast');
+        });
+
+        $(window).resize(function () {
+            var hiddendiv = $('#hiddden-ImageCount');
+            var itemsCountBtn = $('#itemsCountBtn');
+            var leftOfs = itemsCountBtn.offset().left;
+            hiddendiv.offset({ left: leftOfs });
+        });
+
+        $(window).click(function (e) {
+            if ($('#hiddden-ImageCount').css('display') != 'none' && e.target.id != 'itemsCountBtn' && e.target.id != 'itemsCountBtnCaretDown') {
+                $('#hiddden-ImageCount').slideToggle('fast');
+            }
+        })
+
+        $('#hiddden-ImageCount').on('click', '.hiddenBtnImageCount', function (e) {
+            var thisValue = $(this).text();
+            var itemsCountBtnValue = $('#itemsCountBtn').text();
+            $('#itemsCountBtn').text(thisValue);
+            $('#itemsCountBtn').append('<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>');
+            var value1 = 60;
+            var value2 = 100;
+            if (thisValue == 60) {
+                var value1 = 32;
+                var value2 = 100;
+            }
+            else if (thisValue == 100) {
+                var value1 = 32;
+                var value2 = 60;
+            }
+
+            $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
+                       '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
+            showLoadingAnimation();
+            getImagNamesFromServer(1);
+        })
+
+        $('#pagination').on('keypress', '#inputGoToPage', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                var pageNumber = parseInt($(this).val());
+                if (!isNaN(pageNumber)) {
+                    showLoadingAnimation();
+                    getImagNamesFromServer(pageNumber);
+                }
+            }
+        })
+
+    });
+</script>

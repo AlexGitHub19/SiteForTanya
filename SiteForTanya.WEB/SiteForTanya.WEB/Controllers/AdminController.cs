@@ -103,6 +103,33 @@ namespace SiteForTanya.WEB.Controllers
                 }
             }                        
             string html = resultHtmlWithoutNotResultElements.Replace("&lt;" , "<").Replace("&gt;" , ">");
+
+            Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>();
+            SetsInfo setsIfo = setsInfoRepository.GetList().First();
+            string resultTags = String.Empty;
+            if (!String.IsNullOrEmpty(setTags))
+            {
+                string[] tagsList = setTags.Split(';');
+                for (int i = 0; i < tagsList.Length; i++)
+                {
+                    string tag = tagsList[i].Trim().ToLower();
+                    resultTags += tag;
+                    if (i != tagsList.Length - 1)
+                    {
+                        resultTags += ",";
+                    }
+
+                    if (!setsIfo.AllTags.Contains(tag))
+                    {
+                        if (setsIfo.AllTags != String.Empty)
+                        {
+                            setsIfo.AllTags += ",";
+                        }
+                        setsIfo.AllTags += tagsList[i].Trim().ToLower();
+                    }
+                }
+            }
+
             SetEntity set = new SetEntity { Name = setName, Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements, AddingTime = DateTime.Now, Description = setDescription };
             Repository<SetEntity> repository = new Repository<SetEntity>();
             repository.Create(set);
@@ -126,6 +153,28 @@ namespace SiteForTanya.WEB.Controllers
             else
             {
                 return Json(new { result = "True" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetSetsNames(string keyWords, int setsCountOnPage, int pageNumber)
+        {
+            Repository<SetEntity> setEntityRepository = new Repository<SetEntity>();
+
+            if (keyWords == String.Empty)
+            {
+                var allSets = setEntityRepository.GetList();
+                var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
+                return Json(new { setNames = setNames, setCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                List<string> words = keyWords.Split(' ').ToList();
+                var allSets = setEntityRepository.GetList().Where(set => TagContainsWord(set, words));
+                var imageNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
+                return Json(new { imageNames = imageNames, imageCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -165,16 +214,20 @@ namespace SiteForTanya.WEB.Controllers
                                 string[] tagsList = foundTags.Split(';');
                                 for(int i = 0; i< tagsList.Length; i++)
                                 {
-                                    resultTags += tagsList[i].Trim().ToLower();
+                                    string tag = tagsList[i].Trim().ToLower();
+                                    resultTags += tag;
                                     if (i != tagsList.Length - 1)
                                     {
                                         resultTags += ",";
                                     }
 
-                                    if (!imgInfo.AllTags.Contains(tagsList[i].Trim().ToLower()))
+                                    if (!imgInfo.AllTags.Contains(tag))
                                     {
-                                        imgInfo.AllTags += tagsList[i].Trim().ToLower();
-                                        imgInfo.AllTags += ",";                                      
+                                        if (imgInfo.AllTags!= String.Empty)
+                                        {
+                                            imgInfo.AllTags += ",";
+                                        }
+                                        imgInfo.AllTags += tagsList[i].Trim().ToLower();                                     
                                     }
                                 }
                             }
@@ -203,7 +256,7 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpGet]
-        public ActionResult AutocompleteSearch(string term)
+        public ActionResult ImagesAutocompleteSearch(string term)
         {
             Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
             ImagesInfo imgInfo = imageInfoRepository.GetList().First();
@@ -211,7 +264,21 @@ namespace SiteForTanya.WEB.Controllers
             {
                 return Json(null, JsonRequestBehavior.AllowGet);
             }
-            var words = imgInfo.AllTags.Substring(0, imgInfo.AllTags.Length - 1).Split(',').Where(x=>x.Contains(term.ToLower())).OrderBy(s => s).Select(a => new { value = a });
+            var words = imgInfo.AllTags.Split(',').Where(x=>x.Contains(term.ToLower())).OrderBy(s => s).Select(a => new { value = a });
+
+            return Json(words, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult SetsAutocompleteSearch(string term)
+        {
+            Repository<SetsInfo> setInfoRepository = new Repository<SetsInfo>();
+            SetsInfo setInfo = setInfoRepository.GetList().First();
+            if (setInfo.AllTags == String.Empty)
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            var words = setInfo.AllTags.Split(',').Where(x => x.Contains(term.ToLower())).OrderBy(s => s).Select(a => new { value = a });
 
             return Json(words, JsonRequestBehavior.AllowGet);
         }
@@ -238,13 +305,13 @@ namespace SiteForTanya.WEB.Controllers
             }
         }
 
-        private bool TagContainsWord(ImageEntity image, List<string> words)
+        private bool TagContainsWord<T>(T item, List<string> words) where T: IEntity
         {
-            if (image.Tags == null)
+            if (item.Tags == null)
             {
                 return false;
             }
-            foreach(string tag in image.Tags.Split(','))
+            foreach (string tag in item.Tags.Split(','))
             {
                 foreach (string word in words)
                 {

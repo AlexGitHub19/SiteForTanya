@@ -212,6 +212,7 @@
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\SetEntity.cs" />
+    <Compile Include="Models\SetsInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +240,7 @@
     <Content Include="Content\Loading.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
+    <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />

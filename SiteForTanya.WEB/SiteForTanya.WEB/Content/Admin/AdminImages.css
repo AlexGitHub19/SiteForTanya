@@ -125,27 +125,6 @@
     font-size:100px
 }
 
-#imageSeacher {
-    margin-top:20px;
-    padding-left:50px;
-    padding-right:50px;
-    position:relative;
-}
-
-#searchBtn {
-    border-radius:23px;
-    height:45px;
-    width:60px;
-}
-
-#searchInput {
-    display:inline;
-    padding-left:40px;
-    padding-right:40px;
-    border-radius:23px;
-    max-width:500px;
-}
-
 #itemCountSelect {
     margin-top:20px;
 }
@@ -181,35 +160,6 @@ ul#menu li ul li a:hover{background: #ddd;}
 #sd {
     position:absolute;
     z-index:100;
-}
-
-#imageCountContainer {
-    display:inline;
-}
-
-#hiddden-ImageCount {
-    position:absolute;
-    z-index:100;  
-    display:none;  
-}
-.btn-imageCount {
-    border-radius:23px;
-    height:45px;
-    width:70px;
-    font-size:16px;
-}
-
-.fa-caret-down {
-    position:absolute;
-    right:5px;
-     margin-top:2px;
-}
-#imageCountBtn {
-    position:relative;
-}
-
-.hiddenBtnImageCount{
-    margin-top:5px;
 }
 
  .ui-autocomplete {
@@ -269,6 +219,9 @@ ul#menu li ul li a:hover{background: #ddd;}
 
 .relativeClass:hover .blackoutAnimation {
     opacity:0.6;
+    border:solid;
+    border-color:red;
+    border-width:30px;
 }
 
 .confirmDeleteBtn {

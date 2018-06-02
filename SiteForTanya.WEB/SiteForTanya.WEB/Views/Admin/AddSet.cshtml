@@ -61,6 +61,10 @@
         var rowCount = 1;
         var cellCount = 1;
 
+        $(window).resize(function () {
+            setHeightForAllSettingsontainers();
+        });
+
         $('#addRowButton').on('click', function (e) {
             $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow border mainRow">' +
                 '<i id="settigsBtn' + rowCount + '" class="fa fa-cog settingsBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
@@ -79,7 +83,7 @@
         {
             return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding clearfix">' +
                    '<img id="image' + cellCount + '" class="image"/>' +
-                   '<div id="settingsContainer' + cellCount + '" class ="settingsContainer">' +
+                   '<div id="settingsContainer' + cellCount + '" class ="settingsContainer not-result">' +
                    getSettingsRowHtml(cellCount) +
                    '</div>' +
                    '</div>';
@@ -166,6 +170,7 @@
                     cellCount++;
                 }
                 $('#imageContainer' + cellNumber).parent().html(newimageContainerHtml);
+                setHeightForAllSettingsontainers();
             }
             else
             {
@@ -193,6 +198,7 @@
                 }
                 newimageContainerHtml += '</div>';
                 $('#imageContainer' + cellNumber).parent().html(newimageContainerHtml);
+                setHeightForAllSettingsontainers();
             }
             else {
                 alert('Count of rows should be a digit!');
@@ -213,7 +219,6 @@
         });
 
         $('#pageHtml').on('change', '.inputFile', function (e) {
-            var file = this.files[0];
             var cellNumber = getRowOrCellNumber(this);
 
             var reader = new FileReader();
@@ -223,15 +228,23 @@
             }
             reader.readAsDataURL(this.files[0]);
 
+            reader.onloadend = function (e) {
+                setHeightForAllSettingsontainers();
+            }
+
             if(!$('#imageContainer' + cellNumber).hasClass('imageAdded'))
             {
                 $('#settingsContainer' + cellNumber + ' > .downloadImageBtnBeforeAddingImage').remove();
-                $('#splitToRowsLabel' + cellNumber).remove();
-                $('#splitToColumnsLabel' + cellNumber).remove();
+                $('#splitToRowsLabel' + cellNumber).parent().remove();
+                $('#splitToColumnsLabel' + cellNumber).parent().remove();
+                //$('#settingsContainer' + cellNumber).html('');
+
                 $('#settingsContainer' + cellNumber).append(getHtmlForSettingsContainer(cellNumber));
+                $('#settingsContainer' + cellNumber).css('padding-top', '5px;');
                 $('#imageContainer' + cellNumber).addClass('imageAdded');
                 $('#imageContainer' + cellNumber).css('min-height', '1px');
             }
+
         })
 
         $('#pageHtml').on('keypress', '.margin-input', function (e) {
@@ -243,6 +256,7 @@
                 {
                     var margin = $(this).val();
                     $('#imageContainer' + cellNumber).css('margin-top', margin);
+                    setHeightForAllSettingsontainers();
                 }
                 else if($(this).hasClass('left'))
                 {
@@ -256,6 +270,7 @@
                 else if ($(this).hasClass('bot')) {
                     var margin = $(this).val();
                     $('#imageContainer' + cellNumber).css('margin-bottom', margin);
+                    setHeightForAllSettingsontainers();
                 }
                 e.preventDefault();
             }
@@ -264,10 +279,11 @@
         $('#pageHtml').on('keypress', '.maxHeightInput', function (e) {
             var code = e.keyCode || e.which;
             if (code == 13) {
+                e.preventDefault();
                 var cellNumber = getRowOrCellNumber(this);
                 var maxHeight = $(this).val();
                 $('#image' + cellNumber).css('max-height', maxHeight + 'px');
-                e.preventDefault();
+                setHeightForAllSettingsontainers();
             }
         })
 
@@ -294,13 +310,13 @@
                     else
                     {
                         var result = $('#pageHtml').clone();
-                        result = changeSrcs(result, setName, e);
+                        result = changeSrcs(result, setName);
                         var html = result.html();
                         var encodedHtml = encodeHtml(html);
                         $('#resultHtml').val(encodedHtml);
 
                         var result2 = $('#pageHtml').clone();
-                        result2 = changeSrcs(result2, setName, e);
+                        result2 = changeSrcs(result2, setName);
                         result2.find('.not-result').remove();
                         var html2 = result2.html();
                         var encodedHtml2 = encodeHtml(html2);
@@ -315,9 +331,9 @@
 
         });
 
-        function changeSrcs(resultHtml, setName, e)
+        function changeSrcs(resultHtml, setName)
         {
-            resultHtml.find('.image').each(function (index, element, e) {
+            resultHtml.find('.image').each(function (index, element) {
                 var cellNumber = getRowOrCellNumber(element);
                 if ($('#imageContainer' + cellNumber).hasClass('imageAdded'))
                 {
@@ -332,7 +348,20 @@
         {
             var id = $(element).attr('id');
             var number = 0;
-            if ($.isNumeric(id.substring(id.length - 3)))
+
+            if ($.isNumeric(id.substring(id.length - 6)))
+            {
+                number = id.substring(id.length - 6);
+            }
+            else if ($.isNumeric(id.substring(id.length - 5)))
+            {
+                number = id.substring(id.length - 5);
+            }
+            else if ($.isNumeric(id.substring(id.length - 4)))
+            {
+                number = id.substring(id.length - 4);
+            }
+            else if ($.isNumeric(id.substring(id.length - 3)))
             {
                 number = id.substring(id.length - 3);
             }
@@ -345,20 +374,6 @@
                 number = id.substring(id.length - 1);
             }
             return number;
-        }
-
-        function setHtmlWithoutNotResultElements()
-        {
-            var result = $('#pageHtml').clone();
-            result = changeSrcs(result, setName, e);
-            var html = result.html();
-            $('#resultHtmlWithoutNotResultElements').val(html);
-            $('#resultHtmlWithoutNotResultElements').remove('.notResult');
-            var readyHtml = $('#resultHtmlWithoutNotResultElements').clone();
-            var encodedHtml = encodeHtml(readyHtml.html());
-
-            $('#resultHtmlWithoutNotResultElements').val(encodedHtml);
-            alert(encodedHtml);
         }
 
         function encodeHtml(string)
@@ -388,7 +403,7 @@
              '</div>' +
              '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
                  '<div class="form-group">' +
-                     '<input id="inputFile' + cellNumber + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
+                     //'<input id="inputFile' + cellNumber + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
                      '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
                  '</div>' +
                  '<div class="form-group">' +
@@ -411,6 +426,15 @@
 
         function getAntiForgeryToken() {
             return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+        }
+
+        function setHeightForAllSettingsontainers()
+        {
+            $('#pageHtml').find('.settingsContainer').each(function (index, element) {
+                var imageRow = $(element).parent().parent().parent();
+                var imageRowHeight = imageRow.height();
+                $(element).css('height', imageRowHeight);
+            });
         }
 
     });

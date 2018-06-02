@@ -21,23 +21,21 @@
 </div>
 
 <div >
-    <div id="imageSeacher">     
-        <input id="searchInput" name="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("AutocompleteSearch", "Admin")" >
+    <div id="itemSeacher">     
+        <input id="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("ImagesAutocompleteSearch", "Admin")" >
         <button id="searchBtn" class="my-btn btn">
             <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
         </button>
         <label>Show: </label>     
-        <div id="imageCountContainer">
-            <button id="imageCountBtn" class="btn my-btn btn-imageCount">
-                7
-                <i id ="imageCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+        <div id="itemsCountContainer">
+            <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">7<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
             </button>
             <div id="hiddden-ImageCount">
                 <div>
-                    <button class="btn my-btn btn-imageCount hiddenBtnImageCount">60</button>
+                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
                 </div>
                 <div>
-                    <button class="btn my-btn btn-imageCount hiddenBtnImageCount">100</button>
+                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
                 </div>
             </div>      
         </div>          
@@ -81,7 +79,7 @@
         function getImagNamesFromServer(pageNumber)
         {
             var keyWords = $('#searchInput').val();
-            var imagesCountOnPage = parseInt($('#imageCountBtn').text());
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
 
             $.ajax({
                 type: "POST",
@@ -118,7 +116,7 @@
 
             var html = '';
             var count = 0;
-            var imagesCountOnPage = parseInt($('#imageCountBtn').text());
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
             while (count < result.imageNames.length)
             {
                 var endValue = count+4;
@@ -154,7 +152,7 @@
         function createPagination(totalIageCount, pageNumber)
         {
             var html = '';
-            var imagesCountOnPage = parseInt($('#imageCountBtn').text());
+            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
             if (totalIageCount > imagesCountOnPage)
             {
                 html += '<button id="prevBtn" class="my-btn btn"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>';
@@ -385,7 +383,7 @@
         });
 
 
-        $("#imageCountBtn").click(function () {
+        $("#itemsCountBtn").click(function () {
             var hiddendiv = $('#hiddden-ImageCount');
             var leftOfs = $(this).offset().left;
             hiddendiv.offset({ left: leftOfs });
@@ -394,21 +392,22 @@
 
         $(window).resize(function () {
             var hiddendiv = $('#hiddden-ImageCount');
-            var imageCountBtn = $('#imageCountBtn');
-            var leftOfs = imageCountBtn.offset().left;
+            var itemsCountBtn = $('#itemsCountBtn');
+            var leftOfs = itemsCountBtn.offset().left;
             hiddendiv.offset({ left: leftOfs });
         });
 
         $(window).click(function (e) {
-            if ($('#hiddden-ImageCount').css('display') != 'none' && e.target.id != 'imageCountBtn' && e.target.id != 'imageCountBtnCaretDown') {
+            if ($('#hiddden-ImageCount').css('display') != 'none' && e.target.id != 'itemsCountBtn' && e.target.id != 'itemsCountBtnCaretDown') {
                 $('#hiddden-ImageCount').slideToggle('fast');
             }
         })
 
         $('#hiddden-ImageCount').on('click', '.hiddenBtnImageCount', function (e) {
             var thisValue = $(this).text();
-            var imageCountBtnValue = $('#imageCountBtn').text();
-            $('#imageCountBtn').text(thisValue);
+            var itemsCountBtnValue = $('#itemsCountBtn').text();
+            $('#itemsCountBtn').text(thisValue);
+            $('#itemsCountBtn').append('<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>');
             var value1 = 60;
             var value2 = 100;
             if (thisValue == 60) {
@@ -420,8 +419,8 @@
                 var value2 = 60;
             }
 
-            $('#hiddden-ImageCount').html('<div><button class="btn my-btn btn-imageCount hiddenBtnImageCount">' + value1 + '</button></div>' +
-                       '<div><button class="btn my-btn btn-imageCount hiddenBtnImageCount">' + value2 + '</button></div>');
+            $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
+                       '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
             showLoadingAnimation();
             getImagNamesFromServer(1);
         })
