@@ -58,6 +58,11 @@
     </div>
 </div>
 
+<div id="existingSets"></div>
+
+<div id="pagination"></div>
+
+
 <div id="loadingAnimation" style="display:none">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
@@ -73,24 +78,27 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        showLoadingAnimation();
+        getSetNamesFromServer(1);
+
         //$('#searchBtn').bind('click', function () {
         //    showLoadingAnimation();
         //    getImagNamesFromServer(1);
         //});
 
 
-        function getImagNamesFromServer(pageNumber) {
+        function getSetNamesFromServer(pageNumber) {
             var keyWords = $('#searchInput').val();
-            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+            var setsCountOnPage = parseInt($('#itemsCountBtn').text());
 
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("GetImagesNames", "Admin")',
-                //processData: false,
-                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
+                url: '@Url.Action("GetSetsNames", "Admin")',
+                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, setsCountOnPage: setsCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
-                    fillImages(result);
-                    createPagination(result.imageCount, pageNumber);
+                    fillSets(result);
+                    createPagination(result.setsCount, pageNumber);
                 },
                 error: function (xhr, status, p3) {
                     alert('error');
@@ -99,37 +107,38 @@
         }
 
         function showLoadingAnimation() {
-            $('#existingImages').css('margin-top', '130px');
-            $('#existingImages').css('margin-bottom', '130px');
+            $('#existingSets').css('margin-top', '130px');
+            $('#existingSets').css('margin-bottom', '130px');
             var LoaderHtmml = $("#loadingAnimation").html();
-            $('#existingImages').html(LoaderHtmml);
+            $('#existingSets').html(LoaderHtmml);
         }
 
-        function fillImages(result) {
-            if (result.imageCount == 0) {
-                $('#existingImages').css('margin-top', '70px');
-                $('#existingImages').css('margin-bottom', '50px');
-                $('#existingImages').html('<h4>No images are found by this search criteria</h4>');
+        function fillSets(result) {
+            if (result.setsCount == 0)
+            {
+                $('#existingSets').css('margin-top', '70px');
+                $('#existingSets').css('margin-bottom', '50px');
+                $('#existingSets').html('<h4>No sets are found by this search criteria</h4>');
                 return;
             }
 
             var html = '';
             var count = 0;
-            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
-            while (count < result.imageNames.length) {
+            //var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+            while (count < result.setNames.length) {
                 var endValue = count + 4;
-                if (count + 4 > result.imageNames.length) {
-                    endValue = result.imageNames.length;
+                if (count + 4 > result.setNames.length) {
+                    endValue = result.setNames.length;
                 }
-                var imageArray = new Array(0);
+                var setArray = new Array(0);
                 for (var i = count; i < endValue; i++) {
-                    imageArray.push(result.imageNames[i].value);
+                    setArray.push(result.setNames[i].value);
                 }
                 html += '<div class="row existingImagesRow">';
-                for (var i = 0; i < imageArray.length; i++) {
-                    var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
+                for (var i = 0; i < setArray.length; i++) {
+                    var id = setArray[i].substring(0, setArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + setArray[i] + '" class="image" />' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
@@ -139,51 +148,14 @@
                 html += '</div>';
                 count += 4;
             }
-            $('#existingImages').css('margin-top', '20px');
-            $('#existingImages').css('margin-bottom', '0px');
-            $('#existingImages').html(html);
+            $('#existingSets').css('margin-top', '20px');
+            $('#existingSets').css('margin-bottom', '0px');
+            $('#existingSets').html(html);
         }
 
-        function createPagination(totalIageCount, pageNumber) {
-            var html = '';
-            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
-            if (totalIageCount > imagesCountOnPage) {
-                html += '<button id="prevBtn" class="my-btn btn"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>';
-
-                var buttonsCount = parseInt(totalIageCount / imagesCountOnPage);
-                if (totalIageCount % imagesCountOnPage > 0) {
-                    buttonsCount++;
-                }
-
-                if (buttonsCount <= 5) {
-                    for (var i = 1; i <= buttonsCount; i++) {
-                        html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
-                    }
-                }
-                else {
-                    if (pageNumber <= 3) {
-                        for (var i = 1; i <= 5; i++) {
-                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
-                        }
-                    }
-                    else if (pageNumber >= buttonsCount - 1) {
-                        for (var i = buttonsCount - 4; i <= buttonsCount; i++) {
-                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
-                        }
-                    }
-                    else {
-                        for (var i = pageNumber - 2; i <= (parseInt(pageNumber) + parseInt(2)) ; i++) {
-                            html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
-                        }
-                    }
-                }
-
-                paginationButtonsCount = buttonsCount;
-                html += '<button id="nextBtn" class="my-btn btn"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>';
-                if (buttonsCount > 5) {
-                    html += '<div id = "goToPageContainer"><label id="gotoLabel">GO TO</label><input id="inputGoToPage" type="text" class="form-control"><label id="ofLabel">OF ' + buttonsCount + '</label></div>';
-                }
-            }
+        function createPagination(totalSetsCount, pageNumber) {
+            var setsCountOnPage = parseInt($('#itemsCountBtn').text());
+            var html = getPaginationHtml(totalSetsCount, setsCountOnPage)
 
             $('#pagination').html(html);
             $('#paginationBtn-' + pageNumber).addClass('current');

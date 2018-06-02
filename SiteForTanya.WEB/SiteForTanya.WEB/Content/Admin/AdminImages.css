@@ -76,65 +76,10 @@
     z-index:100;
 }
 
-#pagination {
-    margin-top:40px;
-    margin-bottom:20px;
-}
-
-    #pagination #gotoLabel {
-        margin-right:5px;
-    }
-
-     #pagination #ofLabel {
-        margin-left:5px;
-    }
-
-#goToPageContainer {
-   margin-left:0px;
-   margin-top:15px;    
-}
-
-#inputGoToPage {
-    width: 50px;
-    display: inline;
-    font-weight: bold;
-    text-align:center;
-}
-
-.paginationBtn {
-    margin-right:3px;
-    margin-left:3px;
-}
-
-#prevBtn {
-    margin-right:3px;
-}
-
-#nextBtn {
-    margin-left:3px;
-}
-
-.current {
-    background-color: #2572ed;
-}
-    .current:hover {
-        background-color: #2572ed;
-    }
 
 .fa-spin {
     font-size:100px
 }
-
-#itemCountSelect {
-    margin-top:20px;
-}
-
-#mySelect {
-     border-radius:23px;
-     display:inline;
-     width:80px;
-}
-
 
 
 ul#menu, ul#menu ul{
@@ -196,6 +141,7 @@ ul#menu li ul li a:hover{background: #ddd;}
     position: relative;
     display:inline-block;
 }
+
 .deleteImageInfo {
     position:absolute;
     bottom: 0;
@@ -219,9 +165,6 @@ ul#menu li ul li a:hover{background: #ddd;}
 
 .relativeClass:hover .blackoutAnimation {
     opacity:0.6;
-    border:solid;
-    border-color:red;
-    border-width:30px;
 }
 
 .confirmDeleteBtn {

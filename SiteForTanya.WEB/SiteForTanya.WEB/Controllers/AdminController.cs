@@ -167,14 +167,14 @@ namespace SiteForTanya.WEB.Controllers
             {
                 var allSets = setEntityRepository.GetList();
                 var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
-                return Json(new { setNames = setNames, setCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
+                return Json(new { setNames = setNames, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 List<string> words = keyWords.Split(' ').ToList();
                 var allSets = setEntityRepository.GetList().Where(set => TagContainsWord(set, words));
-                var imageNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
-                return Json(new { imageNames = imageNames, imageCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
+                var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
+                return Json(new { setNames = setNames, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
         }
 

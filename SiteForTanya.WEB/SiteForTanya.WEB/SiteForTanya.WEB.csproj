@@ -207,6 +207,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\DbInitializer.cs" />
+    <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\ImageEntity.cs" />
     <Compile Include="Models\ImagesInfo.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
@@ -239,6 +240,7 @@
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\magnific-popup.css" />
+    <Content Include="Content\PaginationElement.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
@@ -317,6 +319,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PaginationElement.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
