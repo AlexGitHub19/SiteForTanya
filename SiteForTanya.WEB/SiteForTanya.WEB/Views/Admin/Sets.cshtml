@@ -41,7 +41,7 @@
 
 
 
-<div class="content">
+@*<div class="content">
     <div class="row">
         <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <a href="AddSet" style="display:block">
@@ -62,7 +62,7 @@
             </a>
         </div>
     </div>
-</div>
+</div>*@
 
 <div id="loadingAnimation" style="display:none">
     <div id="fountainG">
@@ -159,7 +159,7 @@
 
         function createPagination(totalSetsCount, pageNumber) {
             var setsCountOnPage = parseInt($('#itemsCountBtn').text());
-            var html = getPaginationHtml(totalSetsCount, setsCountOnPage)
+            var html = getPaginationHtml(totalSetsCount, setsCountOnPage, pageNumber)
 
             $('#pagination').html(html);
             $('#paginationBtn-' + pageNumber).addClass('current');
@@ -173,16 +173,12 @@
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
-            showLoadingAnimation();
-            getSetNamesFromServer(pageNumber);
-        })
-
-        $('#pagination').on('click', '.paginationBtn', function (e) {
-            var id = $(this).attr('id');
-            var hyphenId = id.indexOf('-');
-            var pageNumber = id.substring(hyphenId + 1);
-            showLoadingAnimation();
-            getSetNamesFromServer(pageNumber);
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getSetNamesFromServer(pageNumber);
+            });
         })
 
         $('#pagination').on('click', '#nextBtn', function (e) {
@@ -196,8 +192,13 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation();
-            getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+            });
+
         })
 
         $('#pagination').on('click', '#prevBtn', function (e) {
@@ -208,8 +209,13 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation();
-            getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            });
+           
         })
 
         $('#searchInput').autocomplete({
@@ -264,8 +270,12 @@
             if (code == 13) {
                 var pageNumber = parseInt($(this).val());
                 if (!isNaN(pageNumber)) {
-                    showLoadingAnimation();
-                    getSetNamesFromServer(pageNumber);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500, function () {
+                        showLoadingAnimation();
+                        getSetNamesFromServer(pageNumber);
+                    });
                 }
             }
         })

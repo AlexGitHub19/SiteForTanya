@@ -154,7 +154,7 @@
         function createPagination(totalImageCount, pageNumber)
         {
             var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
-            var html = getPaginationHtml(totalImageCount, imagesCountOnPage)
+            var html = getPaginationHtml(totalImageCount, imagesCountOnPage, pageNumber)
 
             $('#pagination').html(html);
             $('#paginationBtn-' + pageNumber).addClass('current');
@@ -260,8 +260,12 @@
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
-            showLoadingAnimation();
-            getImagNamesFromServer(pageNumber);
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getImagNamesFromServer(pageNumber);
+            });
         })
 
         $('#pagination').on('click', '#nextBtn', function (e) {
@@ -276,8 +280,13 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation();
-            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+            });
         })
 
         $('#pagination').on('click', '#prevBtn', function (e) {
@@ -288,8 +297,12 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation();
-            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            $('html, body').animate({
+                scrollTop: 0
+            }, 500, function () {
+                showLoadingAnimation();
+                getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            });
         })
 
         $('#uploadImagesBtn').on('click', function (e) {
@@ -387,8 +400,12 @@
                 var pageNumber = parseInt($(this).val());
                 if (!isNaN(pageNumber))
                 {
-                    showLoadingAnimation();
-                    getImagNamesFromServer(pageNumber);
+                    $('html, body').animate({
+                        scrollTop: 0
+                    }, 500, function () {
+                        showLoadingAnimation();
+                        getImagNamesFromServer(pageNumber);
+                    });                  
                 }                            
             }
         })

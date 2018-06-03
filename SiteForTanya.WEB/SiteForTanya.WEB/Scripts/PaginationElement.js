@@ -1,4 +1,4 @@
-﻿function getPaginationHtml(totalItemsCount, itemsCountOnPage)
+﻿function getPaginationHtml(totalItemsCount, itemsCountOnPage, pageNumber)
 {
     var html = '';
 
