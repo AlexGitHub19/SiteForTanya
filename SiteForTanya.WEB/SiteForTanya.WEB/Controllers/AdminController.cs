@@ -5,10 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SiteForTanya.WEB.Models;
-using SiteForTanya.WEB.Models.AdminVewModels;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -51,7 +51,16 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult AddSet()
         {
             ViewBag.ViewName = "AdminAddSet";
-            return View();
+            Repository<SetsInfo> repositorySetInfo = new Repository<SetsInfo>();
+            SetsInfo setInfo = repositorySetInfo.GetList().First();
+            if (setInfo.TempSetNumber == int.MaxValue)
+            {
+                setInfo.TempSetNumber = 0;
+            }
+            setInfo.TempSetNumber++;
+            int tempSetNumber = setInfo.TempSetNumber;
+            repositorySetInfo.Update(setInfo);
+            return View(tempSetNumber);
         }
 
         [HttpGet]
@@ -86,27 +95,46 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]       
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveSet(string setName, string setDescription, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, IEnumerable<HttpPostedFileBase> uploads)
+        public ActionResult SaveSet(string setName, string setDescription, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, string tempSetNumber)
         {           
-            string path = Server.MapPath("~/Content/Images/Sets/"+ setName);
-            DirectoryInfo setDirectory = new DirectoryInfo(path);
+            string setPath = Server.MapPath("~/Content/Images/Sets/"+ setName);
+            DirectoryInfo setDirectory = new DirectoryInfo(setPath);
             setDirectory.Create();
-            if (uploads != null)
+            //if (uploads != null)
+            //{
+            //    foreach (var file in uploads)
+            //    {
+            //        if (file != null)
+            //        {
+            //            string fileName = Path.GetFileName(file.FileName);
+            //            file.SaveAs(Server.MapPath("~/Content/Images/Sets/" + setName + "/" + fileName));
+            //        }
+            //    }
+            //}  
+            string tempDirectoryPath = Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber);
+            DirectoryInfo tempSetDirectory = new DirectoryInfo(tempDirectoryPath);
+            FileInfo[] images = tempSetDirectory.GetFiles();
+            foreach (FileInfo image in images)
             {
-                foreach (var file in uploads)
+                string fileName = image.Name.Substring(0, image.Name.LastIndexOf('.'));
+                if (resultHtmlWithoutNotResultElements.Contains(fileName))
                 {
-                    if (file != null)
-                    {
-                        string fileName = Path.GetFileName(file.FileName);
-                        file.SaveAs(Server.MapPath("~/Content/Images/Sets/" + setName + "/" + fileName));
-                    }
+                    image.MoveTo(setPath + "/" + image.Name);
                 }
-            }                        
+                else if (fileName == "ImageMainImage")
+                {
+                    changeMainImageSizeAndSaveToSetFolder(setPath + "/" + image.Name, image.FullName, 300, 450);
+                }
+            }
+            
+            tempSetDirectory.Delete(true);
+
             string html = resultHtmlWithoutNotResultElements.Replace("&lt;" , "<").Replace("&gt;" , ">");
 
             Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>();
             SetsInfo setsIfo = setsInfoRepository.GetList().First();
             string resultTags = String.Empty;
+            bool isSetInfoModified = false;
             if (!String.IsNullOrEmpty(setTags))
             {
                 string[] tagsList = setTags.Split(';');
@@ -126,8 +154,14 @@ namespace SiteForTanya.WEB.Controllers
                             setsIfo.AllTags += ",";
                         }
                         setsIfo.AllTags += tagsList[i].Trim().ToLower();
+                        isSetInfoModified = true;
                     }
                 }
+            }
+
+            if (isSetInfoModified)
+            {
+                setsInfoRepository.Update(setsIfo);
             }
 
             SetEntity set = new SetEntity { Name = setName, Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements, AddingTime = DateTime.Now, Description = setDescription };
@@ -137,6 +171,28 @@ namespace SiteForTanya.WEB.Controllers
             ViewBag.ViewName = "AdminSuccessfulSetSaving";
             ViewBag.Text = "Set is saved!";
             return View("ShowInfo");
+        }
+
+        private void changeMainImageSizeAndSaveToSetFolder(string newPath, string tempPath, int newHeight, int newWidth)
+        {
+            Image image = Image.FromFile(tempPath);
+            using (image)
+            {
+                Bitmap newImage = new Bitmap(newWidth, newHeight);
+                Graphics g = Graphics.FromImage(newImage);
+                g.InterpolationMode = InterpolationMode.High;
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+                newImage.Save(newPath);
+            }
+        }
+
+        public static Image resizeImage(Image image, int new_height, int new_width)
+        {
+            Bitmap new_image = new Bitmap(new_width, new_height);
+            Graphics g = Graphics.FromImage((Image)new_image);
+            g.InterpolationMode = InterpolationMode.High;
+            g.DrawImage(image, 0, 0, new_width, new_height);
+            return new_image;
         }
 
         [HttpPost]
@@ -176,6 +232,31 @@ namespace SiteForTanya.WEB.Controllers
                 var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
                 return Json(new { setNames = setNames, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public JsonResult UploadSetImage(int tempSetNumber, string imageNumber)
+        {
+            string path = Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber);
+            DirectoryInfo setDirectory = new DirectoryInfo(path);
+            if (!setDirectory.Exists)
+            {
+                setDirectory.Create();
+            }            
+
+            var uploadImage = Request.Files[0];
+            if (uploadImage != null)
+            {
+                // получаем имя файла
+                //string fileName = System.IO.Path.GetFileName(uploadImage.FileName);
+
+                string fileName = "Image" + imageNumber + uploadImage.FileName.Substring(uploadImage.FileName.LastIndexOf('.'));
+                // сохраняем файл в папку Files в проекте
+                uploadImage.SaveAs(Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber + "/" + fileName));
+            }
+            return Json("Ok");
         }
 
         [HttpPost]

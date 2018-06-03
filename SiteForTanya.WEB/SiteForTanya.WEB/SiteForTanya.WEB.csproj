@@ -359,6 +359,7 @@
     <Folder Include="Content\Home\" />
     <Folder Include="Content\Images\Images\" />
     <Folder Include="Content\Images\Sets\" />
+    <Folder Include="Content\Images\Temp\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

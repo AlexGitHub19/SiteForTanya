@@ -27,6 +27,11 @@
     margin-top: 23.5px;
 }
 
+#tempSetNumber {
+    display: none;
+}
+
+
 
 @media (max-width:768px){
 .setInfolabel {

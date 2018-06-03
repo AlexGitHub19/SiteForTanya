@@ -1,10 +1,11 @@
-﻿
+﻿@model int
 @{
     ViewBag.Title = "AddSet";
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <h2>Adding Set</h2>
+
 
 <div class="tokenContainer">
     @Html.AntiForgeryToken()
@@ -13,6 +14,20 @@
 @using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken();
+
+    <input id="tempSetNumber" name = "tempSetNumber" value="@Model"/>
+
+    <div id="setMainImageContainer" class="not-result">
+        <img id="setMainImage" class="image" />
+        <input id="inputFileMainImage" type="file" style="display:none" />
+        <label>Choose set main image: </label>
+        <i id="downloadsetMainImageBtnBeforeAdding" class="fa fa-picture-o fa-lg downloadImageBtnBeforeAddingImage" style="font-size:30px;" aria-hidden="true"></i>
+        <label> it will be resized to 300*450 px</label>
+        <div id="setMainImageblackout">
+            <i id="downloadsetMainImageBtnAfterAdding" class="fa fa-picture-o fa-lg downloadImageBtnAfterAddingImage" style="font-size:30px;" aria-hidden="true"></i>
+        </div>
+        @*<div id="setMainImageblackout"></div>*@
+    </div>
 
     <div class="row setInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -28,7 +43,7 @@
             <label id="setDescriptionLabel" class="setInfolabel">Enter Set's description: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea name="setDescription" rows="3" class="form-control setInfoInput"></textarea>
+            <textarea name="setDescription" rows="3" class="form-control setInfoInput" autocomplete="off"></textarea>
         </div>
     </div>
 
@@ -37,7 +52,7 @@
             <label id="setTagsLabel" class="setInfolabel">Enter Set's Tags: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea id ="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')"></textarea>
+            <textarea id ="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')" autocomplete="off"></textarea>
         </div>
     </div>
 
@@ -45,9 +60,6 @@
 
     <div id="pageHtml"></div>
 
-    @*<div>
-        <button id="addRowButton" class="my-btn btn" type="button">Add row</button>
-    </div>*@
     <input id="resultHtml" type="text" name="resultHtml"/>
     <input id="resultHtmlWithoutNotResultElements" type="text" name="resultHtmlWithoutNotResultElements" />
 
@@ -65,41 +77,63 @@
             setHeightForAllSettingsontainers();
         });
 
+        $('#downloadsetMainImageBtnBeforeAdding').click(function (e) {
+            $("#inputFileMainImage").click();
+        });
+
+        $('#setMainImageContainer').on('click', '.downloadImageBtnAfterAddingImage', function (e) {
+            $("#inputFileMainImage").click();
+        });
+
+        $('#inputFileMainImage').change(function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#setMainImage').attr('src', e.target.result);
+                $('#setMainImage').addClass('srcChanged');
+                $('#setMainImageContainer > label').remove();
+                $('#setMainImageContainer > #downloadsetMainImageBtnBeforeAdding').remove();
+                $('#setMainImageContainer > #setMainImageblackout').css('display', 'block');
+                $('#setMainImageContainer').append('<div id="imageLoadingAnimationMainImage" class ="imageLoadingAnimation"> <i class="fa fa-spinner fa-spin" style="font-size:70px"></i></div>');
+                sendImageToServer('MainImage');
+            }
+
+            reader.readAsDataURL(this.files[0]);
+
+        });
+
         $('#addRowButton').on('click', function (e) {
             $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow border mainRow">' +
                 '<i id="settigsBtn' + rowCount + '" class="fa fa-cog settingsBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
                 '<i id="splitRowBtn' + rowCount + '" class="fa fa-th-large splitRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
                 '<i id="deleteRowBtn' + rowCount + '" class="fa fa-trash-o deleteRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
                 '<i id="showBorderBtn' + rowCount + '" class="fa fa-window-maximize showBorderBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
-                '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding">' +
+                '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding clearfix">' +
                 getImageRowHtml() +
                 '</div>' +
                 '</div>');
             rowCount++;
             cellCount++;
-        })
+        });
 
-        function getImageRowHtml()
-        {
+        function getImageRowHtml() {
             return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding clearfix">' +
                    '<img id="image' + cellCount + '" class="image"/>' +
                    '<div id="settingsContainer' + cellCount + '" class ="settingsContainer not-result">' +
                    getSettingsRowHtml(cellCount) +
                    '</div>' +
                    '</div>';
-        }
+        };
 
-        function getSettingsRowHtml(cellNumber)
-        {
-            return '<input id="inputFile' + cellNumber + '" class="inputFile" type="file" name="uploads" style="display:none"/>' +
-                    '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtnBeforeAddingImage" style="font-size:30px; aria-hidden="true"></i>' +
+        function getSettingsRowHtml(cellNumber) {
+            return '<input id="inputFile' + cellNumber + '" class="inputFile" type="file" style="display:none"/>' +
+                    '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtnBeforeAddingImage" style="font-size:30px;" aria-hidden="true"></i>' +
                      '<div class="form-group">' +
                      '<label id="splitToRowsLabel' + cellNumber + '" class="splitToRowsLabel">split to rows</label>' +
                      '</div>' +
                      '<div class="form-group">' +
                      '<label id="splitToColumnsLabel' + cellNumber + '"class="splitToColumnsLabel">split to columns</label>' +
                      '</div>';
-        }
+        };
 
         $('#pageHtml').on('click', '.downloadImageBtn', function (e) {
             var cellNumber = getRowOrCellNumber(this);
@@ -114,17 +148,17 @@
         $('#pageHtml').on('click', '.floatLeftBtn', function (e) {
             var cellNumber = getRowOrCellNumber(this);
             $('#image' + cellNumber).css('float', 'left');
-        })
+        });
 
         $('#pageHtml').on('click', '.floatCentertBtn', function (e) {
             var cellNumber = getRowOrCellNumber(this);
             $('#image' + cellNumber).css('float', 'none');
-        })
+        });
 
         $('#pageHtml').on('click', '.floatRightBtn', function (e) {
             var cellNumber = getRowOrCellNumber(this);
             $('#image' + cellNumber).css('float', 'right');
-        })
+        });
 
 
         //$('#pageHtml').on('click', '.settingsBtn', function (e) {
@@ -225,15 +259,18 @@
             reader.onload = function (e) {
                 $('#image' + cellNumber).attr('src', e.target.result);
                 $('#image' + cellNumber).addClass('srcChanged');
+                $('#imageContainer' + cellNumber).append('<div id="imageLoadingAnimation' + cellNumber + '" class ="imageLoadingAnimation not-result"> <i class="fa fa-spinner fa-spin" style="font-size:70px"></i></div>');
+                sendImageToServer(cellNumber);
             }
-            reader.readAsDataURL(this.files[0]);
 
             reader.onloadend = function (e) {
                 setHeightForAllSettingsontainers();
             }
 
-            if(!$('#imageContainer' + cellNumber).hasClass('imageAdded'))
-            {
+            reader.readAsDataURL(this.files[0]);
+
+
+            if (!$('#imageContainer' + cellNumber).hasClass('imageAdded')) {
                 $('#settingsContainer' + cellNumber + ' > .downloadImageBtnBeforeAddingImage').remove();
                 $('#splitToRowsLabel' + cellNumber).parent().remove();
                 $('#splitToColumnsLabel' + cellNumber).parent().remove();
@@ -245,21 +282,18 @@
                 $('#imageContainer' + cellNumber).css('min-height', '1px');
             }
 
-        })
+        });
 
         $('#pageHtml').on('keypress', '.margin-input', function (e) {
             var code = e.keyCode || e.which;
-            if (code == 13)
-            {
+            if (code == 13) {
                 var cellNumber = getRowOrCellNumber(this);
-                if ($(this).hasClass('top'))
-                {
+                if ($(this).hasClass('top')) {
                     var margin = $(this).val();
                     $('#imageContainer' + cellNumber).css('margin-top', margin);
                     setHeightForAllSettingsontainers();
                 }
-                else if($(this).hasClass('left'))
-                {
+                else if ($(this).hasClass('left')) {
                     var margin = $(this).val();
                     $('#imageContainer' + cellNumber).css('margin-left', margin);
                 }
@@ -274,7 +308,7 @@
                 }
                 e.preventDefault();
             }
-        })
+        });
 
         $('#pageHtml').on('keypress', '.maxHeightInput', function (e) {
             var code = e.keyCode || e.which;
@@ -285,7 +319,7 @@
                 $('#image' + cellNumber).css('max-height', maxHeight + 'px');
                 setHeightForAllSettingsontainers();
             }
-        })
+        });
 
         $('#saveButton').on('click', function (e) {
             var setName = $('#setName').val();
@@ -331,79 +365,96 @@
 
         });
 
-        function changeSrcs(resultHtml, setName)
-        {
+        function sendImageToServer(cellNumber) {
+            var file = $('#inputFile' + cellNumber)[0].files[0];
+            var tempSetNumber = $('#tempSetNumber').val();
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                data.append("file", file);
+                data.append("__RequestVerificationToken", getAntiForgeryToken());
+                data.append("tempSetNumber", tempSetNumber);
+                data.append("imageNumber", cellNumber);
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("UploadSetImage", "Admin")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        $('#imageLoadingAnimation' + cellNumber).remove();
+                    },
+                    error: function (xhr, status, p3) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Your browser doesn't allow to upload files HTML5!");
+            }
+
+        };
+
+
+        function changeSrcs(resultHtml, setName) {
             resultHtml.find('.image').each(function (index, element) {
                 var cellNumber = getRowOrCellNumber(element);
-                if ($('#imageContainer' + cellNumber).hasClass('imageAdded'))
-                {
-                    var filename = $('#inputFile' + cellNumber)[0].files[0].name;
-                    $(element).attr('src', '/Content/Images/Sets/' + setName + '/' + filename);
+                if ($('#imageContainer' + cellNumber).hasClass('imageAdded')) {
+                    $(element).attr('src', '/Content/Images/Sets/' + setName + '/' + "Image" + cellNumber);
                 }
             });
             return resultHtml;
-        }
+        };
 
-        function getRowOrCellNumber(element)
-        {
+        function getRowOrCellNumber(element) {
             var id = $(element).attr('id');
             var number = 0;
 
-            if ($.isNumeric(id.substring(id.length - 6)))
-            {
+            if ($.isNumeric(id.substring(id.length - 6))) {
                 number = id.substring(id.length - 6);
             }
-            else if ($.isNumeric(id.substring(id.length - 5)))
-            {
+            else if ($.isNumeric(id.substring(id.length - 5))) {
                 number = id.substring(id.length - 5);
             }
-            else if ($.isNumeric(id.substring(id.length - 4)))
-            {
+            else if ($.isNumeric(id.substring(id.length - 4))) {
                 number = id.substring(id.length - 4);
             }
-            else if ($.isNumeric(id.substring(id.length - 3)))
-            {
+            else if ($.isNumeric(id.substring(id.length - 3))) {
                 number = id.substring(id.length - 3);
             }
-            else if ($.isNumeric(id.substring(id.length - 2)))
-            {
+            else if ($.isNumeric(id.substring(id.length - 2))) {
                 number = id.substring(id.length - 2);
             }
-            else
-            {
+            else {
                 number = id.substring(id.length - 1);
             }
             return number;
-        }
+        };
 
-        function encodeHtml(string)
-        {
+        function encodeHtml(string) {
             return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
+        };
 
-        function getHtmlForSettingsContainer(cellNumber)
-        {
+        function getHtmlForSettingsContainer(cellNumber) {
             return '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
                  '<div class="form-group">' +
                      '<label class="margin-label">margin-left: </label>' +
-                    '<input id="inputLeft' + cellNumber + '" name="SetMarginLeft" type="text" class="form-control margin-input left">' +
+                    '<input id="inputLeft' + cellNumber + '" name="SetMarginLeft" type="text" class="form-control margin-input left" autocomplete="off">' +
                  '</div> ' +
                  '<div class="form-group">' +
                      '<label class="margin-label">margin-top: </label>' +
-                     '<input id="inputTop' + cellNumber + '" name="SetMarginTop" type="text" class="form-control margin-input top">' +
+                     '<input id="inputTop' + cellNumber + '" name="SetMarginTop" type="text" class="form-control margin-input top" autocomplete="off">' +
                  '</div>' +
                  '<div class="form-group">' +
                      '<label class="margin-label ">margin-right: </label>' +
-                     '<input id="inputRight' + cellNumber + '" name="SetMarginRight" type="text" class="form-control margin-input right">' +
+                     '<input id="inputRight' + cellNumber + '" name="SetMarginRight" type="text" class="form-control margin-input right" autocomplete="off">' +
                  '</div>' +
                  '<div class="form-group">' +
                      '<label class="margin-label">margin-bot: </label>' +
-                     '<input id="inputBot' + cellNumber + '" name="SetMarginBot" type="text" class="form-control margin-input bot">' +
+                     '<input id="inputBot' + cellNumber + '" name="SetMarginBot" type="text" class="form-control margin-input bot" autocomplete="off">' +
                  '</div>' +
              '</div>' +
              '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">' +
                  '<div class="form-group">' +
-                     //'<input id="inputFile' + cellNumber + '" type="file" class="inputFile" name="uploads" style="display:none"/>' +
                      '<i id="downloadImageBtn' + cellNumber + '" class="fa fa-picture-o fa-lg downloadImageBtn" aria-hidden="true"></i>' +
                  '</div>' +
                  '<div class="form-group">' +
@@ -413,7 +464,7 @@
                  '</div>' +
                  '<div class="form-group">' +
                      '<label class="max-height-label">max-height: </label>' +
-                     '<input id="maxHeightInput' + cellNumber + '" type="text" class="form-control maxHeightInput">' +
+                     '<input id="maxHeightInput' + cellNumber + '" type="text" class="form-control maxHeightInput" autocomplete="off">' +
                  '</div>' +
                 '<div class="form-group">' +
                      '<label id="splitToRowsLabel' + cellNumber + '" class="splitToRowsLabel">split to rows</label>' +
@@ -422,20 +473,19 @@
                      '<label id="splitToColumnsLabel' + cellNumber + '"class="splitToColumnsLabel">split to columns</label>' +
                 '</div>' +
              '</div>';
-        }
+        };
 
         function getAntiForgeryToken() {
             return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
-        }
+        };
 
-        function setHeightForAllSettingsontainers()
-        {
+        function setHeightForAllSettingsontainers() {
             $('#pageHtml').find('.settingsContainer').each(function (index, element) {
                 var imageRow = $(element).parent().parent().parent();
                 var imageRowHeight = imageRow.height();
                 $(element).css('height', imageRowHeight);
             });
-        }
+        };
 
     });
 </script>

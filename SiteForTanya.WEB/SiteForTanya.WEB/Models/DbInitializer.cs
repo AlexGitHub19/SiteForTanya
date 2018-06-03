@@ -25,7 +25,7 @@ namespace SiteForTanya.WEB.Models
             imageInfoRepository.Create(new ImagesInfo { AllTags = String.Empty});
 
             Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>(context);
-            setsInfoRepository.Create(new SetsInfo { AllTags = String.Empty });
+            setsInfoRepository.Create(new SetsInfo { AllTags = String.Empty } );
 
             // если создание пользователя прошло успешно
             base.Seed(context);

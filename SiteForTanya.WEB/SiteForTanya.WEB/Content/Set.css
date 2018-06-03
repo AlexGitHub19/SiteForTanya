@@ -32,6 +32,7 @@
     opacity:0;
     transition: opacity 0.3s;
     color: white;
+    z-index:2;
 }
 
 
@@ -115,6 +116,12 @@
     margin-bottom:5px;
 }
 
+.downloadImageBtnAfterAddingImage {
+    cursor: pointer;
+    margin-top:60px;
+}
+
+
 .downloadImageBtn, .floatLeftBtn, .floatCentertBtn, .floatRightBtn {
     cursor: pointer;
 }
@@ -136,6 +143,39 @@ label {
     margin-left:30px;
 }
 
+.imageLoadingAnimation {
+    position:absolute;
+    top:0;
+    width:100%;
+    height: 100%;
+    padding-top:3%;
+    z-index:1;
+    color:white;
+}
+
+
+#setMainImageContainer {
+    position:relative;
+    margin-bottom:30px;
+}
+
+#setMainImageContainer:hover #setMainImageblackout {
+        opacity:0.7;
+    }
+
+#setMainImageblackout {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background-color:black;
+    opacity:0;
+    transition: opacity 0.3s;
+    color: white;
+    z-index:2;
+    display:none;
+}
 
 
 
