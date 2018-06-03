@@ -1,192 +1,98 @@
-﻿.image {
-    max-width: 100%;
-    max-height: 150px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-.imageContainer {
-    background-size: cover;
-    min-height:100px;
-}
-
-.imageRow {
+﻿.setContainer {
+    padding-left:20px;
+    padding-right:20px;
+    margin-bottom:25px;
     position:relative;
 }
-
-/*.imageAndSettingsContainer {
+.relativeClass {
+    display:inline-block;
     position: relative;
-    display:inline-block;
-}*/
+    background-color:black;
+}
 
-    .imageContainer:hover .settingsContainer {
-        opacity:0.7;
+.image {
+    max-width: 100%;
+    max-height:100%;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    opacity:0.7;
+    -webkit-transition: opacity 0.35s;
+	transition: opacity 0.35s;
+}
+
+#pageName {
+    width:100%;
+    height: 70px;
+    background-color:#f4f1e4; 
+    margin-top:50px;
+    margin-bottom:50px;
+    padding-top:22px;
+}
+
+    #pageName h2 {
+        margin:0px;
     }
 
-.settingsContainer {
+#existingSets {
+    margin-top:20px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.setName {
     position: absolute;
     top:0;
     left:0;
-    width:100%;
     height:100%;
-    background-color:black;
-    opacity:0;
-    transition: opacity 0.3s;
-    color: white;
-    z-index:2;
-}
-
-
-.settingsRow {
-    background-color:#f4f1e4;
-}
-
-#pageHtml {
-    margin-top:20px;
-}
-
-.margin-input, .maxHeightInput {
-    display:inline;
-    width:60px;
-    height:18px;
-    margin-left:5px;
-    padding:6px;
-}
-
-.margin-label {
-    text-align: right;
-    width:100px;
-}
-
-.row {
-    margin-right: 0px;
-    margin-left: 0px;
-}
-
-.settingsBtn {
-    position: absolute;
-    top:0;
-    right: -22px;
-    cursor: pointer;
-    z-index:100;
-}
-
-.splitRowBtn {
-    position: absolute;
-    top:0;
-    right: -22px;
-    margin-top: 25px;
-    cursor: pointer;
-    z-index:100;
-}
-
-.showBorderBtn {
-    position: absolute;
-    top:0;
-    right: -23px;
-    margin-top: 50px;
-    cursor: pointer;
-    z-index:100;
-}
-
-.deleteRowBtn {
-    position: absolute;
-    top:0;
-    right: -21px;
-    margin-top: 75px;
-    cursor: pointer;
-    z-index:100;
-}
-
-.border {
-    border-width:1px;
-    border-style:solid;
-}
-
-.floatContainer {
-    display:inline-block;
-}
-
-.marg-r {
-    margin-right:10px;
-}
-
-.downloadImageBtnBeforeAddingImage {
-    cursor: pointer;
-    margin-top:20px;
-    margin-bottom:5px;
-}
-
-.downloadImageBtnAfterAddingImage {
-    cursor: pointer;
-    margin-top:60px;
-}
-
-
-.downloadImageBtn, .floatLeftBtn, .floatCentertBtn, .floatRightBtn {
-    cursor: pointer;
-}
-
-label {
-    margin-bottom:0px;
-}
-
-.noPadding {
-    padding:0px;
-}
-
-.splitToRowsLabel, .splitToColumnsLabel {
-    cursor: pointer;
-}
-
-.mainRow {
-    margin-right:30px;
-    margin-left:30px;
-}
-
-.imageLoadingAnimation {
-    position:absolute;
-    top:0;
     width:100%;
-    height: 100%;
-    padding-top:3%;
-    z-index:1;
-    color:white;
 }
 
-
-#setMainImageContainer {
-    position:relative;
-    margin-bottom:30px;
+.setName h2 {
+    margin-left:0px;
+    margin-right:0px;
+    margin-bottom:0px;
+    margin-top:20%;
+    color: white;
+    text-transform: uppercase;
+    -webkit-transition: -webkit-transform 0.35s;
+	transition: transform 0.35s;
+	-webkit-transform: translate3d(0,20px,0);
+	transform: translate3d(0,20px,0);
 }
 
-#setMainImageContainer:hover #setMainImageblackout {
-        opacity:0.7;
-    }
+.setName p {
+    margin-left:0px;
+    margin-right:0px;
+    margin-bottom:0px;
+    margin-top:5%;
+    color: white;
+    opacity: 0;
+    font-size:16px;
+	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	transition: opacity 0.35s, transform 0.35s;
+	-webkit-transform: translate3d(0,100px,0);
+	transform: translate3d(0,100px,0);
+}
 
-#setMainImageblackout {
+.relativeClass:hover h2 {
+	-webkit-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+
+.relativeClass:hover p {
+	opacity: 1;
+	-webkit-transform: translate3d(0,0,0) scale(1);
+	transform: translate3d(0,0,0) scale(1);
+}
+.relativeClass:hover .image {
+    opacity:0.2;
+}
+
+/*.blackoutAnimation {
     position: absolute;
     top:0;
     left:0;
+    height:100%;
     width:100%;
-    height: 100%;
     background-color:black;
-    opacity:0;
-    transition: opacity 0.3s;
-    color: white;
-    z-index:2;
-    display:none;
-}
-
-
-
-@media (max-width:768px){
-.control-label {
-    text-align: center;
-    float:none;
-}
-
-.form-control{
-    display:initial;
-}
-
-}
+    Z-index:2;
+}*/

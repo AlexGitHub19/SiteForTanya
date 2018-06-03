@@ -22,7 +22,14 @@ body {
   overflow-x: hidden;
   position: relative;
   padding: 0px;
-  font-size:12px;
+  font-size:14px;
+  font-family:'Raleway', Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+h2 {
+  font-size:25px;
+  font-family:'Raleway', Arial, sans-serif;
 }
 input {
     font-size:12px;
@@ -31,11 +38,9 @@ input {
     margin-bottom: 2px;
 }
 .my-btn {
-    font-size:12px;
     background-color: #f4f1e4;
     color: black;
     border-color: black;
-    height:32px;
 }
     .my-btn:hover {
         background-color: #ccc3a1;
@@ -116,7 +121,7 @@ input {
   position: absolute;
   height: 3px;
   width: 100%;
-  background: #b1f1de;
+  background: black;
   border-radius: 10px;
   opacity: 1;
   left: 0;

@@ -63,54 +63,44 @@ namespace SiteForTanya.WEB.Controllers
             return View(tempSetNumber);
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult DeleteSet()
-        {
-            ViewBag.ViewName = "AdminDeleteSet";
-            Repository<SetEntity> repository = new Repository<SetEntity>();
-            IEnumerable<SetEntity> sets =  repository.GetList();
-            List<string> names = sets.Select(set=>set.Name).ToList();
-            SelectList setNames = new SelectList(names);
-            return View(setNames);
-        }
+        //[HttpGet]
+        //[Authorize]
+        //public ActionResult DeleteSet()
+        //{
+        //    ViewBag.ViewName = "AdminDeleteSet";
+        //    Repository<SetEntity> repository = new Repository<SetEntity>();
+        //    IEnumerable<SetEntity> sets =  repository.GetList();
+        //    List<string> names = sets.Select(set=>set.Name).ToList();
+        //    SelectList setNames = new SelectList(names);
+        //    return View(setNames);
+        //}
 
-        [HttpPost]
-        [Authorize]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteSet(string setName)
-        {
-            Repository<SetEntity> repository = new Repository<SetEntity>();
-            SetEntity set = repository.GetList().Where(s => s.Name == setName).FirstOrDefault();
-            repository.Delete(set.Id);
+        //[HttpPost]
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteSet(string setName)
+        //{
+        //    Repository<SetEntity> repository = new Repository<SetEntity>();
+        //    SetEntity set = repository.GetList().Where(s => s.Name == setName).FirstOrDefault();
+        //    repository.Delete(set.Id);
 
-            string path = Server.MapPath("~/Content/Images/Sets/" + setName);
-            DirectoryInfo setDirectory = new DirectoryInfo(path);
-            setDirectory.Delete(true);
+        //    string path = Server.MapPath("~/Content/Images/Sets/" + setName);
+        //    DirectoryInfo setDirectory = new DirectoryInfo(path);
+        //    setDirectory.Delete(true);
 
-            ViewBag.Text = "Set is Deleted!";
-            return View("ShowInfo");
-        }
+        //    ViewBag.Text = "Set is Deleted!";
+        //    return View("ShowInfo");
+        //}
 
         [HttpPost]       
         [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult SaveSet(string setName, string setDescription, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, string tempSetNumber)
-        {           
-            string setPath = Server.MapPath("~/Content/Images/Sets/"+ setName);
+        {
+            string mainImageName = null;    
+            string setPath = Server.MapPath("~/Content/Images/Sets/"+ setName.Trim());
             DirectoryInfo setDirectory = new DirectoryInfo(setPath);
-            setDirectory.Create();
-            //if (uploads != null)
-            //{
-            //    foreach (var file in uploads)
-            //    {
-            //        if (file != null)
-            //        {
-            //            string fileName = Path.GetFileName(file.FileName);
-            //            file.SaveAs(Server.MapPath("~/Content/Images/Sets/" + setName + "/" + fileName));
-            //        }
-            //    }
-            //}  
+            setDirectory.Create(); 
             string tempDirectoryPath = Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber);
             DirectoryInfo tempSetDirectory = new DirectoryInfo(tempDirectoryPath);
             FileInfo[] images = tempSetDirectory.GetFiles();
@@ -123,6 +113,7 @@ namespace SiteForTanya.WEB.Controllers
                 }
                 else if (fileName == "ImageMainImage")
                 {
+                    mainImageName = image.Name;
                     changeMainImageSizeAndSaveToSetFolder(setPath + "/" + image.Name, image.FullName, 300, 450);
                 }
             }
@@ -164,7 +155,8 @@ namespace SiteForTanya.WEB.Controllers
                 setsInfoRepository.Update(setsIfo);
             }
 
-            SetEntity set = new SetEntity { Name = setName, Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements, AddingTime = DateTime.Now, Description = setDescription };
+            SetEntity set = new SetEntity { Name = setName.Trim(), Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements,
+                Tags = resultTags, Description = setDescription, AddingTime = DateTime.Now, MainImageName = mainImageName};
             Repository<SetEntity> repository = new Repository<SetEntity>();
             repository.Create(set);
             ViewBag.Alex = html;
@@ -186,21 +178,12 @@ namespace SiteForTanya.WEB.Controllers
             }
         }
 
-        public static Image resizeImage(Image image, int new_height, int new_width)
-        {
-            Bitmap new_image = new Bitmap(new_width, new_height);
-            Graphics g = Graphics.FromImage((Image)new_image);
-            g.InterpolationMode = InterpolationMode.High;
-            g.DrawImage(image, 0, 0, new_width, new_height);
-            return new_image;
-        }
-
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult CheckSetName(string setName)
         {
-            string path = Server.MapPath("~/Content/Images/Sets/" + setName);
+            string path = Server.MapPath("~/Content/Images/Sets/" + setName.Trim());
             DirectoryInfo setDirectory = new DirectoryInfo(path);
             if (setDirectory.Exists)
             {
@@ -222,15 +205,15 @@ namespace SiteForTanya.WEB.Controllers
             if (keyWords == String.Empty)
             {
                 var allSets = setEntityRepository.GetList();
-                var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
-                return Json(new { setNames = setNames, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
+                var sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { setName = set.Name, mainImageName = set.MainImageName });
+                return Json(new { sets = sets, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
             else
             {
                 List<string> words = keyWords.Split(' ').ToList();
                 var allSets = setEntityRepository.GetList().Where(set => TagContainsWord(set, words));
-                var setNames = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { value = set.Name });
-                return Json(new { setNames = setNames, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
+                var sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { setName = set.Name, mainImageName = set.MainImageName });
+                return Json(new { sets = sets, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -410,22 +393,82 @@ namespace SiteForTanya.WEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteImage(string imageName)
         {
-            Repository<ImageEntity> imageInfoRepository = new Repository<ImageEntity>();
+            Repository<ImageEntity> imageRepository = new Repository<ImageEntity>();
 
-            ImageEntity image = imageInfoRepository.GetList().Where(img => img.Name.Substring(0, img.Name.IndexOf('.')) == imageName).FirstOrDefault();
+            ImageEntity image = imageRepository.GetList().Where(img => img.Name.Substring(0, img.Name.IndexOf('.')) == imageName).FirstOrDefault();
             if (image != null)
             {
-                imageInfoRepository.Delete(image.Id);
+                imageRepository.Delete(image.Id);
                 string strFileFullPath = Server.MapPath("~/Content/Images/Images/" + image.Name);
                 if (System.IO.File.Exists(strFileFullPath))
                 {
                     System.IO.File.Delete(strFileFullPath);
                 }
 
+                if (!String.IsNullOrEmpty(image.Tags))
+                {
+                    recalculateAllTags<ImagesInfo>(imageRepository.GetList());
+                }
+
                 return Json(new { result = "Success"}, JsonRequestBehavior.AllowGet);
             }
 
             return Json(new {result = "Fail"}, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteSet(string setName)
+        {
+            Repository<SetEntity> setsRepository = new Repository<SetEntity>();
+            
+            SetEntity set = setsRepository.GetList().Where(s => s.Name == setName).FirstOrDefault();
+            if (set != null)
+            {
+                setsRepository.Delete(set.Id);
+                string setDirectoryPath = Server.MapPath("~/Content/Images/Sets/" + setName);
+                if (Directory.Exists(setDirectoryPath))
+                {
+                    Directory.Delete(setDirectoryPath, true);
+                }
+
+                if (!String.IsNullOrEmpty(set.Tags))
+                {
+                    recalculateAllTags<SetsInfo>(setsRepository.GetList());
+                }
+                return Json(new { result = "Success" }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result = "Fail" }, JsonRequestBehavior.AllowGet);
+        }
+
+        private void recalculateAllTags<T>(IEnumerable<IEntity> entities) where T:class, IEntityInfo
+        {
+            Repository<T> entityInfoRepository = new Repository<T>();
+            T entityInfo = entityInfoRepository.GetList().First();
+            string resultAllTags = String.Empty;
+            foreach (IEntity entity in entities)
+            {
+                if (!String.IsNullOrEmpty(entity.Tags))
+                {
+                    string[] tagsList = entity.Tags.Split(',');
+                    for (int i = 0; i < tagsList.Length; i++)
+                    {
+                        if (!resultAllTags.Contains(tagsList[i]))
+                        {
+                            if (resultAllTags != String.Empty)
+                            {
+                                resultAllTags += ",";
+                            }
+                            resultAllTags += tagsList[i];
+                        }
+                    }
+                }
+            }
+
+            entityInfo.AllTags = resultAllTags;
+            entityInfoRepository.Update(entityInfo);
         }
 
     }

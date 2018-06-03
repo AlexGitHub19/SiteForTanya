@@ -40,3 +40,65 @@
 .no-padding {
     padding:0
 }
+
+.setInfo {
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #f4f1e4;
+    height:0px;
+    width:100%;
+    overflow:hidden;
+    transition: height 0.4s;
+    z-index: 5;
+}
+    .setInfo p {
+        margin-top:8px;
+        margin-bottom:3px;
+    }
+
+.relativeClass:hover .setInfo {
+    height: 60px;
+}
+
+.deletingAnimation {
+    position:absolute;
+    top:0;
+    right: 0;
+    height:100%;
+    width:100%;
+    background-color: black;
+    color: white;
+    padding-top:20%;
+    display:none;
+    z-index:6;
+}
+
+    .deletingAnimation p {
+        margin-top:12%;
+    }
+
+.deleteSetBtn {
+    margin-top: 20px;
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.settingsSetBtn {
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.confirmDeleteBtn {
+    margin-right:72px;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    cursor: pointer;
+}
+
+.confirmChangeBtn {
+    margin-right:72px;
+    cursor: pointer;
+}

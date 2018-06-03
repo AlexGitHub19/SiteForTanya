@@ -31,6 +31,179 @@
     display: none;
 }
 
+.image {
+    max-width: 100%;
+    max-height: 150px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.imageContainer {
+    background-size: cover;
+    min-height:100px;
+}
+
+    .imageContainer:hover .settingsContainer {
+        opacity:0.7;
+    }
+
+.imageRow {
+    position:relative;
+}
+
+.settingsContainer {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:black;
+    opacity:0;
+    transition: opacity 0.3s;
+    color: white;
+    z-index:2;
+}
+
+
+.settingsRow {
+    background-color:#f4f1e4;
+}
+
+#pageHtml {
+    margin-top:20px;
+}
+
+.margin-input, .maxHeightInput {
+    display:inline;
+    width:60px;
+    height:18px;
+    margin-left:5px;
+    padding:6px;
+}
+
+.margin-label {
+    text-align: right;
+    width:100px;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.settingsBtn {
+    position: absolute;
+    top:0;
+    right: -22px;
+    cursor: pointer;
+    z-index:100;
+}
+
+.splitRowBtn {
+    position: absolute;
+    top:0;
+    right: -22px;
+    margin-top: 25px;
+    cursor: pointer;
+    z-index:100;
+}
+
+.showBorderBtn {
+    position: absolute;
+    top:0;
+    right: -23px;
+    margin-top: 50px;
+    cursor: pointer;
+    z-index:100;
+}
+
+.deleteRowBtn {
+    position: absolute;
+    top:0;
+    right: -21px;
+    margin-top: 75px;
+    cursor: pointer;
+    z-index:100;
+}
+
+.border {
+    border-width:1px;
+    border-style:solid;
+}
+
+.floatContainer {
+    display:inline-block;
+}
+
+.marg-r {
+    margin-right:10px;
+}
+
+.downloadImageBtnBeforeAddingImage {
+    cursor: pointer;
+    margin-top:20px;
+    margin-bottom:5px;
+}
+
+.downloadImageBtnAfterAddingImage {
+    cursor: pointer;
+    margin-top:60px;
+}
+
+
+.downloadImageBtn, .floatLeftBtn, .floatCentertBtn, .floatRightBtn {
+    cursor: pointer;
+}
+
+label {
+    margin-bottom:0px;
+}
+
+.noPadding {
+    padding:0px;
+}
+
+.splitToRowsLabel, .splitToColumnsLabel {
+    cursor: pointer;
+}
+
+.mainRow {
+    margin-right:30px;
+    margin-left:30px;
+}
+
+.imageLoadingAnimation {
+    position:absolute;
+    top:0;
+    width:100%;
+    height: 100%;
+    padding-top:3%;
+    z-index:1;
+    color:white;
+}
+
+
+#setMainImageContainer {
+    position:relative;
+    margin-bottom:30px;
+}
+
+#setMainImageContainer:hover #setMainImageblackout {
+        opacity:0.7;
+    }
+
+#setMainImageblackout {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height: 100%;
+    background-color:black;
+    opacity:0;
+    transition: opacity 0.3s;
+    color: white;
+    z-index:2;
+    display:none;
+}
 
 
 @media (max-width:768px){

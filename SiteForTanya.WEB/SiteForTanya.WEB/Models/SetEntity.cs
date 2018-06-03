@@ -14,5 +14,6 @@ namespace SiteForTanya.WEB.Models
         public string Description { get; set; }
         public string Tags { get; set; }
         public DateTime AddingTime { get; set; }
+        public string MainImageName { get; set; }
     }
 }

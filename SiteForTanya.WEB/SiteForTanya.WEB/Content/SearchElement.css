@@ -11,12 +11,14 @@
     padding-right:40px;
     border-radius:23px;
     max-width:500px;
+    min-width:206px;
 }
 
 #searchBtn {
     border-radius:23px;
     height:45px;
     width:60px;
+    display:inline;
 }
 
 #itemsCountContainer {
@@ -49,4 +51,100 @@
     right:5px;
      margin-top:2px;
 }
+
+#searchInfoContainer {
+    display:inline-block;
+}
+
+
+ul#menu, ul#menu ul{
+  list-style:none;
+  margin: 0px;
+  padding: 0px;
+  width: 250px;
+  -webkit-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
+  -moz-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
+  box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.2);}
+ul#menu a,ul#menu span{display: block; text-decoration: none;}
+ul#menu li {margin-top: 1px;}
+ul#menu li a,ul#menu li span{
+  background: #1ba600;
+  color: #fff;
+  padding: 7px;}
+ul#menu li a:hover,ul#menu li span:hover{background: #333;}
+ul#menu li ul li a{
+  background: #eee;
+  color: #000;
+  padding-left: 20px;}
+ul#menu li ul li a:hover{background: #ddd;}
+#sd {
+    position:absolute;
+    z-index:100;
+}
+
+ .ui-autocomplete {
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px;
+}
+
+.ui-state-hover, .ui-state-active {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #f4f1e4;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    background-image: none;
+    font-size:16px;
+}
+
+
+.ui-menu-item-wrapper {
+    border-radius:10px;
+}
+
+
+
+
+@media (max-width:801px) {
+
+    #searchInput {
+        max-width:70%;
+    }
+}
+
+@media (max-width:730px) {
+
+    #searchInput {
+        max-width:65%;
+    }
+}
+
+@media (max-width:643px) {
+
+    #searchInput {
+        max-width:60%;
+    }
+}
+
+@media (max-width:576px) {
+
+    #itemsCountBtn {
+        margin-top:10px;
+    }
+
+    #searchInfoContainer label {
+        margin-top:10px;
+    }
+}
+
 

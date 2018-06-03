@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SiteForTanya.WEB.Models
 {
-    public class ImagesInfo
+    public class ImagesInfo: IEntityInfo
     {
         public int Id { get; set; }
         public string AllTags { get; set; }

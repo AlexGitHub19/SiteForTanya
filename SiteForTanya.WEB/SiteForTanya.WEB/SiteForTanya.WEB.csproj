@@ -208,6 +208,7 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\IEntity.cs" />
+    <Compile Include="Models\IEntityInfo.cs" />
     <Compile Include="Models\ImageEntity.cs" />
     <Compile Include="Models\ImagesInfo.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />

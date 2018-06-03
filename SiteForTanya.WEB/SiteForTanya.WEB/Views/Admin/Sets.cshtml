@@ -8,30 +8,36 @@
     @Html.AntiForgeryToken()
 </div>
 
+<div id="pageName"><h2 class="setNameText">SETS</h2></div>
 <div>
     <div id="itemSeacher">
         <input id="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("SetsAutocompleteSearch", "Admin")">
         <button id="searchBtn" class="my-btn btn">
             <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
         </button>
-        <label>Show: </label>
-        <div id="itemsCountContainer">
-            <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
-                7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
-            </button>
-            <div id="hiddden-ImageCount">
-                <div>
-                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
-                </div>
-                <div>
-                    <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
+        <div id="searchInfoContainer">
+            <label>Show </label>
+            <div id="itemsCountContainer">
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
+                    7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <div id="hiddden-ImageCount">
+                    <div>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
+                    </div>
+                    <div>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
+
+<div id="existingSets"></div>
+
+<div id="pagination"></div>
 
 
 
@@ -58,11 +64,6 @@
     </div>
 </div>
 
-<div id="existingSets"></div>
-
-<div id="pagination"></div>
-
-
 <div id="loadingAnimation" style="display:none">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
@@ -82,10 +83,10 @@
         showLoadingAnimation();
         getSetNamesFromServer(1);
 
-        //$('#searchBtn').bind('click', function () {
-        //    showLoadingAnimation();
-        //    getImagNamesFromServer(1);
-        //});
+        $('#searchBtn').bind('click', function () {
+            showLoadingAnimation();
+            getSetNamesFromServer(1);
+        });
 
 
         function getSetNamesFromServer(pageNumber) {
@@ -116,8 +117,8 @@
         function fillSets(result) {
             if (result.setsCount == 0)
             {
-                $('#existingSets').css('margin-top', '70px');
-                $('#existingSets').css('margin-bottom', '50px');
+                $('#existingSets').css('margin-top', '20px');
+                $('#existingSets').css('margin-bottom', '0px');
                 $('#existingSets').html('<h4>No sets are found by this search criteria</h4>');
                 return;
             }
@@ -125,28 +126,31 @@
             var html = '';
             var count = 0;
             //var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
-            while (count < result.setNames.length) {
-                var endValue = count + 4;
-                if (count + 4 > result.setNames.length) {
-                    endValue = result.setNames.length;
+            while (count < result.sets.length) {
+                var endValue = count + 2;
+                if (count + 2 > result.sets.length) {
+                    endValue = result.sets.length;
                 }
                 var setArray = new Array(0);
                 for (var i = count; i < endValue; i++) {
-                    setArray.push(result.setNames[i].value);
+                    setArray.push(result.sets[i]);
                 }
-                html += '<div class="row existingImagesRow">';
+                html += '<div class="row existingItemsRow">';
                 for (var i = 0; i < setArray.length; i++) {
-                    var id = setArray[i].substring(0, setArray[i].indexOf('.'));
-                    html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + setArray[i] + '" class="image" />' +
-                        '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
-                        '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
-                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
+                    var id = setArray[i].setName;
+                    html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 setContainer">' +
+                        '<div class="relativeClass clearfix">' +
+                        //'<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
+                        '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" />' +
+                        '<div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div>' +
+                        '<div id="setInfo-' + id + '" class ="setInfo"><i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                        '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i></div>' +
+                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:80px"></i></div>' +
                         '</div>' +
                         '</div>';
                 }
                 html += '</div>';
-                count += 4;
+                count += 2;
             }
             $('#existingSets').css('margin-top', '20px');
             $('#existingSets').css('margin-bottom', '0px');
@@ -169,16 +173,16 @@
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
-            showLoadingAnimation;
-            getImagNamesFromServer(pageNumber);
+            showLoadingAnimation();
+            getSetNamesFromServer(pageNumber);
         })
 
         $('#pagination').on('click', '.paginationBtn', function (e) {
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
-            showLoadingAnimation;
-            getImagNamesFromServer(pageNumber);
+            showLoadingAnimation();
+            getSetNamesFromServer(pageNumber);
         })
 
         $('#pagination').on('click', '#nextBtn', function (e) {
@@ -192,8 +196,8 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation;
-            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+            showLoadingAnimation();
+            getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
         })
 
         $('#pagination').on('click', '#prevBtn', function (e) {
@@ -204,8 +208,8 @@
                 e.preventDefault();
                 return;
             }
-            showLoadingAnimation;
-            getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            showLoadingAnimation();
+            getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
         })
 
         $('#searchInput').autocomplete({
@@ -252,7 +256,7 @@
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
             showLoadingAnimation();
-            getImagNamesFromServer(1);
+            getSetNamesFromServer(1);
         })
 
         $('#pagination').on('keypress', '#inputGoToPage', function (e) {
@@ -261,9 +265,79 @@
                 var pageNumber = parseInt($(this).val());
                 if (!isNaN(pageNumber)) {
                     showLoadingAnimation();
-                    getImagNamesFromServer(pageNumber);
+                    getSetNamesFromServer(pageNumber);
                 }
             }
+        })
+
+        $('#existingSets').on('click', '.deleteSetBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var finalId = id.substring(hyphenId + 1);
+            var html = '<p>CONFIRM DELETING</p>' +
+                       '<i id="confirmDeleteBtn-' + finalId + '" style="font-size:28px;" class="fa fa-check confirmDeleteBtn" aria-hidden="true"></i>' +
+                       '<i id="cancelBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelBtn" aria-hidden="true"></i>';
+
+            $(this).parent().html(html);
+        })
+
+        $('#existingSets').on('click', '.settingsSetBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var finalId = id.substring(hyphenId + 1);
+            var html = '<p>CONFIRM CHANGING</p>' +
+                       '<i id="confirmChangeBtn-' + finalId + '" style="font-size:28px;" class="fa fa-check confirmChangeBtn" aria-hidden="true"></i>' +
+                       '<i id="cancelBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelBtn" aria-hidden="true"></i>';
+
+            $(this).parent().html(html);
+        })
+
+        $('#existingSets').on('click', '.cancelBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var setId = id.substring(hyphenId + 1);
+            var html = '<i id="deleteSetBtn-' + setId + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                       '<i id="settingsSetBtn-' + setId + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i>';
+            $(this).parent().html(html);
+        })
+
+
+        $('#existingSets').on('mouseleave', '.setContainer', function (e) {
+            var id = $(this).attr('id');
+            var html = '<i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                       '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i>';
+            $(this).find('.setInfo').html(html);
+        })
+
+        $('#existingSets').on('click', '.confirmDeleteBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var setId = id.substring(hyphenId + 1);
+            $('[id="deletingAnimation-'+ setId+'"]').fadeIn('slow', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("DeleteSet", "Admin")',
+                    data: { __RequestVerificationToken: getAntiForgeryToken(), setName: setId },
+                    success: function (result) {
+                        if (result.result == "Success") {
+                            $('[id="deletingAnimation-'+ setId+'"]').html('<p>SET IS DELETED</p>');
+                            setTimeout(function () {
+                                showLoadingAnimation();
+                                getSetNamesFromServer(1);
+                            }, 2000);
+                        }
+                        else {
+                            $('#deletingAnimation-' + setId).html('<p>DELETING FAIL</p>');
+                            setTimeout(function () {
+                                $('#deletingAnimation-' + setId).fadeOut('slow');
+                            }, 2000);
+                        }
+                    },
+                    error: function (xhr, status, p3) {
+                        alert('error');
+                    }
+                });
+            });
         })
 
     });
