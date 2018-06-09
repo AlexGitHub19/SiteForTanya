@@ -61,6 +61,10 @@
     height: 60px;
 }
 
+.hiddenLink {
+    display: none;
+}
+
 .deletingAnimation {
     position:absolute;
     top:0;

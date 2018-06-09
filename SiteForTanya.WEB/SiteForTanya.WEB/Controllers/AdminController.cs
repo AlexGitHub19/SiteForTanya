@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SiteForTanya.WEB.Models;
+using SiteForTanya.WEB.Models.AdminVewModels;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Drawing;
@@ -63,39 +64,136 @@ namespace SiteForTanya.WEB.Controllers
             return View(tempSetNumber);
         }
 
-        //[HttpGet]
-        //[Authorize]
-        //public ActionResult DeleteSet()
-        //{
-        //    ViewBag.ViewName = "AdminDeleteSet";
-        //    Repository<SetEntity> repository = new Repository<SetEntity>();
-        //    IEnumerable<SetEntity> sets =  repository.GetList();
-        //    List<string> names = sets.Select(set=>set.Name).ToList();
-        //    SelectList setNames = new SelectList(names);
-        //    return View(setNames);
-        //}
+        [HttpGet]
+        [Authorize]
+        public ActionResult ChangeSet(string setName)
+        {
+            ViewBag.ViewName = "AdminChangeSet";
 
-        //[HttpPost]
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteSet(string setName)
-        //{
-        //    Repository<SetEntity> repository = new Repository<SetEntity>();
-        //    SetEntity set = repository.GetList().Where(s => s.Name == setName).FirstOrDefault();
-        //    repository.Delete(set.Id);
+            AdminChangeSetViewModel viewModel = new AdminChangeSetViewModel();
+            Repository<SetsInfo> repositorySetInfo = new Repository<SetsInfo>();
+            SetsInfo setInfo = repositorySetInfo.GetList().First();
+            if (setInfo.TempSetNumber == int.MaxValue)
+            {
+                setInfo.TempSetNumber = 0;
+            }
+            setInfo.TempSetNumber++;
+            repositorySetInfo.Update(setInfo);
 
-        //    string path = Server.MapPath("~/Content/Images/Sets/" + setName);
-        //    DirectoryInfo setDirectory = new DirectoryInfo(path);
-        //    setDirectory.Delete(true);
+            Repository<SetEntity> setEntityRepository = new Repository<SetEntity>();
+            SetEntity set = setEntityRepository.GetList().Where(s => s.Name == setName).First();
 
-        //    ViewBag.Text = "Set is Deleted!";
-        //    return View("ShowInfo");
-        //}
+            string setPath = Server.MapPath("~/Content/Images/Sets/" + set.Name);
+            DirectoryInfo setDirectory = new DirectoryInfo(setPath);
+            FileInfo[] images = setDirectory.GetFiles();
+            foreach (FileInfo image in images)
+            {
+                if (image.Name.Contains("ImageMainImage"))
+                {
+                    viewModel.MainImageName = image.Name;
+                    break;
+                }
+            }
+
+            viewModel.TempSetNumber = setInfo.TempSetNumber;
+            viewModel.SetName = set.Name;
+            viewModel.Html = set.Html;
+            viewModel.Tags = set.Tags.Replace("," , ";");
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeSet(string setName, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, string tempSetNumber)
+        {
+            Repository<SetEntity> setsRepository = new Repository<SetEntity>();
+
+            string mainImageName = null;
+            string setPath = Server.MapPath("~/Content/Images/Sets/" + setName.Trim());
+            DirectoryInfo setDirectory = new DirectoryInfo(setPath);
+            string tempDirectoryPath = Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber);
+            DirectoryInfo tempSetDirectory = new DirectoryInfo(tempDirectoryPath);
+
+            FileInfo[] oldImages = setDirectory.GetFiles();
+            foreach (FileInfo image in oldImages)
+            {
+                string fileName = image.Name.Substring(0, image.Name.LastIndexOf('.'));
+                //fileName.Contains("Image") is added to not delete Thumb.db
+                if (fileName.Contains("Image") && !(fileName == "ImageMainImage") && !resultHtmlWithoutNotResultElements.Contains(fileName))
+                {
+                    image.Delete();
+                }
+            }
+
+            bool mainImageChanged = false;
+            if (tempSetDirectory.Exists)
+            {
+                FileInfo[] newImages = tempSetDirectory.GetFiles();
+                foreach (FileInfo image in newImages)
+                {
+                    string fileName = image.Name.Substring(0, image.Name.LastIndexOf('.'));
+                    if (resultHtmlWithoutNotResultElements.Contains(fileName))
+                    {
+                        FileInfo imageWithSameName = new FileInfo(setPath + "/" + image.Name);
+                        if (imageWithSameName.Exists)
+                        {
+                            imageWithSameName.Delete();
+                        }
+                        image.MoveTo(setPath + "/" + image.Name);
+                    }
+                    else if (fileName == "ImageMainImage")
+                    {
+                        mainImageChanged = true;
+                        mainImageName = image.Name;
+                        changeMainImageSizeAndSaveToSetFolder(setPath + "/" + image.Name, image.FullName, 300, 450);
+                    }
+                }
+
+                tempSetDirectory.Delete(true);
+            }
+
+            string resultTags = String.Empty;
+            if (!String.IsNullOrEmpty(setTags))
+            {
+                string[] tagsList = setTags.Split(';');
+                for (int i = 0; i < tagsList.Length; i++)
+                {
+                    string tag = tagsList[i].Trim().ToLower();
+                    resultTags += tag;
+                    if (i != tagsList.Length - 1)
+                    {
+                        resultTags += ",";
+                    }
+                }
+            }
+
+            string html = resultHtmlWithoutNotResultElements.Replace("&lt;", "<").Replace("&gt;", ">");
+
+            SetEntity set = setsRepository.GetList().First(s => s.Name == setName);
+            set.HtmlWithoutNotResultElements = html;
+            set.Html = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">");
+            set.Tags = resultTags;
+            if (mainImageChanged)
+            {
+                set.MainImageName = mainImageName;
+            }
+
+            List<SetEntity> sets = setsRepository.GetList().ToList();
+            sets.Add(set);
+            recalculateAllTags<SetsInfo>(sets);
+            setsRepository.Update(set);
+            ViewBag.ViewName = "AdminSuccessfulSetSaving";
+            ViewBag.Text = "Set is saved!";
+            return View("ShowInfo");
+        }
+
 
         [HttpPost]       
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveSet(string setName, string setDescription, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, string tempSetNumber)
+        public ActionResult SaveSet(string setName, string setTags, string resultHtml, string resultHtmlWithoutNotResultElements, string tempSetNumber)
         {
             string mainImageName = null;    
             string setPath = Server.MapPath("~/Content/Images/Sets/"+ setName.Trim());
@@ -155,11 +253,11 @@ namespace SiteForTanya.WEB.Controllers
                 setsInfoRepository.Update(setsIfo);
             }
 
-            SetEntity set = new SetEntity { Name = setName.Trim(), Html = resultHtml, HtmlWithoutNotResultElements = resultHtmlWithoutNotResultElements,
-                Tags = resultTags, Description = setDescription, AddingTime = DateTime.Now, MainImageName = mainImageName};
+            SetEntity set = new SetEntity { Name = setName.Trim(), Html = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">"),
+                HtmlWithoutNotResultElements = html,
+                Tags = resultTags, AddingTime = DateTime.Now, MainImageName = mainImageName};
             Repository<SetEntity> repository = new Repository<SetEntity>();
             repository.Create(set);
-            ViewBag.Alex = html;
             ViewBag.ViewName = "AdminSuccessfulSetSaving";
             ViewBag.Text = "Set is saved!";
             return View("ShowInfo");
@@ -232,11 +330,7 @@ namespace SiteForTanya.WEB.Controllers
             var uploadImage = Request.Files[0];
             if (uploadImage != null)
             {
-                // получаем имя файла
-                //string fileName = System.IO.Path.GetFileName(uploadImage.FileName);
-
                 string fileName = "Image" + imageNumber + uploadImage.FileName.Substring(uploadImage.FileName.LastIndexOf('.'));
-                // сохраняем файл в папку Files в проекте
                 uploadImage.SaveAs(Server.MapPath("~/Content/Images/Temp/" + "Set" + tempSetNumber + "/" + fileName));
             }
             return Json("Ok");

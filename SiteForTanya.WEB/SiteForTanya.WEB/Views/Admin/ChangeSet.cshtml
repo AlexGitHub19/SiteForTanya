@@ -1,28 +1,30 @@
-﻿@model int
+﻿@model SiteForTanya.WEB.Models.AdminVewModels.AdminChangeSetViewModel
 @{
-    ViewBag.Title = "AddSet";
-    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Set Changing";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Adding Set</h2>
+<div id="bacgroundColorContainer">
+    Set Changing
+</div>
 
 
 <div class="tokenContainer">
     @Html.AntiForgeryToken()
 </div>
 
-@using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("ChangeSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken();
 
-    <input id="tempSetNumber" name = "tempSetNumber" value="@Model"/>
+    <h2>@Model.SetName</h2>
 
-    <div id="setMainImageContainer">
-        <img id="setMainImage" class="image" />
+    <input id="setName" name="setName" type="text" style="display:none" class="form-control setInfoInput">
+    <input id="tempSetNumber" name="tempSetNumber" value="@Model.TempSetNumber" />
+
+    <div id="setMainImageContainer" class="not-result">
+        <img id="setMainImage" class="image" src="~/Content/Images/Sets/@Model.SetName/@Model.MainImageName" />
         <input id="inputFileMainImage" type="file" style="display:none" />
-        <label>Choose set main image: </label>
-        <i id="downloadsetMainImageBtnBeforeAdding" class="fa fa-picture-o fa-lg downloadImageBtnBeforeAddingImage" style="font-size:30px;" aria-hidden="true"></i>
-        <label> it will be resized to 300*450 px</label>
         <div id="setMainImageblackout">
             <i id="downloadsetMainImageBtnAfterAdding" class="fa fa-picture-o fa-lg downloadImageBtnAfterAddingImage" style="font-size:30px;" aria-hidden="true"></i>
         </div>
@@ -30,27 +32,22 @@
 
     <div class="row setInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label id="setNameLabel" class="setInfolabel">Enter Set's name: </label>
+            <label id="setTagsLabel" class="setInfolabel">Change Set's Tags: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <input id="setName" name="setName" type="text" autocomplete="off" class="form-control setInfoInput">
+            <textarea id="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')" autocomplete="off"></textarea>
         </div>
     </div>
 
-    <div class="row setInfoRow">
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <label id="setTagsLabel" class="setInfolabel">Enter Set's Tags: </label>
-        </div>
-        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea id ="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')" autocomplete="off"></textarea>
-        </div>
+    <br>
+    <br>
+    <br>
+
+    <div id="pageHtml">
+        @Html.Raw(Model.Html)
     </div>
 
-
-
-    <div id="pageHtml"></div>
-
-    <input id="resultHtml" type="text" name="resultHtml"/>
+    <input id="resultHtml" type="text" name="resultHtml" />
     <input id="resultHtmlWithoutNotResultElements" type="text" name="resultHtmlWithoutNotResultElements" />
 
     <div id="saveAndAddButtonsContainer">
@@ -59,11 +56,13 @@
     </div>
 }
 
-
 <script>
     $(document).ready(function () {
-        var totalRowCount = 1;
-        var cellCount = 1;
+        $('#setTags').text('@Model.Tags');
+        $('#setName').val('@Model.SetName');
+
+        var rowCount = parseInt(getRowOrCellNumber($('.mainRow').last())) + 1;
+        var cellCount = parseInt(getRowOrCellNumber($('.imageContainer').last())) + 1;
 
         $(window).resize(function () {
             setHeightForAllSettingsontainers();
@@ -94,14 +93,14 @@
         });
 
         $('#addRowButton').on('click', function (e) {
-            $('#pageHtml').append('<div id="imageRow' + totalRowCount + '" class="row imageRow border mainRow">' +
-                '<i id="deleteRowBtn' + totalRowCount + '" class="fa fa-trash-o deleteRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
-                '<i id="showBorderBtn' + totalRowCount + '" class="fa fa-window-maximize showBorderBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+            $('#pageHtml').append('<div id="imageRow' + rowCount + '" class="row imageRow border mainRow">' +
+                '<i id="deleteRowBtn' + rowCount + '" class="fa fa-trash-o deleteRowBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
+                '<i id="showBorderBtn' + rowCount + '" class="fa fa-window-maximize showBorderBtn not-result" style="font-size:20px;" aria-hidden="true"></i>' +
                 '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 noPadding clearfix">' +
                 getImageRowHtml() +
                 '</div>' +
                 '</div>');
-            totalRowCount++;
+            rowCount++;
             cellCount++;
         });
 
@@ -167,8 +166,7 @@
                 $('#imageContainer' + cellNumber).parent().html(newimageContainerHtml);
                 setHeightForAllSettingsontainers();
             }
-            else
-            {
+            else {
                 alert('Count of rows should be a digit!');
             }
         });
@@ -188,7 +186,7 @@
                     newimageContainerHtml += '<div class="col-xs-12 col-sm-' + 12 / userRowCount + ' col-md-' + 12 / userRowCount + ' col-lg-' + 12 / userRowCount + ' noPadding clearfix">' +
                                getImageRowHtml() +
                                '</div>';
-                               '</div>';
+                    '</div>';
                     cellCount++;
                 }
                 newimageContainerHtml += '</div>';
@@ -283,46 +281,19 @@
         });
 
         $('#saveButton').on('click', function (e) {
-            var setName = $('#setName').val();
-            if (setName == '')
-            {
-                alert('please fill set name!');
-                e.preventDefault();
-                return;
-                }
+            var result = $('#pageHtml').clone();
+            var setName = $('#setName').val();;
+            result = changeSrcs(result, setName);
+            var html = result.html();
+            var encodedHtml = encodeHtml(html);
+            $('#resultHtml').val(encodedHtml);
 
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("CheckSetName", "Admin")',
-                data: { __RequestVerificationToken: getAntiForgeryToken(), setName: setName },
-                async: false,
-                success: function (result) {
-                    if (result.result== 'False')
-                    {
-                        e.preventDefault();
-                        alert('Set with name: ' + setName + ' already exists. Choose another name, please');
-                    }
-                    else
-                    {
-                        var result = $('#pageHtml').clone();
-                        result = changeSrcs(result, setName);
-                        var html = result.html();
-                        var encodedHtml = encodeHtml(html);
-                        $('#resultHtml').val(encodedHtml);
-
-                        var result2 = $('#pageHtml').clone();
-                        result2 = changeSrcs(result2, setName);
-                        result2.find('.not-result').remove();
-                        var html2 = result2.html();
-                        var encodedHtml2 = encodeHtml(html2);
-                        $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);
-                    }
-                },
-                error: function (xhr, status, p3) {
-                    alert('error');
-                    return 'False';
-                }
-            });
+            var result2 = $('#pageHtml').clone();
+            result2 = changeSrcs(result2, setName);
+            result2.find('.not-result').remove();
+            var html2 = result2.html();
+            var encodedHtml2 = encodeHtml(html2);
+            $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);
 
         });
 
@@ -359,7 +330,8 @@
         function changeSrcs(resultHtml, setName) {
             resultHtml.find('.image').each(function (index, element) {
                 var cellNumber = getRowOrCellNumber(element);
-                if ($('#inputFile' + cellNumber).length > 0 && $('#inputFile' + cellNumber)[0].files.length > 0) {
+                if ($('#inputFile' + cellNumber).length > 0 && $('#inputFile' + cellNumber)[0].files.length>0)
+                {
                     var fileName = $('#inputFile' + cellNumber)[0].files[0].name;
                     var fileExtension = fileName.substring(fileName.lastIndexOf('.'))
                     if ($('#imageContainer' + cellNumber).hasClass('imageAdded')) {
@@ -452,5 +424,7 @@
             });
         };
 
-    });
+
+
+     });
 </script>

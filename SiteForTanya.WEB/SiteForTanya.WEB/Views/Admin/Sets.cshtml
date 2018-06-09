@@ -215,7 +215,7 @@
                 showLoadingAnimation();
                 getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
             });
-           
+
         })
 
         $('#searchInput').autocomplete({
@@ -297,10 +297,21 @@
             var finalId = id.substring(hyphenId + 1);
             var html = '<p>CONFIRM CHANGING</p>' +
                        '<i id="confirmChangeBtn-' + finalId + '" style="font-size:28px;" class="fa fa-check confirmChangeBtn" aria-hidden="true"></i>' +
-                       '<i id="cancelBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelBtn" aria-hidden="true"></i>';
+                       '<i id="cancelBtn-' + finalId + '" style="font-size:28px;"  class="fa fa-times cancelBtn" aria-hidden="true"></i>'+
+                       '<a id="hiddenLink-' + finalId + '" href="/Admin/ChangeSet?setName=' + finalId + '" class="hiddenLink"></a>';
 
             $(this).parent().html(html);
         })
+
+        $('#existingSets').on('click', '.confirmChangeBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var setId = id.substring(hyphenId + 1);
+            var link = $('[id="hiddenLink-' + setId + '"]');
+            link[0].click();
+        })
+
+
 
         $('#existingSets').on('click', '.cancelBtn', function (e) {
             var id = $(this).attr('id');

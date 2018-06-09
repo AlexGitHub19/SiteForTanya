@@ -61,15 +61,17 @@
     transition: opacity 0.3s;
     color: white;
     z-index:2;
+    font-size:12px;
 }
 
 
 .settingsRow {
-    background-color:#f4f1e4;
+    background-color:var(--secondColor);
 }
 
 #pageHtml {
     margin-top:20px;
+    margin-bottom:20px;
 }
 
 .margin-input, .maxHeightInput {
@@ -90,28 +92,10 @@
     margin-left: 0px;
 }
 
-.settingsBtn {
-    position: absolute;
-    top:0;
-    right: -22px;
-    cursor: pointer;
-    z-index:100;
-}
-
-.splitRowBtn {
-    position: absolute;
-    top:0;
-    right: -22px;
-    margin-top: 25px;
-    cursor: pointer;
-    z-index:100;
-}
-
 .showBorderBtn {
     position: absolute;
     top:0;
     right: -23px;
-    margin-top: 50px;
     cursor: pointer;
     z-index:100;
 }
@@ -120,7 +104,7 @@
     position: absolute;
     top:0;
     right: -21px;
-    margin-top: 75px;
+    margin-top: 25px;
     cursor: pointer;
     z-index:100;
 }
@@ -203,6 +187,10 @@ label {
     color: white;
     z-index:2;
     display:none;
+}
+
+#saveAndAddButtonsContainer {
+    margin-bottom:20px;
 }
 
 

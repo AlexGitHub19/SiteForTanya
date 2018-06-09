@@ -39,6 +39,13 @@
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminDeleteSet.css" />
     }
+    else if (ViewBag.ViewName == "AdminChangeSet")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminChangeSet.css" />
+        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    }
+
     <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
     <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")" type="text/javascript"></script>

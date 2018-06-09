@@ -135,7 +135,7 @@
                 for(var i = 0; i < imageArray.length; i++)
                 {
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
-                    html += '<div id="' + id + '" class="col-xs-6 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
+                    html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
                         '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
@@ -168,7 +168,7 @@
             for (var i = 0; i < this.files.length; i++) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#images').append('<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 imageContainer">' +
+                    $('#images').append('<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 imageContainer">' +
                        '<img src = "' + e.target.result + '" class="image"/>' +
                        '</div>');
                 }
