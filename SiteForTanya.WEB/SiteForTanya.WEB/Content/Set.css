@@ -1,8 +1,9 @@
 ﻿.setContainer {
-    padding-left:20px;
-    padding-right:20px;
-    margin-bottom:25px;
+    padding-left:25px;
+    padding-right:25px;
+    margin-bottom:30px;
     position:relative;
+    display:none;
 }
 .relativeClass {
     display:inline-block;
@@ -32,6 +33,12 @@
     margin-top:20px;
     margin-left: 40px;
     margin-right: 40px;
+}
+
+#getSetNamesFromServerLoadingAnimation {
+    margin-top:130px;
+    margin-bottom:130px;
+    display:none;
 }
 
 .setName {

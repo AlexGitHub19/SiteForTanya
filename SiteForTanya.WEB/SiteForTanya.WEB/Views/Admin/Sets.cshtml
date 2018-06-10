@@ -24,8 +24,7 @@
         <div id="searchInfoContainer">
             <label>Show </label>
             <div id="itemsCountContainer">
-                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
-                    7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
                 </button>
                 <div id="hiddden-ImageCount">
                     <div>
@@ -40,37 +39,7 @@
     </div>
 </div>
 
-
-<div id="existingSets"></div>
-
-<div id="pagination"></div>
-
-
-
-@*<div class="content">
-    <div class="row">
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="AddSet" style="display:block">
-                <div class="item item-left">
-                    <div class="item-content">
-                        <h3 class="text">ADD SET</h3>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="DeleteSet" style="display:block">
-                <div class="item item-right">
-                    <div class="item-content">
-                        <h3 class="text">DELETE SET</h3>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>*@
-
-<div id="loadingAnimation" style="display:none">
+<div id="getSetNamesFromServerLoadingAnimation">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
@@ -83,19 +52,38 @@
     </div>
 </div>
 
+<div id="existingSets"></div>
+
+<div id="pagination"></div>
+
+
+@*<div id="loadingAnimation" style="display:none">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>*@
+
 <script type="text/javascript">
     $(document).ready(function () {
 
-        showLoadingAnimation();
         getSetNamesFromServer(1);
 
         $('#searchBtn').bind('click', function () {
-            showLoadingAnimation();
             getSetNamesFromServer(1);
         });
 
 
         function getSetNamesFromServer(pageNumber) {
+            $('#pagination').fadeOut();
+            showLoadingAnimation();
+
             var keyWords = $('#searchInput').val();
             var setsCountOnPage = parseInt($('#itemsCountBtn').text());
 
@@ -104,8 +92,24 @@
                 url: '@Url.Action("GetSetsNames", "Admin")',
                 data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, setsCountOnPage: setsCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
+                    loadedBeginNumber = 0;
+                    loadedEndNumber = result.sets.length;
+                    loadedResultImageCount = result.setsCount;
+                    loadedPageNumber = pageNumber;
                     fillSets(result);
-                    createPagination(result.setsCount, pageNumber);
+                    setTimeout(showIfNotAllImagesAreLoaded, 12000);
+
+                    function showIfNotAllImagesAreLoaded() {
+                        $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+                        var imageContainers = $('#existingSets').find('.setContainer');
+                        imageContainers.each(function (index, element) {
+                            if ($(element).css('display') == 'none')
+                            {
+                                $(element).fadeIn(600);
+                            }                           
+                        });
+                        createPagination(result.setsCount, pageNumber);
+                    }
                 },
                 error: function (xhr, status, p3) {
                     alert('error');
@@ -114,10 +118,7 @@
         }
 
         function showLoadingAnimation() {
-            $('#existingSets').css('margin-top', '130px');
-            $('#existingSets').css('margin-bottom', '130px');
-            var LoaderHtmml = $("#loadingAnimation").html();
-            $('#existingSets').html(LoaderHtmml);
+            $('#getSetNamesFromServerLoadingAnimation').css('display', 'block');
         }
 
         function fillSets(result) {
@@ -131,7 +132,6 @@
 
             var html = '';
             var count = 0;
-            //var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
             while (count < result.sets.length) {
                 var endValue = count + 2;
                 if (count + 2 > result.sets.length) {
@@ -146,8 +146,7 @@
                     var id = setArray[i].setName;
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 setContainer">' +
                         '<div class="relativeClass clearfix">' +
-                        //'<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
-                        '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" />' +
+                        '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" onload="imgLoaded(this)"/>' +
                         '<div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div>' +
                         '<div id="setInfo-' + id + '" class ="setInfo"><i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
                         '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i></div>' +
@@ -163,14 +162,6 @@
             $('#existingSets').html(html);
         }
 
-        function createPagination(totalSetsCount, pageNumber) {
-            var setsCountOnPage = parseInt($('#itemsCountBtn').text());
-            var html = getPaginationHtml(totalSetsCount, setsCountOnPage, pageNumber)
-
-            $('#pagination').html(html);
-            $('#paginationBtn-' + pageNumber).addClass('current');
-        }
-
         function getAntiForgeryToken() {
             return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
         }
@@ -179,10 +170,10 @@
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
-            $('html, body').animate({
+            $('#pagination').fadeOut();
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getSetNamesFromServer(pageNumber);
             });
         })
@@ -198,10 +189,11 @@
                 e.preventDefault();
                 return;
             }
-            $('html, body').animate({
+
+            $('#pagination').fadeOut();
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
             });
 
@@ -215,10 +207,11 @@
                 e.preventDefault();
                 return;
             }
-            $('html, body').animate({
+
+            $('#pagination').fadeOut();
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
             });
 
@@ -267,7 +260,6 @@
 
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
-            showLoadingAnimation();
             getSetNamesFromServer(1);
         })
 
@@ -275,11 +267,12 @@
             var code = e.keyCode || e.which;
             if (code == 13) {
                 var pageNumber = parseInt($(this).val());
-                if (!isNaN(pageNumber)) {
-                    $('html, body').animate({
+                if (!isNaN(pageNumber))
+                {
+                    $('#pagination').fadeOut();
+                    $('html').animate({
                         scrollTop: 0
                     }, 500, function () {
-                        showLoadingAnimation();
                         getSetNamesFromServer(pageNumber);
                     });
                 }
@@ -349,7 +342,6 @@
                         if (result.result == "Success") {
                             $('[id="deletingAnimation-'+ setId+'"]').html('<p>SET IS DELETED</p>');
                             setTimeout(function () {
-                                showLoadingAnimation();
                                 getSetNamesFromServer(1);
                             }, 2000);
                         }
@@ -368,4 +360,36 @@
         })
 
     });
+
+    var loadedBeginNumber = 0;
+    var loadedEndNumber = 0;
+    var loadedResultImageCount = 0;
+    var loadedPageNumber = 0;
+    function imgLoaded(img) {
+        loadedBeginNumber++;
+        if (loadedBeginNumber == loadedEndNumber) {
+            var imageContainers = $('#existingSets').find('.setContainer');
+            $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+            imageContainers.each(function (index, element) {
+                if (index == imageContainers.length - 1) {
+                    $(element).delay(100 * index).fadeIn(600, function () {
+                        createPagination(loadedResultImageCount, loadedPageNumber);
+                    });
+                }
+                else
+                {
+                    $(element).delay(100 * index).fadeIn(600);
+                }
+            });
+        }
+    };
+
+    function createPagination(totalSetsCount, pageNumber) {
+        var setsCountOnPage = parseInt($('#itemsCountBtn').text());
+        var html = getPaginationHtml(totalSetsCount, setsCountOnPage, pageNumber)
+
+        $('#pagination').html(html);
+        $('#paginationBtn-' + pageNumber).addClass('current');
+        $('#pagination').fadeIn();
+    }
 </script>

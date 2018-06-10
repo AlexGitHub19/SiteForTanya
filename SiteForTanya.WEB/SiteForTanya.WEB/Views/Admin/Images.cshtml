@@ -44,7 +44,7 @@
     </div>   
 </div>
 
-<div id="getImagNamesFromServerLoadingAnimation">
+<div id="getImageNamesFromServerLoadingAnimation">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
@@ -92,6 +92,19 @@
                     loadedResultImageCount = result.imageCount;
                     loadedPageNumber = pageNumber;
                     fillImages(result);
+
+                    setTimeout(showIfNotAllImagesAreLoaded, 12000);
+
+                    function showIfNotAllImagesAreLoaded() {
+                        $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
+                        var imageContainers = $('#existingImages').find('.imageContainer');
+                        imageContainers.each(function (index, element) {
+                            if ($(element).css('display') == 'none') {
+                                $(element).fadeIn(600);
+                            }
+                        });
+                        createPagination(result.imageCount, pageNumber);
+                    }
                 },
                 error: function (xhr, status, p3) {
                     alert('error');
@@ -101,7 +114,7 @@
 
         function showLoadingAnimation()
         {
-            $('#getImagNamesFromServerLoadingAnimation').css('display','block');
+            $('#getImageNamesFromServerLoadingAnimation').css('display','block');
         }
 
         function fillImages(result)
@@ -248,7 +261,7 @@
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
             $('#pagination').fadeOut();
-            $('html, body').animate({
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
                 getImagNamesFromServer(pageNumber);
@@ -269,7 +282,7 @@
             }
 
             $('#pagination').fadeOut();
-            $('html, body').animate({
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
                 getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
@@ -286,7 +299,7 @@
             }
 
             $('#pagination').fadeOut();
-            $('html, body').animate({
+            $('html').animate({
                 scrollTop: 0
             }, 500, function () {
                 getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
@@ -384,10 +397,10 @@
             var code = e.keyCode || e.which;
             if (code == 13) {
                 var pageNumber = parseInt($(this).val());
-                if (!isNaN(pageNumber))
+                if (!isNaN(pageNumber) && pageNumber <= buttonsCount)
                 {
                     $('#pagination').fadeOut();
-                    $('html, body').animate({
+                    $('html').animate({
                         scrollTop: 0
                     }, 500, function () {
                         getImagNamesFromServer(pageNumber);
@@ -427,7 +440,7 @@
         loadedBeginNumber++;
         if (loadedBeginNumber == loadedEndNumber) {
             var imageContainers = $('#existingImages').find('.imageContainer');
-            $('#getImagNamesFromServerLoadingAnimation').css('display', 'none');
+            $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
             imageContainers.each(function (index, element) {
                 if (index == imageContainers.length - 1) {
                     $(element).delay(100 * index).fadeIn(600, function () {
@@ -442,9 +455,11 @@
         }
     };
 
+    var buttonsCount = 0;
     function createPagination(totalImageCount, pageNumber) {
         var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
         var html = getPaginationHtml(totalImageCount, imagesCountOnPage, pageNumber)
+        buttonsCount = getButtonsCount(totalImageCount, imagesCountOnPage);
 
         $('#pagination').html(html);
         $('#paginationBtn-' + pageNumber).addClass('current');

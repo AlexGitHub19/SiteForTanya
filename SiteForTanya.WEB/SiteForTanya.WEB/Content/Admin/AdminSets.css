@@ -59,6 +59,7 @@
 
 .relativeClass:hover .setInfo {
     height: 60px;
+    min-width:180px;
 }
 
 .hiddenLink {

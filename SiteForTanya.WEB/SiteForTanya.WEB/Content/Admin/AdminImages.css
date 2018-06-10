@@ -15,7 +15,6 @@
     padding-right: 25px;
     margin-bottom:30px;
     position:relative;
-    /*max-height:200px;*/
     display:none;
 }
 
@@ -48,7 +47,7 @@
     margin-top:20px;
 }
 
-#getImagNamesFromServerLoadingAnimation {
+#getImageNamesFromServerLoadingAnimation {
     margin-top:130px;
     margin-bottom:130px;
     display:none;
@@ -112,6 +111,7 @@
 
 .relativeClass:hover .deleteImageInfo {
     height: 60px;
+    min-width:80px
 }
 
 .relativeClass:hover .blackoutAnimation {

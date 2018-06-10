@@ -285,7 +285,7 @@
         $('#saveButton').on('click', function (e) {          
             if ($('#setMainImage').attr('src') == undefined)
             {
-                alert('please fill set image!');
+                alert('please fill set main image!');
                 e.preventDefault();
                 return;
             }
@@ -310,6 +310,11 @@
                     }
                     else
                     {
+                        if ($('#pageHtml').html() == '')
+                        {
+                            e.preventDefault();
+                            alert("Set can't be empty!");
+                        }
                         var result = $('#pageHtml').clone();
                         result = changeSrcs(result, setName);
                         var html = result.html();

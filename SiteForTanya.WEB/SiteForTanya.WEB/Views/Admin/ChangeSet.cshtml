@@ -282,7 +282,7 @@
 
         $('#saveButton').on('click', function (e) {
             var result = $('#pageHtml').clone();
-            var setName = $('#setName').val();;
+            var setName = $('#setName').val();
             result = changeSrcs(result, setName);
             var html = result.html();
             var encodedHtml = encodeHtml(html);
@@ -294,6 +294,11 @@
             var html2 = result2.html();
             var encodedHtml2 = encodeHtml(html2);
             $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);
+
+            if (setName.indexOf("&#39;") != -1)
+            {
+                $('#setName').val(setName.replace(/&#39;/g, "'"));
+            }
 
         });
 
