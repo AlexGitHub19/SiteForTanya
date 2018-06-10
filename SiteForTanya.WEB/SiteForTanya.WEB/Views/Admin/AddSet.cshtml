@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
 </div>
 
-@using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken();
 
@@ -282,14 +282,20 @@
             }
         });
 
-        $('#saveButton').on('click', function (e) {
+        $('#saveButton').on('click', function (e) {          
+            if ($('#setMainImage').attr('src') == undefined)
+            {
+                alert('please fill set image!');
+                e.preventDefault();
+                return;
+            }
             var setName = $('#setName').val();
             if (setName == '')
             {
                 alert('please fill set name!');
                 e.preventDefault();
                 return;
-                }
+            }
 
             $.ajax({
                 type: "POST",

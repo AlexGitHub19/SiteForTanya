@@ -29,9 +29,7 @@
         <div id="searchInfoContainer">
             <label>Show </label>
             <div id="itemsCountContainer">
-                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
-                    7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
-                </button>
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i></button>
                 <div id="hiddden-ImageCount">
                     <div>
                         <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
@@ -46,11 +44,7 @@
     </div>   
 </div>
 
-<div id="existingImages"></div>
-
-<div id="pagination"></div>
-
-<div id="loadingAnimation" style="display:none">
+<div id="getImagNamesFromServerLoadingAnimation">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
@@ -62,11 +56,14 @@
         <div id="fountainG_8" class="fountainG"></div>
     </div>
 </div>
+<div id="existingImages"></div>
+
+<div id="pagination"></div>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
 
-        showLoadingAnimation();
         getImagNamesFromServer(1);
 
         $('#addmageBtn').bind('click', function () {
@@ -74,12 +71,13 @@
         });
 
         $('#searchBtn').bind('click', function () {
-            showLoadingAnimation();
             getImagNamesFromServer(1);
         });
 
         function getImagNamesFromServer(pageNumber)
         {
+            $('#pagination').fadeOut();
+            showLoadingAnimation();
             var keyWords = $('#searchInput').val();
             var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
 
@@ -89,8 +87,11 @@
                 //processData: false,
                 data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
+                    loadedBeginNumber = 0;
+                    loadedEndNumber = result.imageNames.length;
+                    loadedResultImageCount = result.imageCount;
+                    loadedPageNumber = pageNumber;
                     fillImages(result);
-                    createPagination(result.imageCount, pageNumber);
                 },
                 error: function (xhr, status, p3) {
                     alert('error');
@@ -100,10 +101,7 @@
 
         function showLoadingAnimation()
         {
-            $('#existingImages').css('margin-top', '130px');
-            $('#existingImages').css('margin-bottom', '130px');
-            var LoaderHtmml = $("#loadingAnimation").html();
-            $('#existingImages').html(LoaderHtmml);
+            $('#getImagNamesFromServerLoadingAnimation').css('display','block');
         }
 
         function fillImages(result)
@@ -118,7 +116,6 @@
 
             var html = '';
             var count = 0;
-            //var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
             while (count < result.imageNames.length)
             {
                 var endValue = count+4;
@@ -136,7 +133,7 @@
                 {
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" />' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" onload="imgLoaded(this)"/>' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
@@ -151,15 +148,6 @@
             $('#existingImages').html(html);
         }
 
-        function createPagination(totalImageCount, pageNumber)
-        {
-            var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
-            var html = getPaginationHtml(totalImageCount, imagesCountOnPage, pageNumber)
-
-            $('#pagination').html(html);
-            $('#paginationBtn-' + pageNumber).addClass('current');
-        }
-
         function getAntiForgeryToken() {
             return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
         }
@@ -168,7 +156,7 @@
             for (var i = 0; i < this.files.length; i++) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    $('#images').append('<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 imageContainer">' +
+                    $('#images').append('<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 imageContainer" style="display:block;">' +
                        '<img src = "' + e.target.result + '" class="image"/>' +
                        '</div>');
                 }
@@ -229,7 +217,6 @@
                         {
                             $('#deletingAnimation-' + imageId).html('<p>IMAGE IS DELETED</p>');
                             setTimeout(function () {
-                                showLoadingAnimation();
                                 getImagNamesFromServer(1);
                             }, 2000);
                         }
@@ -260,10 +247,10 @@
             var id = $(this).attr('id');
             var hyphenId = id.indexOf('-');
             var pageNumber = id.substring(hyphenId + 1);
+            $('#pagination').fadeOut();
             $('html, body').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getImagNamesFromServer(pageNumber);
             });
         })
@@ -281,10 +268,10 @@
                 return;
             }
 
+            $('#pagination').fadeOut();
             $('html, body').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
             });
         })
@@ -297,10 +284,11 @@
                 e.preventDefault();
                 return;
             }
+
+            $('#pagination').fadeOut();
             $('html, body').animate({
                 scrollTop: 0
             }, 500, function () {
-                showLoadingAnimation();
                 getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
             });
         })
@@ -332,7 +320,6 @@
                                 '<i class="fa fa-times fa-lg closeAlertBtn" aria-hidden="true"></i>');
                             $('.addImage').css('background-color', '#f4f1e4');
                             $('#searchInput').val();
-                            showLoadingAnimation();
                             getImagNamesFromServer(1);
                         },
                         error: function (xhr, status, p3) {
@@ -390,7 +377,6 @@
 
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
-            showLoadingAnimation();
             getImagNamesFromServer(1);
         })
 
@@ -400,10 +386,10 @@
                 var pageNumber = parseInt($(this).val());
                 if (!isNaN(pageNumber))
                 {
+                    $('#pagination').fadeOut();
                     $('html, body').animate({
                         scrollTop: 0
                     }, 500, function () {
-                        showLoadingAnimation();
                         getImagNamesFromServer(pageNumber);
                     });                  
                 }                            
@@ -432,4 +418,37 @@
     //        }
     //    }
     //});
+
+    var loadedBeginNumber = 0;
+    var loadedEndNumber = 0;
+    var loadedResultImageCount = 0;
+    var loadedPageNumber = 0;
+    function imgLoaded(img) {
+        loadedBeginNumber++;
+        if (loadedBeginNumber == loadedEndNumber) {
+            var imageContainers = $('#existingImages').find('.imageContainer');
+            $('#getImagNamesFromServerLoadingAnimation').css('display', 'none');
+            imageContainers.each(function (index, element) {
+                if (index == imageContainers.length - 1) {
+                    $(element).delay(100 * index).fadeIn(600, function () {
+                        createPagination(loadedResultImageCount, loadedPageNumber);
+                    });
+                }
+                else
+                {
+                    $(element).delay(100 * index).fadeIn(600);
+                }
+            });
+        }
+    };
+
+    function createPagination(totalImageCount, pageNumber) {
+        var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
+        var html = getPaginationHtml(totalImageCount, imagesCountOnPage, pageNumber)
+
+        $('#pagination').html(html);
+        $('#paginationBtn-' + pageNumber).addClass('current');
+        $('#pagination').fadeIn();
+    }
+
     </script>

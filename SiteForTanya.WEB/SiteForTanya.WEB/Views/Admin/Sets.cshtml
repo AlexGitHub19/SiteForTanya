@@ -8,7 +8,13 @@
     @Html.AntiForgeryToken()
 </div>
 
-<div id="pageName"><h2 class="setNameText">SETS</h2></div>
+@using (Html.BeginForm("AddSet", "Admin", FormMethod.Get))
+{
+    <div id="pageName">
+        <input class="my-btn btn" type="submit" value="Add set" />
+    </div>
+}
+
 <div>
     <div id="itemSeacher">
         <input id="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("SetsAutocompleteSearch", "Admin")">

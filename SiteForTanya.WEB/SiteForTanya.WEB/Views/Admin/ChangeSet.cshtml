@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
 </div>
 
-@using (Html.BeginForm("ChangeSet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("ChangeSet", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken();
 
