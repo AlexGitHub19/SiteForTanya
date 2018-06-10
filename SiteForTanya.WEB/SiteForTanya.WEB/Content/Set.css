@@ -99,3 +99,12 @@
     background-color:black;
     Z-index:2;
 }*/
+
+
+@media (max-width:500px) {
+
+    #getSetNamesFromServerLoadingAnimation {
+        margin-top: 80px;
+        margin-bottom: 80px;
+    }
+}

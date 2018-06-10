@@ -176,3 +176,84 @@
 		background-color:rgb(255,255,255);
 	}
 }
+
+
+@media (max-width:490px) {
+
+    #fountainG{
+	width:400px;
+    }
+
+    .fountainG {
+        width: 25px;
+        height: 25px;
+    }
+
+    #fountainG_2 {
+        left: 50px;
+    }
+
+    #fountainG_3 {
+        left: 100px;
+    }
+
+    #fountainG_4 {
+        left: 150px;
+    }
+
+    #fountainG_5 {
+        left: 200px;
+    }
+
+    #fountainG_6 {
+       left: 250px;
+    }
+
+    #fountainG_7 {
+      left: 300px;
+    }
+
+    #fountainG_8 {
+      left: 350px;
+    }
+}
+
+@media (max-width:400px) {
+
+    #fountainG{
+	width:240px;
+    }
+
+    .fountainG {
+        width: 14px;
+        height: 14px;
+    }
+
+    #fountainG_2 {
+        left: 30px;
+    }
+
+    #fountainG_3 {
+        left: 60px;
+    }
+
+    #fountainG_4 {
+        left: 90px;
+    }
+
+    #fountainG_5 {
+        left: 120px;
+    }
+
+    #fountainG_6 {
+       left: 150px;
+    }
+
+    #fountainG_7 {
+      left: 180px;
+    }
+
+    #fountainG_8 {
+      left: 210px;
+    }
+}
