@@ -1,0 +1,62 @@
+﻿body {
+}
+:root {
+  --secondColor: #f4f1e4;
+}
+
+body {
+  left: 0;
+  margin: 0;
+  overflow-x: hidden;
+  position: relative;
+  padding: 0px;
+  font-size:14px;
+  font-family:'Raleway', Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+.body-content { 
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    -webkit-background-size: cover;
+      -moz-background-size: cover;
+       -o-background-size: cover;
+          background-size: cover;
+}
+
+.form-control:focus {
+        border:1px solid #ccc3a1;
+        box-shadow:0 0 10px #ccc3a1;
+}
+
+
+h2 {
+  font-size:25px;
+  font-family:'Raleway', Arial, sans-serif;
+}
+
+h3, h5{ 
+  font-family:'Raleway', Arial, sans-serif;
+}
+
+input {
+    font-size:12px;
+}
+
+.my-btn {
+    background-color: var(--secondColor);
+    color: black;
+    border-color: black;
+}
+    .my-btn:hover {
+        background-color: #ccc3a1;
+        border-color: black;
+    }
+
+    .my-btn:focus {
+        outline: none;
+        border-color: black;
+    }

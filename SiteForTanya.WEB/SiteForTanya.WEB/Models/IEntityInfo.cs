@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SiteForTanya.WEB.Models
 {
-    interface IEntityInfo
+    public interface IEntityInfo
     {
         string AllTags { get; set; }
     }

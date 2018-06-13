@@ -20,14 +20,6 @@
 	transition: opacity 0.35s;
 }
 
-#pageName {
-    width:100%;
-    background-color:var(--secondColor); 
-    padding-top:20px;
-    padding-bottom:20px;
-    margin-top:50px;
-}
-
 
 #existingSets {
     margin-top:20px;
@@ -76,6 +68,10 @@
 	transform: translate3d(0,100px,0);
 }
 
+.relativeClass:hover {
+    cursor:pointer;
+}
+
 .relativeClass:hover h2 {
 	-webkit-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
@@ -89,16 +85,6 @@
 .relativeClass:hover .image {
     opacity:0.2;
 }
-
-/*.blackoutAnimation {
-    position: absolute;
-    top:0;
-    left:0;
-    height:100%;
-    width:100%;
-    background-color:black;
-    Z-index:2;
-}*/
 
 
 @media (max-width:500px) {

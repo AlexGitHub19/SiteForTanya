@@ -6,21 +6,42 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <link type="text/css" rel="stylesheet" href="~/Content/Layout.css"/>
+    <link type="text/css" rel="stylesheet" href="~/Content/Site.css" />
+
     @if (ViewBag.ViewName == "HomeProduct")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Products/Balloon_Product.css" />
     }
-    @if (ViewBag.ViewName == "WorkIndex")
+    else if (ViewBag.ViewName == "WorkIndex")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Work/WorkIndex.css" />
     }
-    
-    
+    else if (ViewBag.ViewName == "WorkSets")
+    {
+        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+        <link type="text/css" rel="stylesheet" href="~/Content/SearchElement.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/Set.css" />
+        <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
+    }
+    else if (ViewBag.ViewName == "WorkSet")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
+    }
+
+
     <script src='@Url.Content("~/Scripts/jquery-3.3.1.min.js")' type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.12.1.min.js")" type="text/javascript"></script>
+    
     @*magnific popup*@
     <link rel="stylesheet" href="~/Content/magnific-popup.css">
     <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 
     
 </head>
@@ -118,8 +139,8 @@
                 });
             </script>
 
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
+            @*@Scripts.Render("~/bundles/jquery")*@
+            @*@Scripts.Render("~/bundles/bootstrap")*@
             @RenderSection("scripts", required: false)
 </body>
 </html>

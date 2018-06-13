@@ -6,7 +6,10 @@
     <title>@ViewBag.ViewName</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
     <link type="text/css" rel="stylesheet" href="~/Content/AdminLayout.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/Site.css" />
+
     @if (ViewBag.ViewName == "AdminIndex")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
@@ -32,7 +35,8 @@
     }
     else if (ViewBag.ViewName == "AdminAddSet")
     {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />       
+        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
         <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     }
     else if (ViewBag.ViewName == "AdminDeleteSet")
@@ -42,6 +46,7 @@
     else if (ViewBag.ViewName == "AdminChangeSet")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminChangeSet.css" />
         <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     }
@@ -149,7 +154,7 @@
     </script>
 
     @*@Scripts.Render("~/bundles/jquery")*@
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

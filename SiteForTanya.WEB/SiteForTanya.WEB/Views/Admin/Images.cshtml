@@ -121,8 +121,6 @@
         {
             if (result.imageCount == 0)
             {
-                $('#existingImages').css('margin-top', '20px');
-                $('#existingImages').css('margin-bottom', '0px');
                 $('#existingImages').html('<h4>No images are found by this search criteria</h4>');
                 return;
             }
@@ -156,8 +154,6 @@
                 html+='</div>';
                 count += 4;
             }
-            $('#existingImages').css('margin-top', '20px');
-            $('#existingImages').css('margin-bottom', '0px');
             $('#existingImages').html(html);
         }
 
@@ -390,7 +386,23 @@
 
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
-            getImagNamesFromServer(1);
+
+            $('#pagination').fadeOut(400, function () {
+                getImagNamesFromServer(1);
+            });
+
+            //var imageContainers = $('#existingImages').find('.imageContainer');
+            //imageContainers.each(function (index, element) {
+            //    if (index == imageContainers.length - 1) {
+            //        $(element).fadeOut(600, function () {
+            //            getImagNamesFromServer(1);
+            //        });
+            //    }
+            //    else
+            //    {
+            //        $(element).fadeOut(600);
+            //    }
+            //});
         })
 
         $('#pagination').on('keypress', '#inputGoToPage', function (e) {

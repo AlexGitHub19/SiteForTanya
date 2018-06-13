@@ -1,0 +1,25 @@
+﻿.mainRow {
+    margin-right:30px;
+    margin-left:30px;
+}
+
+.noPadding {
+    padding:0px;
+}
+
+.imageContainer {
+    background-size: cover;
+    min-height:100px;
+}
+
+.image {
+    max-width: 100%;
+    max-height: 150px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+@media (max-width:768px){
+    .imageContainer {
+    }
+
+}

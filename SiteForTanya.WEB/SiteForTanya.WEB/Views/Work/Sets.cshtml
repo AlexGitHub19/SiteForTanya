@@ -1,7 +1,291 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Sets";
 }
 
+<div class="tokenContainer">
+    @Html.AntiForgeryToken()
+</div>
+
 <h2>Sets</h2>
+<div>
+    <div id="itemSeacher">
+        <input id="searchInput" type="text" class="form-control input-lg" placeholder="Enter keyWord" autocomplete="off" spellcheck="false" autocorrect="off" data-autocomplete-source="@Url.Action("SetsAutocompleteSearch", "Work")">
+        <button id="searchBtn" class="my-btn btn">
+            <i class="fa fa-search" style="font-size:20px" aria-hidden="true"></i>
+        </button>
+        <div id="searchInfoContainer">
+            <label>Show </label>
+            <div id="itemsCountContainer">
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
+                    7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+                </button>
+                <div id="hiddden-ImageCount">
+                    <div>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
+                    </div>
+                    <div>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="getSetNamesFromServerLoadingAnimation">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>
+
+<div id="existingSets"></div>
+
+<div id="pagination"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        getSetNamesFromServer(1);
+
+        $('#searchBtn').bind('click', function () {
+            getSetNamesFromServer(1);
+        });
+
+
+        function getSetNamesFromServer(pageNumber) {
+            $('#pagination').fadeOut();
+            showLoadingAnimation();
+
+            var keyWords = $('#searchInput').val();
+            var setsCountOnPage = parseInt($('#itemsCountBtn').text());
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("GetSetsNames", "Work")',
+                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, setsCountOnPage: setsCountOnPage, pageNumber: pageNumber },
+                success: function (result) {
+                    loadedBeginNumber = 0;
+                    loadedEndNumber = result.sets.length;
+                    loadedResultImageCount = result.setsCount;
+                    loadedPageNumber = pageNumber;
+                    fillSets(result);
+                    setTimeout(showIfNotAllImagesAreLoaded, 12000);
+
+                    function showIfNotAllImagesAreLoaded() {
+                        $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+                        var imageContainers = $('#existingSets').find('.setContainer');
+                        imageContainers.each(function (index, element) {
+                            if ($(element).css('display') == 'none')
+                            {
+                                $(element).fadeIn(600);
+                            }
+                        });
+                        createPagination(result.setsCount, pageNumber);
+                    }
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                }
+            });
+        }
+
+        function showLoadingAnimation() {
+            $('#getSetNamesFromServerLoadingAnimation').css('display', 'block');
+        }
+
+        function fillSets(result) {
+            if (result.setsCount == 0)
+            {
+                $('#existingSets').html('<h4>No sets are found by this search criteria</h4>');
+                return;
+            }
+
+            var html = '';
+            var count = 0;
+            while (count < result.sets.length) {
+                var endValue = count + 2;
+                if (count + 2 > result.sets.length) {
+                    endValue = result.sets.length;
+                }
+                var setArray = new Array(0);
+                for (var i = count; i < endValue; i++) {
+                    setArray.push(result.sets[i]);
+                }
+                html += '<div class="row existingItemsRow">';
+                for (var i = 0; i < setArray.length; i++) {
+                    var id = setArray[i].setName;
+                    html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 setContainer">' +
+                        '<div class="relativeClass clearfix">' +
+                        '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                        '<a href="/Work/Set?name=' + setArray[i].setName + '"><div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div></a>' +
+                        '</div>' +
+                        '</div>';
+                }
+                html += '</div>';
+                count += 2;
+            }
+            $('#existingSets').html(html);
+        }
+
+        function getAntiForgeryToken() {
+            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+        }
+
+        $('#pagination').on('click', '.paginationBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var pageNumber = id.substring(hyphenId + 1);
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                getSetNamesFromServer(pageNumber);
+            });
+        })
+
+        $('#pagination').on('click', '#nextBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            var lastId = $('#pagination > .paginationBtn').last().attr('id')
+            var lastHyphenId = lastId.indexOf('-');
+            var lastPageNumber = lastId.substring(hyphenId + 1);
+            if (currentPageNumber == lastPageNumber) {
+                e.preventDefault();
+                return;
+            }
+
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+            });
+
+        })
+
+        $('#pagination').on('click', '#prevBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            if (currentPageNumber == 1) {
+                e.preventDefault();
+                return;
+            }
+
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+            });
+
+        })
+
+        $('#searchInput').autocomplete({
+            source: $('#searchInput').attr("data-autocomplete-source")
+        });
+
+
+        $("#itemsCountBtn").click(function () {
+            var hiddendiv = $('#hiddden-ImageCount');
+            var leftOfs = $(this).offset().left;
+            hiddendiv.offset({ left: leftOfs });
+            $(this).next().slideToggle('fast');
+        });
+
+        $(window).resize(function () {
+            var hiddendiv = $('#hiddden-ImageCount');
+            var itemsCountBtn = $('#itemsCountBtn');
+            var leftOfs = itemsCountBtn.offset().left;
+            hiddendiv.offset({ left: leftOfs });
+        });
+
+        $(window).click(function (e) {
+            if ($('#hiddden-ImageCount').css('display') != 'none' && e.target.id != 'itemsCountBtn' && e.target.id != 'itemsCountBtnCaretDown') {
+                $('#hiddden-ImageCount').slideToggle('fast');
+            }
+        })
+
+        $('#hiddden-ImageCount').on('click', '.hiddenBtnImageCount', function (e) {
+            var thisValue = $(this).text();
+            var itemsCountBtnValue = $('#itemsCountBtn').text();
+            $('#itemsCountBtn').text(thisValue);
+            $('#itemsCountBtn').append('<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>');
+            var value1 = 60;
+            var value2 = 100;
+            if (thisValue == 60) {
+                var value1 = 32;
+                var value2 = 100;
+            }
+            else if (thisValue == 100) {
+                var value1 = 32;
+                var value2 = 60;
+            }
+
+            $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
+                       '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
+
+            $('#pagination').fadeOut(400, function () {
+                getSetNamesFromServer(1);
+            })
+        })
+
+        $('#pagination').on('keypress', '#inputGoToPage', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                var pageNumber = parseInt($(this).val());
+                if (!isNaN(pageNumber))
+                {
+                    $('#pagination').fadeOut();
+                    $('html').animate({
+                        scrollTop: 0
+                    }, 500, function () {
+                        getSetNamesFromServer(pageNumber);
+                    });
+                }
+            }
+        })      
+
+    });
+
+    var loadedBeginNumber = 0;
+    var loadedEndNumber = 0;
+    var loadedResultImageCount = 0;
+    var loadedPageNumber = 0;
+    function imgLoaded(img) {
+        loadedBeginNumber++;
+        if (loadedBeginNumber == loadedEndNumber) {
+            var imageContainers = $('#existingSets').find('.setContainer');
+            $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+            imageContainers.each(function (index, element) {
+                if (index == imageContainers.length - 1) {
+                    $(element).delay(100 * index).fadeIn(600, function () {
+                        createPagination(loadedResultImageCount, loadedPageNumber);
+                    });
+                }
+                else
+                {
+                    $(element).delay(100 * index).fadeIn(600);
+                }
+            });
+        }
+    };
+
+    function createPagination(totalSetsCount, pageNumber) {
+        var setsCountOnPage = parseInt($('#itemsCountBtn').text());
+        var html = getPaginationHtml(totalSetsCount, setsCountOnPage, pageNumber)
+
+        $('#pagination').html(html);
+        $('#paginationBtn-' + pageNumber).addClass('current');
+        $('#pagination').fadeIn();
+    }
+</script>
 

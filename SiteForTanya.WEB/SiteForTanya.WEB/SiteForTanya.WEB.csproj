@@ -206,6 +206,9 @@
     <Compile Include="Models\ApplicationContext .cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
+    <Compile Include="Models\CommonMethods.cs" />
+    <Compile Include="Models\CommonViewModels\AutocompleteViewModel.cs" />
+    <Compile Include="Models\CommonViewModels\SetViewModel.cs" />
     <Compile Include="Models\DbInitializer.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\IEntityInfo.cs" />
@@ -214,7 +217,9 @@
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\SetEntity.cs" />
+    <Compile Include="Models\SetProcessor.cs" />
     <Compile Include="Models\SetsInfo.cs" />
+    <Compile Include="Models\WorkViewModels\SetVewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -246,6 +251,8 @@
     <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
+    <Content Include="Content\SetStyle.css" />
+    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -353,6 +360,7 @@
     <Content Include="Views\Admin\DeleteSet.cshtml" />
     <Content Include="Views\Admin\ShowInfo.cshtml" />
     <Content Include="Views\Admin\ChangeSet.cshtml" />
+    <Content Include="Views\Work\Set.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -298,21 +298,8 @@ namespace SiteForTanya.WEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetSetsNames(string keyWords, int setsCountOnPage, int pageNumber)
         {
-            Repository<SetEntity> setEntityRepository = new Repository<SetEntity>();
-
-            if (keyWords == String.Empty)
-            {
-                var allSets = setEntityRepository.GetList();
-                var sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { setName = set.Name, mainImageName = set.MainImageName });
-                return Json(new { sets = sets, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                List<string> words = keyWords.Split(' ').ToList();
-                var allSets = setEntityRepository.GetList().Where(set => TagContainsWord(set, words));
-                var sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).Take(setsCountOnPage).Select(set => new { setName = set.Name, mainImageName = set.MainImageName });
-                return Json(new { sets = sets, setsCount = allSets.Count() }, JsonRequestBehavior.AllowGet);
-            }
+            SetProcessor setProcessor = new SetProcessor();
+            return Json(setProcessor.GetSetsNames(keyWords, setsCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -416,29 +403,13 @@ namespace SiteForTanya.WEB.Controllers
         [HttpGet]
         public ActionResult ImagesAutocompleteSearch(string term)
         {
-            Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
-            ImagesInfo imgInfo = imageInfoRepository.GetList().First();
-            if (imgInfo.AllTags == String.Empty)
-            {
-                return Json(null, JsonRequestBehavior.AllowGet);
-            }
-            var words = imgInfo.AllTags.Split(',').Where(x=>x.Contains(term.ToLower())).OrderBy(s => s).Select(a => new { value = a });
-
-            return Json(words, JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<ImagesInfo>(term), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult SetsAutocompleteSearch(string term)
         {
-            Repository<SetsInfo> setInfoRepository = new Repository<SetsInfo>();
-            SetsInfo setInfo = setInfoRepository.GetList().First();
-            if (setInfo.AllTags == String.Empty)
-            {
-                return Json(null, JsonRequestBehavior.AllowGet);
-            }
-            var words = setInfo.AllTags.Split(',').Where(x => x.Contains(term.ToLower())).OrderBy(s => s).Select(a => new { value = a });
-
-            return Json(words, JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<SetsInfo>(term), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -457,29 +428,10 @@ namespace SiteForTanya.WEB.Controllers
             else
             {
                 List<string> words = keyWords.Split(' ').ToList();
-                var allImages = imageEntityRepository.GetList().Where(img => TagContainsWord(img, words));
+                var allImages = imageEntityRepository.GetList().Where(img => CommonMethods.TagContainsWord(img, words));
                 var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber - 1) * imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
                 return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
             }
-        }
-
-        private bool TagContainsWord<T>(T item, List<string> words) where T: IEntity
-        {
-            if (item.Tags == null)
-            {
-                return false;
-            }
-            foreach (string tag in item.Tags.Split(','))
-            {
-                foreach (string word in words)
-                {
-                    if (word == tag)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
 
         [HttpPost]
