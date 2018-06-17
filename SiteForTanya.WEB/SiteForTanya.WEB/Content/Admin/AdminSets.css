@@ -111,7 +111,14 @@
 #addSetContainer {
     width:100%;
     background-color:var(--secondColor); 
-    padding-top:20px;
-    padding-bottom:20px;
-    margin-top:50px;
+    padding-top:15px;
+    padding-bottom:15px;
+    margin-top:20px;
+}
+
+@media (max-width:600px) {
+
+   #addSetContainer {
+       margin-top:40px;
+    }
 }

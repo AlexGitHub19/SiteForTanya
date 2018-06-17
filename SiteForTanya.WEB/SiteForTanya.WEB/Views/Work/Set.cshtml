@@ -1,6 +1,76 @@
 ﻿@model SiteForTanya.WEB.Models.WorkViewModels.SetVewModel
 
-<h2>@Model.Name</h2>
+<div id="setNameContainer">@Model.Name</div>
 
 @Html.Raw(Model.Html)
 
+<div id="widthP"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var imageContainersData = [];
+        var imageContainers = $('.imageContainer');
+        imageContainers.each(function (index, element) {
+            item = {};
+            item.id = $(element).attr('id');
+            var marginTop = $(element).css('margin-top');
+            item.marginTop = marginTop;
+            var marginBottom = $(element).css('margin-bottom');
+            item.marginBottom = marginBottom;
+            var marginRight = $(element).css('margin-right');
+            item.marginRight = marginRight;
+            var marginLeft = $(element).css('margin-left');
+            item.marginLeft = marginLeft;
+
+            imageContainersData.push(item);
+        });
+
+        var imagesData = [];
+        var images = $('.image');
+        images.each(function (index, element) {
+            item = {};
+            item.id = $(element).attr('id');
+            var maxHeight = $(element).css('max-height');
+            item.maxHeight = maxHeight;
+            var float = $(element).css('float');
+            item.float = float;
+            imagesData.push(item);
+        });
+
+        calculateImageParameters();
+
+        $(window).resize(function () {
+            calculateImageParameters();
+        });         
+
+        function calculateImageParameters()
+        {
+            if (window.innerWidth <= 767) {
+                images.each(function (index, element) {
+                    $(element).css('max-height', '600px');
+                    $(element).css('float', 'none');;
+                });
+
+                imageContainers.each(function (index, element) {
+                    $(element).css('margin-top', '0px');
+                    $(element).css('margin-bottom', '30px');
+                    $(element).css('margin-right', '0px');
+                    $(element).css('margin-left', '0px');
+                });
+            }
+            else {
+                for (var i = 0; i < imagesData.length; i++) {
+                    $('#' + imagesData[i].id).css('max-height', imagesData[i].maxHeight);
+                    $('#' + imagesData[i].id).css('float', imagesData[i].float);
+                }
+
+                for (var i = 0; i < imageContainersData.length; i++) {
+                    $('#' + imageContainersData[i].id).css('margin-top', imageContainersData[i].marginTop);
+                    $('#' + imageContainersData[i].id).css('margin-bottom', imageContainersData[i].marginBottom);
+                    $('#' + imageContainersData[i].id).css('margin-right', imageContainersData[i].marginRight);
+                    $('#' + imageContainersData[i].id).css('margin-left', imageContainersData[i].marginLeft);
+                }
+            }
+        }
+    });
+</script>

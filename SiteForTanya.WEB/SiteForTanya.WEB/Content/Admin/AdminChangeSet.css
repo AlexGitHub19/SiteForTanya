@@ -9,3 +9,10 @@
     font-size: 25px;
     font-family: 'Raleway', Arial, sans-serif;
 }
+
+@media (max-width:600px) {
+
+   #bacgroundColorContainer {
+       margin-top:40px;
+    }
+}

@@ -1,6 +1,6 @@
 ﻿.mainRow {
-    margin-right:30px;
-    margin-left:30px;
+    margin-right:45px;
+    margin-left:45px;
 }
 
 .noPadding {
@@ -18,8 +18,28 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
+
+#setNameContainer {
+    background-color: var(--secondColor);
+    margin-top:20px;
+    margin-bottom:20px;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size: 25px;
+    font-family: 'Raleway', Arial, sans-serif;
+}
+
+
 @media (max-width:768px){
     .imageContainer {
+        margin-bottom:30px;
     }
 
+}
+
+@media (max-width:600px) {
+
+   #setNameContainer {
+       margin-top:40px;
+    }
 }

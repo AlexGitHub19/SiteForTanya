@@ -1,18 +1,18 @@
 ﻿#resultInfo {
-    margin-top:50px;
+    margin-top:20px;
     position:relative;
 }
 
 .addImage {
     background-color:#f4f1e4;      
-    padding-top:20px;
-    padding-bottom:20px;
+    padding-top:15px;
+    padding-bottom:15px;
 }
 
 .imageContainer {
     background-size: cover;
-    padding-left: 25px;
-    padding-right: 25px;
+    /*padding-left: 25px;
+    padding-right: 25px*/;
     margin-bottom:30px;
     position:relative;
     display:none;
@@ -54,8 +54,8 @@
 }
 
 .existingItemsRow{
-    padding-left:50px;
-    padding-right:50px;
+    padding-left:30px;
+    padding-right:30px;
 }
 
 .deleteImageBtn {
@@ -160,5 +160,12 @@
 
    .image {
        max-height:600px;
+    }
+}
+
+@media (max-width:600px) {
+
+   #resultInfo {
+       margin-top:40px;
     }
 }
