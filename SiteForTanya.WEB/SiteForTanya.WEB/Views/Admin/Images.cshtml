@@ -88,7 +88,7 @@
                 data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
                     loadedBeginNumber = 0;
-                    loadedEndNumber = result.imageNames.length;
+                    loadedEndNumber = result.imageInfos.length;
                     loadedResultImageCount = result.imageCount;
                     loadedPageNumber = pageNumber;
                     fillImages(result);
@@ -127,24 +127,27 @@
 
             var html = '';
             var count = 0;
-            while (count < result.imageNames.length)
+            while (count < result.imageInfos.length)
             {
                 var endValue = count+4;
-                if (count + 4 > result.imageNames.length)
+                if (count + 4 > result.imageInfos.length)
                 {
-                    endValue = result.imageNames.length;
+                    endValue = result.imageInfos.length;
                 }
                 var imageArray = new Array(0);
+                var imageHasTags = new Array(0);
                 for(var i = count; i < endValue; i++)
                 {
-                    imageArray.push(result.imageNames[i].value);
+                    imageArray.push(result.imageInfos[i].name);
+                    imageHasTags.push(result.imageInfos[i].hasTags);
                 }
                 html += '<div class="row existingItemsRow">';
                 for(var i = 0; i < imageArray.length; i++)
                 {
+                    var borderClass = imageHasTags[i] ? "" : "warningBorder";
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" onload="imgLoaded(this)"/>' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image ' + borderClass + '" onload="imgLoaded(this)"/>' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +

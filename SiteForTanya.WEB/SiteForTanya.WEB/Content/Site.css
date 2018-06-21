@@ -65,3 +65,21 @@ input {
     margin-right:0px;
     margin-left:0px;
 }
+
+#bacgroundColorContainer {
+    background-color: var(--secondColor);
+    margin-top:20px;
+    margin-bottom:20px;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-size: 25px;
+    font-family: 'Raleway', Arial, sans-serif;
+}
+
+@media (max-width:600px) {
+
+   #bacgroundColorContainer {
+       margin-top:40px;
+       font-size:20px;
+    }
+}

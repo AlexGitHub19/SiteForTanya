@@ -25,6 +25,13 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpGet]
+        public ActionResult Images()
+        {
+            ViewBag.ViewName = "WorkImages";
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Set(string name)
         {
             Repository<SetEntity> setRepostory = new Repository<SetEntity>();
@@ -49,6 +56,15 @@ namespace SiteForTanya.WEB.Controllers
             return Json(setProcessor.GetSetsNames(keyWords, setsCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
+        {
+            ImageProcessor imageProcessor = new ImageProcessor();
+            return Json(imageProcessor.GetImagesNames(keyWords, imagesCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult SetsAutocompleteSearch(string term)
         {
@@ -56,10 +72,9 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpGet]
-        public ActionResult SingleImages()
+        public ActionResult ImagesAutocompleteSearch(string term)
         {
-            ViewBag.ViewName = "SingleImages";
-            return View();
+            return Json(CommonMethods.AutocompleteSearch<ImagesInfo>(term), JsonRequestBehavior.AllowGet);
         }
     }
 }

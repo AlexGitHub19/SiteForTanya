@@ -9,53 +9,10 @@
     padding-bottom:15px;
 }
 
-.imageContainer {
-    background-size: cover;
-    /*padding-left: 25px;
-    padding-right: 25px*/;
-    margin-bottom:30px;
-    position:relative;
-    display:none;
-}
-
-/*.customBorder {
-     box-shadow: 0 0 10px rgba(0,0,0,0.5);
-     border-radius:3px;
-     -webkit-transition-duration: 0.4s;
-     -o-transition-duration: 0.4s;
-     -moz-transition-duration: 0.4s;
-     transition-duration: 0.4s;
-}*/
-
-.image {
-    max-width: 100%;
-    max-height:180px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-#loading {
-    display:none;
-}
-
 #images {
     display:none;
     margin-top:20px;
     margin-bottom:20px;
-}
-
-#existingImages {
-    margin-top:20px;
-}
-
-#getImageNamesFromServerLoadingAnimation {
-    margin-top:130px;
-    margin-bottom:130px;
-    display:none;
-}
-
-.existingItemsRow{
-    padding-left:30px;
-    padding-right:30px;
 }
 
 .deleteImageBtn {
@@ -86,11 +43,6 @@
     font-size:100px
 }
 
-
-.relativeClass {
-    position: relative;
-    display:inline-block;
-}
 
 .deleteImageInfo {
     position:absolute;
@@ -155,12 +107,11 @@
     transition: opacity 0.4s;
 }
 
-
-@media (max-width:767px) {
-
-   .image {
-       max-height:600px;
-    }
+.warningBorder {
+    border: solid;
+    color: red;
+    border-width:1px;
+    box-shadow: 0 0 10px red;
 }
 
 @media (max-width:600px) {

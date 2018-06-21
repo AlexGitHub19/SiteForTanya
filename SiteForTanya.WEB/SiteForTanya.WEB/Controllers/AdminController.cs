@@ -417,21 +417,8 @@ namespace SiteForTanya.WEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
         {
-            Repository<ImageEntity> imageEntityRepository = new Repository<ImageEntity>();
-
-            if (keyWords == String.Empty)
-            {
-                var allImages = imageEntityRepository.GetList();
-                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber-1)* imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
-                return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                List<string> words = keyWords.Split(' ').ToList();
-                var allImages = imageEntityRepository.GetList().Where(img => CommonMethods.TagContainsWord(img, words));
-                var imageNames = allImages.OrderByDescending(img => img.AddingTime).Skip((pageNumber - 1) * imagesCountOnPage).Take(imagesCountOnPage).Select(img => new { value = img.Name });
-                return Json(new { imageNames = imageNames, imageCount = allImages.Count() }, JsonRequestBehavior.AllowGet);
-            }
+            ImageProcessor imageProcessor = new ImageProcessor();
+            return Json(imageProcessor.GetImagesNames(keyWords, imagesCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

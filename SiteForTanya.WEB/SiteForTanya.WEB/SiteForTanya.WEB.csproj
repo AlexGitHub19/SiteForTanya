@@ -213,7 +213,9 @@
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\IEntityInfo.cs" />
     <Compile Include="Models\ImageEntity.cs" />
+    <Compile Include="Models\ImageProcessor.cs" />
     <Compile Include="Models\ImagesInfo.cs" />
+    <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\SetEntity.cs" />
@@ -236,6 +238,7 @@
     <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Images.css" />
     <Content Include="Content\Images\Balloon_Product\1.jpg" />
     <Content Include="Content\Images\Balloon_Product\2.jpg" />
     <Content Include="Content\Images\Balloon_Product\3.jpg" />
@@ -296,7 +299,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\Work\WorkIndex.css" />
     <Content Include="Content\Work\WorkSets.css" />
-    <Content Include="Content\Work\WorkSingleImages.css" />
+    <Content Include="Content\Work\WorkImages.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -349,7 +352,7 @@
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
     <Content Include="Views\Work\Sets.cshtml" />
-    <Content Include="Views\Work\SingleImages.cshtml" />
+    <Content Include="Views\Work\Images.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\AddSet.cshtml" />

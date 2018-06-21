@@ -138,15 +138,47 @@ ul#menu li ul li a:hover{background: #ddd;}
     }
 }
 
-@media (max-width:559px) {
+@media (max-width:576px) {
 
-    #searchInfoContainer {
-        margin-top:10px;
-    }
-
-    /*#searchInfoContainer label {
+    /*#searchInfoContainer {
         margin-top:10px;
     }*/
+
+    #searchInput {
+        height: 30px;
+        max-width:70%;
+        font-size:14px;
+    }
+
+    #searchBtn {
+        height: 30px;
+        width:40px;
+        padding: 0px;
+    }
+
+    .itemsCountBtn {
+        height: 30px;
+        width:40px;
+        padding: 0px;
+    }
+
+    #searchInfoContainer label {
+        margin-top:10px;
+    }
+}
+
+@media (max-width:563px) {
+    #searchInput {
+        max-width:60%;
+    }
+
+}
+
+@media (max-width:457px) {
+    #searchInput {
+        max-width:10%;
+    }
+
 }
 
 
