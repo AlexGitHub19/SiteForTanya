@@ -364,6 +364,7 @@
     <Content Include="Views\Admin\ShowInfo.cshtml" />
     <Content Include="Views\Admin\ChangeSet.cshtml" />
     <Content Include="Views\Work\Set.cshtml" />
+    <Content Include="Views\Admin\Set.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

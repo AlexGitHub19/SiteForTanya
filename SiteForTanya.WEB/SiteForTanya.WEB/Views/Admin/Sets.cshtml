@@ -131,7 +131,7 @@
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 setContainer">' +
                         '<div class="relativeClass clearfix">' +
                         '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" onload="imgLoaded(this)"/>' +
-                        '<div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div>' +
+                        '<a href="/Work/Set?name=' + setArray[i].setName + '"><div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div></a>' +
                         '<div id="setInfo-' + id + '" class ="setInfo"><i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
                         '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:80px"></i></div>' +

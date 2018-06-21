@@ -1,4 +1,7 @@
 ﻿@model SiteForTanya.WEB.Models.WorkViewModels.SetVewModel
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 
 <div id="setNameContainer">@Model.Name</div>
 
@@ -40,7 +43,7 @@
 
         $(window).resize(function () {
             calculateImageParameters();
-        });         
+        });
 
         function calculateImageParameters()
         {

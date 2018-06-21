@@ -10,6 +10,7 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using SiteForTanya.WEB.Models.WorkViewModels;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -29,6 +30,21 @@ namespace SiteForTanya.WEB.Controllers
         {
             ViewBag.ViewName = "AdminSets";
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Set(string name)
+        {
+            Repository<SetEntity> setRepostory = new Repository<SetEntity>();
+            SetEntity set = setRepostory.GetList().FirstOrDefault(s => s.Name == name);
+            if (set == null)
+            {
+                return RedirectToAction("Home");
+            }
+
+            ViewBag.ViewName = "AdminSet";
+            SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
+            return View(vm);
         }
 
         [HttpGet]
