@@ -142,7 +142,7 @@
                 {
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" onload="imgLoaded(this)"/>' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
                         '</div>' +
                         '</div>';
                 }
@@ -289,7 +289,7 @@
                     scrollTop: 0
                 }, 500, function () {
                     $('#existingImages').fadeOut(400, function () {
-                        getImageNamesFromServer(1);
+                        getImagNamesFromServer(1);
                     });
                 });
             });

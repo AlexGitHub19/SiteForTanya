@@ -161,7 +161,7 @@
                     var borderClass = imageHasTags[i] ? "" : "warningBorder";
                     var id = imageArray[i].substring(0, imageArray[i].indexOf('.'));
                     html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-3 col-lg-3 imageContainer">' +
-                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image ' + borderClass + '" onload="imgLoaded(this)"/>' +
+                        '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + imageArray[i] + '" class="image ' + borderClass + '" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
                         '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                         '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                         '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +

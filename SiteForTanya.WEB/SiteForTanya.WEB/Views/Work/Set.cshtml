@@ -2,8 +2,6 @@
 
 <div id="setNameContainer">@Model.Name</div>
 
-@Html.Raw(Model.Html)
-
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -72,4 +70,14 @@
             }
         }
     });
+
+    function imgLoaded(img) {
+        if ($('#getSetNamesFromServerLoadingAnimation').css('display') != 'none')
+        {
+            $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+        }
+        $(img).parent().fadeIn(600);
+    };
 </script>
+
+@Html.Raw(Model.Html)

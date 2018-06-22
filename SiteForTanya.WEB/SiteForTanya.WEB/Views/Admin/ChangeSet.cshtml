@@ -106,7 +106,7 @@
 
         function getImageRowHtml() {
             return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding clearfix">' +
-                   '<img id="image' + cellCount + '" class="image"/>' +
+                   '<img id="image' + cellCount + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
                    '<div id="settingsContainer' + cellCount + '" class ="settingsContainer not-result">' +
                    getSettingsRowHtml(cellCount) +
                    '</div>' +
