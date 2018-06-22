@@ -71,7 +71,14 @@
         });
 
         $('#searchBtn').bind('click', function () {
-            getImagNamesFromServer(1);
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#existingImages').fadeOut(400, function () {
+                    getImagNamesFromServer(1);
+                });
+            });
         });
 
         function getImagNamesFromServer(pageNumber)
@@ -96,14 +103,19 @@
                     setTimeout(showIfNotAllImagesAreLoaded, 12000);
 
                     function showIfNotAllImagesAreLoaded() {
+                        var areNotDisplayed = false;
                         $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
                         var imageContainers = $('#existingImages').find('.imageContainer');
                         imageContainers.each(function (index, element) {
                             if ($(element).css('display') == 'none') {
                                 $(element).fadeIn(600);
+                                areNotDisplayed = true;
                             }
                         });
-                        createPagination(result.imageCount, pageNumber);
+                        if (areNotDisplayed)
+                        {
+                            createPagination(result.imageCount, pageNumber);
+                        }                       
                     }
                 },
                 error: function (xhr, status, p3) {
@@ -121,7 +133,9 @@
         {
             if (result.imageCount == 0)
             {
-                $('#existingImages').html('<h4>No images are found by this search criteria</h4>');
+                $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
+                $('#existingImages').html('<h4 style="margin-top:50px;">No images are found by this search criteria</h4>');
+                $('#existingImages').css('display', 'block');
                 return;
             }
 
@@ -158,6 +172,7 @@
                 count += 4;
             }
             $('#existingImages').html(html);
+            $('#existingImages').css('display', 'block');
         }
 
         function getAntiForgeryToken() {
@@ -263,7 +278,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getImagNamesFromServer(pageNumber);
+                $('#existingImages').fadeOut(400, function () {
+                    getImagNamesFromServer(pageNumber);
+                });
             });
         })
 
@@ -284,7 +301,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+                $('#existingImages').fadeOut(400, function () {
+                    getImagNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+                });                
             });
         })
 
@@ -301,7 +320,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+                $('#existingImages').fadeOut(400, function () {
+                    getImagNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+                });                
             });
         })
 
@@ -390,8 +411,13 @@
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
 
-            $('#pagination').fadeOut(400, function () {
-                getImagNamesFromServer(1);
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#existingImages').fadeOut(400, function () {
+                    getImagNamesFromServer(1);
+                });
             });
 
             //var imageContainers = $('#existingImages').find('.imageContainer');
@@ -418,7 +444,9 @@
                     $('html').animate({
                         scrollTop: 0
                     }, 500, function () {
-                        getImagNamesFromServer(pageNumber);
+                        $('#existingImages').fadeOut(400, function () {
+                            getImagNamesFromServer(pageNumber);
+                        });
                     });                  
                 }                            
             }

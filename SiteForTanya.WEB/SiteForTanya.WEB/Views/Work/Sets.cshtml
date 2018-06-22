@@ -55,7 +55,14 @@
         getSetNamesFromServer(1);
 
         $('#searchBtn').bind('click', function () {
-            getSetNamesFromServer(1);
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#existingSets').fadeOut(400, function () {
+                    getSetNamesFromServer(1);
+                });
+            });
         });
 
 
@@ -79,15 +86,20 @@
                     setTimeout(showIfNotAllImagesAreLoaded, 12000);
 
                     function showIfNotAllImagesAreLoaded() {
+                        var areNotDisplayed = false;
                         $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
                         var imageContainers = $('#existingSets').find('.setContainer');
                         imageContainers.each(function (index, element) {
                             if ($(element).css('display') == 'none')
                             {
                                 $(element).fadeIn(600);
+                                areNotDisplayed = true;
                             }
                         });
-                        createPagination(result.setsCount, pageNumber);
+                        
+                        if (areNotDisplayed) {
+                            createPagination(result.setsCount, pageNumber);
+                        }
                     }
                 },
                 error: function (xhr, status, p3) {
@@ -103,7 +115,9 @@
         function fillSets(result) {
             if (result.setsCount == 0)
             {
-                $('#existingSets').html('<h4>No sets are found by this search criteria</h4>');
+                $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+                $('#existingSets').html('<h4 style="margin-top:50px;">No sets are found by this search criteria</h4>');
+                $('#existingSets').css('display', 'block');
                 return;
             }
 
@@ -132,6 +146,7 @@
                 count += 2;
             }
             $('#existingSets').html(html);
+            $('#existingSets').css('display', 'block');
         }
 
         function getAntiForgeryToken() {
@@ -146,7 +161,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getSetNamesFromServer(pageNumber);
+                $('#existingSets').fadeOut(400, function () {
+                    getSetNamesFromServer(pageNumber);
+                });
             });
         })
 
@@ -166,7 +183,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+                $('#existingSets').fadeOut(400, function () {
+                    getSetNamesFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+                });
             });
 
         })
@@ -184,7 +203,9 @@
             $('html').animate({
                 scrollTop: 0
             }, 500, function () {
-                getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+                $('#existingSets').fadeOut(400, function () {
+                    getSetNamesFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+                });
             });
 
         })
@@ -233,9 +254,14 @@
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
                        '<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value2 + '</button></div>');
 
-            $('#pagination').fadeOut(400, function () {
-                getSetNamesFromServer(1);
-            })
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#existingSets').fadeOut(400, function () {
+                    getSetNamesFromServer(1);
+                });
+            });
         })
 
         $('#pagination').on('keypress', '#inputGoToPage', function (e) {
@@ -248,7 +274,9 @@
                     $('html').animate({
                         scrollTop: 0
                     }, 500, function () {
-                        getSetNamesFromServer(pageNumber);
+                        $('#existingSets').fadeOut(400, function () {
+                            getSetNamesFromServer(pageNumber);
+                        });
                     });
                 }
             }

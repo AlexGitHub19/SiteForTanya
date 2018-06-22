@@ -1,6 +1,6 @@
 ﻿.setContainer {
-    padding-left:0px;
-    padding-right:0px;
+    padding-left:15px;
+    padding-right:15px;
     margin-bottom:30px;
     position:relative;
     display:none;
@@ -23,8 +23,8 @@
 
 #existingSets {
     margin-top:20px;
-    margin-left: 40px;
-    margin-right: 40px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 #getSetNamesFromServerLoadingAnimation {
