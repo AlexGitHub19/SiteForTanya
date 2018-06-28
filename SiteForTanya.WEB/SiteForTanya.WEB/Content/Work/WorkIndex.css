@@ -1,9 +1,15 @@
 ﻿.content {
-    margin-top:50px;
+    margin-top:10px;
+}
+
+#bacgroundColorContainer {
+    background-color:black;
+    color: white;
 }
 
 .item {
     position:relative;
+    height: 450px;
     color:black;
     /*text-shadow: 0px 0px 2px black;*/
 }
@@ -14,10 +20,6 @@
 
 .item-right {
     margin-left:5px;
-}
-
-.image {
-    width:100%;
 }
 
     .item-content {
@@ -42,4 +44,33 @@
 
 .no-padding {
     padding:0
+}
+
+
+@media (max-width:1100px) {
+    .item {
+        height: 400px;
+    }
+
+}
+
+@media (max-width:800px) {
+    .item {
+        height: 350px;
+    }
+
+}
+
+@media (max-width:600px) {
+    .item {
+        height: 300px;
+    }
+
+}
+
+@media (max-width:535px) {
+    .item {
+        height: 250px;
+    }
+
 }

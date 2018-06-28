@@ -17,6 +17,9 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     opacity:0.7;
     -webkit-transition: opacity 0.35s;
+    -moz-transition:  opacity 0.35s;
+    -ms-transition:  opacity 0.35s;
+    -o-transition:  opacity 0.35s;
 	transition: opacity 0.35s;
 }
 
@@ -45,13 +48,15 @@
     margin-left:0px;
     margin-right:0px;
     margin-bottom:0px;
-    margin-top:20%;
+    margin-top:25%;
     color: white;
+    opacity: 0;
     text-transform: uppercase;
-    -webkit-transition: -webkit-transform 0.35s;
-	transition: transform 0.35s;
-	-webkit-transform: translate3d(0,20px,0);
-	transform: translate3d(0,20px,0);
+    -webkit-transition: -webkit-transform 0.35s, opacity 0.45s;
+    -moz-transition: -moz-transform 0.35s, opacity 0.45s;
+    -ms-transition: -ms-transform 0.35s, opacity 0.45s;
+    -o-transition: -o-transform 0.35s, opacity 0.45s;
+	transition: transform 0.35s, opacity 0.45s;
 }
 
 .setName p {
@@ -62,9 +67,15 @@
     color: white;
     opacity: 0;
     font-size:16px;
-	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+	-webkit-transition: -webkit-transform 0.35s, opacity 0.35s;
+    -moz-transition: -moz-transform 0.35s, opacity 0.35s;
+    -ms-transition: -ms-transform 0.35s, opacity 0.35s;
+    -o-transition: -o-transform 0.35s, opacity 0.35s;
 	transition: opacity 0.35s, transform 0.35s;
 	-webkit-transform: translate3d(0,100px,0);
+    -moz-transform: translate3d(0,100px,0);
+    -ms-transform: translate3d(0,100px,0); 
+    -o-transform: translate3d(0,100px,0);
 	transform: translate3d(0,100px,0);
 }
 
@@ -73,14 +84,16 @@
 }
 
 .relativeClass:hover h2 {
-	-webkit-transform: translate3d(0,0,0);
-	transform: translate3d(0,0,0);
+    opacity: 1;
 }
 
 .relativeClass:hover p {
 	opacity: 1;
-	-webkit-transform: translate3d(0,0,0) scale(1);
-	transform: translate3d(0,0,0) scale(1);
+	-webkit-transform: translate3d(0,0,0);
+    -moz-transform: translate3d(0,0,0);
+    -ms-transform: translate3d(0,0,0); 
+    -o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
 }
 .relativeClass:hover .image {
     opacity:0.2;
