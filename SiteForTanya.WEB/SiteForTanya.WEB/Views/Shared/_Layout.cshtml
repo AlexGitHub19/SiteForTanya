@@ -10,7 +10,15 @@
     <link type="text/css" rel="stylesheet" href="~/Content/Layout.css"/>
     <link type="text/css" rel="stylesheet" href="~/Content/Site.css" />
 
-    @if (ViewBag.ViewName == "HomeProduct")
+    @if (ViewBag.ViewName == "HomeIndex")
+    {
+        <link type="text/css" rel="stylesheet" href="~/Content/Home/HomeIndex.css"/>
+        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+
+
+        <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
+    }
+    else if (ViewBag.ViewName == "HomeProduct")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Products/Balloon_Product.css" />
     }
@@ -32,6 +40,8 @@
     {
         <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/SetShowingStyle.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
+        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
     }
     else if (ViewBag.ViewName == "WorkImages")
     {
@@ -41,6 +51,7 @@
         <link type="text/css" rel="stylesheet" href="~/Content/SearchElement.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
         <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
+        <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
         <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
     }
 

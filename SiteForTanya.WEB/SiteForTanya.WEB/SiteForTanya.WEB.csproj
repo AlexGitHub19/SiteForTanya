@@ -238,6 +238,7 @@
     <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
     <Content Include="Content\Images\Balloon_Product\1.jpg" />
     <Content Include="Content\Images\Balloon_Product\2.jpg" />
@@ -254,6 +255,7 @@
     <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
+    <Content Include="Content\SetShowingStyle.css" />
     <Content Include="Content\SetStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -371,7 +373,6 @@
     <Folder Include="Content\Account\" />
     <Folder Include="Content\Blog\" />
     <Folder Include="Content\Contacts\" />
-    <Folder Include="Content\Home\" />
     <Folder Include="Content\Images\Images\" />
     <Folder Include="Content\Images\Sets\" />
     <Folder Include="Content\Images\Temp\" />
