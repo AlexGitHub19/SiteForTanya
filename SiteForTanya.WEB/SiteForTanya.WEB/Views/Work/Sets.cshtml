@@ -16,12 +16,11 @@
         <div id="searchInfoContainer">
             <label>Show </label>
             <div id="itemsCountContainer">
-                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">
-                    7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">20<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>
                 </button>
                 <div id="hiddden-ImageCount">
                     <div>
-                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">40</button>
                     </div>
                     <div>
                         <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
@@ -240,15 +239,15 @@
             var itemsCountBtnValue = $('#itemsCountBtn').text();
             $('#itemsCountBtn').text(thisValue);
             $('#itemsCountBtn').append('<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>');
-            var value1 = 60;
+            var value1 = 40;
             var value2 = 100;
-            if (thisValue == 60) {
-                var value1 = 32;
+            if (thisValue == 40) {
+                var value1 = 20;
                 var value2 = 100;
             }
             else if (thisValue == 100) {
-                var value1 = 32;
-                var value2 = 60;
+                var value1 = 20;
+                var value2 = 40;
             }
 
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +

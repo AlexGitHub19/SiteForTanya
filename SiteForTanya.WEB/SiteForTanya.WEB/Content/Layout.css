@@ -2,7 +2,8 @@
     font-size: 12px;
     background-color: white;
     height: 37px;
-    position:inherit
+    position:inherit;
+     -webkit-transition: 0.3s -webkit-filter linear;
 }
 
     .main-menu ul {

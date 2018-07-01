@@ -29,10 +29,10 @@
         <div id="searchInfoContainer">
             <label>Show </label>
             <div id="itemsCountContainer">
-                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">7<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i></button>
+                <button id="itemsCountBtn" class="btn my-btn itemsCountBtn">20<i id="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i></button>
                 <div id="hiddden-ImageCount">
                     <div>
-                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">60</button>
+                        <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">40</button>
                     </div>
                     <div>
                         <button class="btn my-btn itemsCountBtn hiddenBtnImageCount">100</button>
@@ -402,15 +402,15 @@
             var itemsCountBtnValue = $('#itemsCountBtn').text();
             $('#itemsCountBtn').text(thisValue);
             $('#itemsCountBtn').append('<i id ="itemsCountBtnCaretDown" class="fa fa-caret-down" aria-hidden="true"></i>');
-            var value1 = 60;
+            var value1 = 40;
             var value2 = 100;
-            if (thisValue == 60) {
-                var value1 = 32;
+            if (thisValue == 40) {
+                var value1 = 20;
                 var value2 = 100;
             }
             else if (thisValue == 100) {
-                var value1 = 32;
-                var value2 = 60;
+                var value1 = 20;
+                var value2 = 40;
             }
 
             $('#hiddden-ImageCount').html('<div><button class="btn my-btn itemsCountBtn hiddenBtnImageCount">' + value1 + '</button></div>' +
@@ -459,9 +459,13 @@
 
 
         $('.body-content').on('click', '.blackoutAnimation', function (e) {
-
             var image = $(this).parent().find('img').first();
-            $('.body-content').append('<div class="zoomContainer">' +
+            $('.body-content').css('filter', 'blur(15px)');
+            $('.main-menu').css('filter', 'blur(15px)');
+            $('#nav-icon').css('filter', 'blur(15px)');
+            $('.logOff').css('filter', 'blur(15px)');
+
+            $('body').append('<div class="zoomContainer">' +
                     '<div class="overlay"></div>' +
                     '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
                     '<div class="zoomMenu"></div>' +
@@ -469,26 +473,31 @@
                         '<img src="' + $(image).attr('src') + '" alt="Sample Photo" class="zoomedImage"/>' +
                     '</div>' +
                 '</div>').ready(function () {
-                    $('.overlay').animate({ 'opacity': '1' }, 600, function () {
-                        $('.zoomMenu').css('opacity', '0.5');
-                        $('.resizeBtn').animate({ 'opacity': '1' });
-                        $('.closeImageBtn').animate({ 'opacity': '1' });
-                    });
-                    $('.zoomedImage').css('transform', 'scale(1)');
-                    $('body').css('overflow', 'hidden');
+                    setTimeout(function () {
+                        $('.zoomedImage').css('transform', 'scale(1)');
+                        $('body').css('overflow', 'hidden');
+
+                        setTimeout(function () {
+                            $('.overlay').animate({ 'opacity': '0.8' }, 600, function () {
+                                $('.zoomMenu').css('opacity', '0.3');
+                                $('.resizeBtn').animate({ 'opacity': '1' });
+                                $('.closeImageBtn').animate({ 'opacity': '1' });
+                            });
+                        }, 600);
+                    }, 300);
                 });
         });
 
-        $('.body-content').on('click', '.zoomedImageContainer', function (e) {
+        $('body').on('click', '.zoomedImageContainer', function (e) {
             removeZoomContainer();
         });
 
-        $('.body-content').on('click', '.zoomedImage', function (e) {
+        $('body').on('click', '.zoomedImage', function (e) {
             e.stopPropagation();
             scaleImage(this);
         });
 
-        $('.body-content').on('click', '.resizeBtn', function (e) {
+        $('body').on('click', '.resizeBtn', function (e) {
             if ($(this).hasClass('fa-search-plus')) {
                 $(this).removeClass('fa-search-plus');
                 $(this).addClass('fa-search-minus');
@@ -500,7 +509,7 @@
             scaleImage($('.zoomedImage').first());
         });
 
-        $('.body-content').on('click', '.closeImageBtn', function (e) {
+        $('body').on('click', '.closeImageBtn', function (e) {
             removeZoomContainer();
         });
 
@@ -561,11 +570,18 @@
         $(elem).animate({ left: "0px", top: "0px" }, 600);
         $(elem).toggleClass('scaleClass');
         $(elem).css('cursor', 'zoom-in');
+        $('.resizeBtn').removeClass('fa-search-minus');
+        $('.resizeBtn').addClass('fa-search-plus');
     }
 
     function removeZoomContainer() {
         $('.resizeBtn').remove();
         $('.closeImageBtn').remove();
+
+        $('.body-content').css('filter', 'blur(0px)');
+        $('.main-menu').css('filter', 'blur(0px)');
+        $('#nav-icon').css('filter', 'blur(0px)');
+        $('.logOff').css('filter', 'blur(0px)');
 
         $('.zoomContainer').animate({ 'opacity': '0' }, 400, function () {
             $('.zoomContainer').remove();
@@ -610,6 +626,8 @@
             $(element).css('cursor', '-webkit-grab');
             $(element).css('cursor', '-moz-grab');
             $(element).css('cursor', 'grab');
+            $('.resizeBtn').removeClass('fa-search-plus');
+            $('.resizeBtn').addClass('fa-search-minus');
         }
     }
 

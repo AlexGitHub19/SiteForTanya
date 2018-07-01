@@ -1,6 +1,4 @@
-﻿body {
-}
-:root {
+﻿:root {
   --secondColor: #f4f1e4;
 }
 
@@ -16,11 +14,11 @@ body {
 }
 
 .body-content { 
-    text-align: center;
     height: 100%;
     width: 100%;
     padding: 0px;
     margin: 0px;
+    text-align: center;
     -webkit-background-size: cover;
       -moz-background-size: cover;
        -o-background-size: cover;

@@ -9,6 +9,7 @@
     display:inline-block;
     position: relative;
     background-color:black;
+    border-radius:3px;
 }
 
 .image {
@@ -21,6 +22,7 @@
     -ms-transition:  opacity 0.35s;
     -o-transition:  opacity 0.35s;
 	transition: opacity 0.35s;
+    border-radius:3px;
 }
 
 
@@ -66,7 +68,7 @@
     margin-top:5%;
     color: white;
     opacity: 0;
-    font-size:16px;
+    font-size:14px;
 	-webkit-transition: -webkit-transform 0.35s, opacity 0.35s;
     -moz-transition: -moz-transform 0.35s, opacity 0.35s;
     -ms-transition: -ms-transform 0.35s, opacity 0.35s;

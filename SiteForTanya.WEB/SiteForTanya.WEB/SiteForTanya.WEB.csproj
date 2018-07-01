@@ -253,6 +253,7 @@
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\PaginationElement.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
+    <Content Include="Content\ScaleImage.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
     <Content Include="Content\SetShowingStyle.css" />
