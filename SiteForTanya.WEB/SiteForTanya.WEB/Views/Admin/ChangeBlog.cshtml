@@ -1,0 +1,52 @@
+﻿@model SiteForTanya.WEB.Models.BlogEntity
+@{
+    Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("SaveChangingBlog", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input id="Name" name="Name" type="hidden" autocomplete="off" class="form-control blogInfoInput">
+    <h2>@Model.Name</h2>
+
+    <div class="row blogInfoRow">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label id="blogShortDescriptionLabel" class="blogInfolabel">Description: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <textarea id="ShortDescription" name="ShortDescription" rows="2" ro class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off">@Model.ShortDescription</textarea>
+        </div>
+    </div>
+
+    <div class="row blogInfoRow">
+        <div>
+            <label id="blogTextLabel" class="blogInfolabel">Text: </label>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <textarea id="Text" name="Text" rows="20" class="form-control blogInfoInput" placeholder="Enter blog item Text" autocomplete="off">@Model.Text</textarea>
+        </div>
+    </div>
+
+    <input id="saveButton" class="my-btn btn" type="submit" value="Save blog item" />
+
+}
+
+<script>
+    $(document).ready(function () {
+        $('#saveButton').on('click', function (e) {
+
+            if ($('#Text').val() == '') {
+                e.preventDefault();
+                alert("Blog text can't be empty!");
+                return;
+            }
+            else if ($('#ShortDescription').val() == '') {
+                e.preventDefault();
+                alert("Blog shprt description can't be empty!");
+                return;
+            }               
+        });
+
+    });
+</script>

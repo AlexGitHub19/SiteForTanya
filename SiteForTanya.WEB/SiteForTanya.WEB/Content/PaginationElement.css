@@ -36,8 +36,8 @@
 }
 
 .current {
-    background-color: #2572ed;
+    background-color: var(--thirdColor); 
 }
     .current:hover {
-        background-color: #2572ed;
+        background-color: var(--thirdColor); 
     }

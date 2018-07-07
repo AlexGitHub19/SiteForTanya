@@ -3,6 +3,7 @@ using Owin;
 using SiteForTanya.WEB.Models;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
+using System;
 
 [assembly: OwinStartup(typeof(SiteForTanya.WEB.App_Start.Startup))]
 
@@ -19,6 +20,7 @@ namespace SiteForTanya.WEB.App_Start
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                ExpireTimeSpan = TimeSpan.FromMinutes(30),
             });
         }
     }

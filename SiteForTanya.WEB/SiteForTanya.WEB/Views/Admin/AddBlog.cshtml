@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="bacgroundColorContainer">Add blog item</div>
+
+@using (Html.BeginForm("AddBlog", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row blogInfoRow">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label id="blogNameLabel" class="blogInfolabel">Enter blog item name: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <input id="blogName" name="blogName" type="text" autocomplete="off" class="form-control blogInfoInput">
+        </div>
+    </div>
+
+    <div class="row blogInfoRow">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label id="blogShortDescriptionLabel" class="blogInfolabel">Enter short description: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <textarea id="blogShortDescription" name="blogShortDescription" rows="2" class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off"></textarea>
+        </div>
+    </div>
+
+    <div class="row blogInfoRow">
+        <div>
+            <label id="blogTextLabel">Enter blog text: </label>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <textarea id="blogText" name="blogText" rows="20" class="form-control" placeholder="Enter blog item Text" autocomplete="off"></textarea>
+        </div>
+    </div>
+
+    <input id="saveButton" class="my-btn btn" type="submit" value="Save blog item" />
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $('#saveButton').on('click', function (e) {
+
+            var blogName = $('#blogName').val();
+            if (blogName == '') {
+                alert('please fill blog name!');
+                e.preventDefault();
+                return;
+            }
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("CheckBlogName", "Admin")',
+                data: { blogName: blogName },
+                async: false,
+                success: function (result) {
+                    if (result.result == 'False') {
+                        e.preventDefault();
+                        alert('Blog item with name: ' + blogName + ' already exists. Choose another name, please');
+                    }
+                    else {
+                        if ($('#blogShortDescription').val() == '')
+                        {
+                            e.preventDefault();
+                            alert("Blog short description can't be empty!");
+                        }
+                        else if ($('#blogText').val() == '') {
+                            e.preventDefault();
+                            alert("Blog text can't be empty!");
+                        }
+                    }
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                    return 'False';
+                }
+            });
+
+        });
+
+    });
+</script>

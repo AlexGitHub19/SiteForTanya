@@ -15,7 +15,7 @@
 
 @using (Html.BeginForm("ChangeSet", "Admin", FormMethod.Post))
 {
-    @Html.AntiForgeryToken();
+    @Html.AntiForgeryToken()
 
     <h2>@Model.SetName</h2>
 

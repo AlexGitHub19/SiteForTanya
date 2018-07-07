@@ -4,8 +4,7 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Adding Set</h2>
-
+<div id="bacgroundColorContainer">Adding Set</div>
 
 <div class="tokenContainer">
     @Html.AntiForgeryToken()
@@ -13,7 +12,7 @@
 
 @using (Html.BeginForm("SaveSet", "Admin", FormMethod.Post))
 {
-    @Html.AntiForgeryToken();
+    @Html.AntiForgeryToken()
 
     <input id="tempSetNumber" name = "tempSetNumber" value="@Model"/>
 

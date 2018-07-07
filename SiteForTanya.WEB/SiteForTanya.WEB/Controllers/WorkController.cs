@@ -48,7 +48,6 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult GetSetsNames(string keyWords, int setsCountOnPage, int pageNumber)
         {
@@ -57,7 +56,6 @@ namespace SiteForTanya.WEB.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
         {

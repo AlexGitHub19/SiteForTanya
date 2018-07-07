@@ -1,5 +1,221 @@
-﻿
-@{
-    ViewBag.Title = "Sets";
+﻿@{
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+@using (Html.BeginForm("AddBlog", "Admin", FormMethod.Get))
+{
+    <div id="addBlogContainer">
+        <input class="my-btn btn" type="submit" value="Add blog item" />
+    </div>
+}
+
+<div class="tokenContainer">
+    @Html.AntiForgeryToken()
+</div>
+
+<div id="blogItemsContainer" class="clearfix"></div>
+
+<div id="pagination"></div>
+
+<div id="loadingAnimation">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        getBlogInfosFromServer(1);
+
+        function getBlogInfosFromServer(pageNumber) {
+            $('#pagination').fadeOut();
+            showLoadingAnimation();
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("GetBlogInfos", "Admin")',
+                data: { pageNumber: pageNumber },
+                success: function (result) {
+                    fillBlogItems(result, pageNumber);
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                }
+            });
+        }
+
+        function showLoadingAnimation() {
+            $('#loadingAnimation').css('display', 'block');
+        }
+
+        function fillBlogItems(result, pageNumber) {
+            if (result.BlogItemsCount == 0) {
+                $('#loadingAnimation').css('display', 'none');
+                $('#blogItemsContainer').html('<h4 style="margin-top:50px;">No sets are found by this search criteria</h4>');
+                $('#blogItemsContainer').css('display', 'block');
+                return;
+            }
+
+            var html = '';
+            var count = 0;
+
+            for (var i = 0; i < result.BlogInfos.length; i++)
+            {
+                html += '<div class="blogItemContainer">' +
+                            '<div class="itemName"><a href="/Admin/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><span>' + result.BlogInfos[i].Name + '</span></a></div>' +
+                            '<div class="shortDescription"><span>' + result.BlogInfos[i].ShortDescription + '</span></div>' +
+                            '<i id="deleteBlogItemBtn-' + result.BlogInfos[i].Id + '" class="fa fa-trash-o deleteBlogItemBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                        '</div>';
+            }
+            
+            $('#blogItemsContainer').html(html);
+            $('#blogItemsContainer').css('display', 'block').ready(function () {
+                var blogItems = $('.blogItemContainer');
+                $('#loadingAnimation').css('display', 'none');
+                blogItems.each(function (index, element) {
+                    if (index == blogItems.length - 1) {
+                        $(element).delay(100 * index).fadeIn(600, function () {
+                            createPagination(result.BlogItemsCount, pageNumber);
+                        });
+                    }
+                    else {
+                        $(element).delay(100 * index).fadeIn(600);
+                    }
+                });
+            });
+        }
+
+        $('#pagination').on('click', '.paginationBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var pageNumber = id.substring(hyphenId + 1);
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#blogItemsContainer').fadeOut(400, function () {
+                    getBlogInfosFromServer(pageNumber);
+                });
+            });
+        })
+
+        $('#pagination').on('click', '#nextBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            var lastId = $('#pagination > .paginationBtn').last().attr('id')
+            var lastHyphenId = lastId.indexOf('-');
+            var lastPageNumber = lastId.substring(hyphenId + 1);
+            if (currentPageNumber == lastPageNumber) {
+                e.preventDefault();
+                return;
+            }
+
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#blogItemsContainer').fadeOut(400, function () {
+                    getBlogInfosFromServer(parseInt(parseInt(currentPageNumber) + parseInt(1)));
+                });
+            });
+
+        })
+
+        $('#pagination').on('click', '#prevBtn', function (e) {
+            var currentid = $('#pagination > .current').attr('id');
+            var hyphenId = currentid.indexOf('-');
+            var currentPageNumber = currentid.substring(hyphenId + 1);
+            if (currentPageNumber == 1) {
+                e.preventDefault();
+                return;
+            }
+
+            $('#pagination').fadeOut();
+            $('html').animate({
+                scrollTop: 0
+            }, 500, function () {
+                $('#blogItemsContainer').fadeOut(400, function () {
+                    getBlogInfosFromServer(parseInt(parseInt(currentPageNumber) - parseInt(1)));
+                });
+            });
+
+        })
+
+        $('#pagination').on('keypress', '#inputGoToPage', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                var pageNumber = parseInt($(this).val());
+                if (!isNaN(pageNumber)) {
+                    $('#pagination').fadeOut();
+                    $('html').animate({
+                        scrollTop: 0
+                    }, 500, function () {
+                        $('#blogItemsContainer').fadeOut(400, function () {
+                            getBlogInfosFromServer(pageNumber);
+                        });
+                    });
+                }
+            }
+        })
+
+
+        function createPagination(totalSetsCount, pageNumber) {
+            var html = getPaginationHtml(totalSetsCount, 10, pageNumber)
+
+            $('#pagination').html(html);
+            $('#paginationBtn-' + pageNumber).addClass('current');
+            $('#pagination').fadeIn();
+        }
+
+        $('#blogItemsContainer').on('click', '.deleteBlogItemBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var finalId = id.substring(hyphenId + 1);
+            var blogItemName = $(this).parent().find('.itemName span').first().html();
+            e.preventDefault();
+            if (!confirm('Are you sure to delete item "' + blogItemName + '"?'))
+            {
+                return;
+            }
+
+            var itemsContainer = $(this).parent();
+            itemsContainer.html('<i class="fa fa-spinner fa-spin" style="font-size:40px"></i>');
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("DeleteBlogItem", "Admin")',
+                data: { __RequestVerificationToken: getAntiForgeryToken(), blogItemId: finalId },
+                success: function (result) {
+                    if (result.result == "Success") {
+                        itemsContainer.html('<p>ITEM IS DELETED</p>');
+                        setTimeout(function () {
+                            itemsContainer.fadeOut();
+                        }, 2000);
+                    }
+                    else {
+                        itemsContainer.html('<p>DELETING FAIL</p>');
+                        setTimeout(function () {
+                            getBlogInfosFromServer(1);
+                        }, 3000);
+                    }
+                },
+                error: function (xhr, status, p3) {
+                    alert('error');
+                }
+            });  
+        })
+
+        function getAntiForgeryToken() {
+            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+        }
+    });
+
+</script>

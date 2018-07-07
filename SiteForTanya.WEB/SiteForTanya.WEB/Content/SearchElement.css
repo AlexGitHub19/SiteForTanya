@@ -159,6 +159,10 @@ ul#menu li ul li a:hover{background: #ddd;}
     #searchInfoContainer label {
         margin-top:10px;
     }
+
+    .fa-caret-down {
+        right:1px;
+    }
 }
 
 @media (max-width:563px) {

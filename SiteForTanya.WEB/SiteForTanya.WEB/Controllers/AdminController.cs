@@ -65,6 +65,148 @@ namespace SiteForTanya.WEB.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult BlogItem(string blogName)
+        {
+            try
+            {
+                Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
+                ViewBag.ViewName = "AdminBlogItem";
+                return View(blogEntity);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Exception");
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult AddBlog()
+        {
+            ViewBag.ViewName = "AdminAddBlog";
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBlog(string blogName, string blogShortDescription, string blogText)
+        {
+            try
+            {
+                Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+                BlogEntity blogEntity = new BlogEntity { Name = blogName, Text = blogText, ShortDescription = blogShortDescription, AddingTime = DateTime.Now };
+                blogRepository.Create(blogEntity);
+
+                ViewBag.Text = "Blog item is saved!";
+                ViewBag.ViewName = "Info";
+                return View("ShowInfo");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Exception");
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult ChangeBlog(string blogName)
+        {
+            try
+            {
+                Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
+                ViewBag.ViewName = "AdminChangeBlog";
+                return View(blogEntity);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Exception");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult SaveChangingBlog(string Name, string shortDescription, string blogText)
+        {
+            try
+            {
+                Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == Name);
+                blogEntity.Text = blogText;
+                blogEntity.ShortDescription = shortDescription;
+                blogRepository.Update(blogEntity);
+
+                ViewBag.Text = "Blog item is changed!";
+                ViewBag.ViewName = "Info";
+                return View("ShowInfo");
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Exception");
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteBlogItem(int blogItemId)
+        {
+            try
+            {
+                Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Id == blogItemId);
+
+                if (blogEntity != null)
+                {
+                    blogRepository.Delete(blogEntity.Id);                 
+                    return Json(new { result = "Success" }, JsonRequestBehavior.AllowGet);
+                }
+
+                return Json(new { result = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { result = "Fail" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult CheckBlogName(string blogName)
+        {
+            Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
+            BlogEntity blogEntity = blogRepository.GetList().FirstOrDefault(b => b.Name == blogName);
+           
+            if (blogEntity == null)
+            {
+                return Json(new { result = "True" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { result = "False" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult GetBlogInfos(int pageNumber)
+        {
+            try
+            {
+                BlogProcessor blogProcessor = new BlogProcessor();
+                return Json(blogProcessor.GetBlogInfos(pageNumber), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Exception");
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult AddSet()
         {
             ViewBag.ViewName = "AdminAddSet";
@@ -201,7 +343,8 @@ namespace SiteForTanya.WEB.Controllers
             recalculateAllTags<SetsInfo>(sets);
             setsRepository.Update(set);
             ViewBag.ViewName = "AdminSuccessfulSetSaving";
-            ViewBag.Text = "Set is saved!";
+            ViewBag.Text = "Set is changed!";
+            ViewBag.ViewName = "Info";
             return View("ShowInfo");
         }
 
@@ -274,8 +417,8 @@ namespace SiteForTanya.WEB.Controllers
                 Tags = resultTags, AddingTime = DateTime.Now, MainImageName = mainImageName};
             Repository<SetEntity> repository = new Repository<SetEntity>();
             repository.Create(set);
-            ViewBag.ViewName = "AdminSuccessfulSetSaving";
             ViewBag.Text = "Set is saved!";
+            ViewBag.ViewName = "Info";
             return View("ShowInfo");
         }
 

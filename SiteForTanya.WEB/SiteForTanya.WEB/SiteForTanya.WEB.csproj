@@ -206,6 +206,9 @@
     <Compile Include="Models\ApplicationContext .cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
+    <Compile Include="Models\BlogEntity.cs" />
+    <Compile Include="Models\BlogProcessor.cs" />
+    <Compile Include="Models\BlogViewModel.cs" />
     <Compile Include="Models\CommonMethods.cs" />
     <Compile Include="Models\CommonViewModels\AutocompleteViewModel.cs" />
     <Compile Include="Models\CommonViewModels\SetViewModel.cs" />
@@ -226,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\AdminLayout.css" />
+    <Content Include="Content\Admin\AdminAddBlog.css" />
     <Content Include="Content\Admin\AdminAddSet.css" />
     <Content Include="Content\Admin\AdminBlog.css" />
     <Content Include="Content\Admin\AdminChangeSet.css" />
@@ -233,6 +237,8 @@
     <Content Include="Content\Admin\AdminImages.css" />
     <Content Include="Content\Admin\AdminIndex.css" />
     <Content Include="Content\Admin\AdminSets.css" />
+    <Content Include="Content\Blog.css" />
+    <Content Include="Content\BlogItem.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CommonStyle.css" />
@@ -368,6 +374,10 @@
     <Content Include="Views\Admin\ChangeSet.cshtml" />
     <Content Include="Views\Work\Set.cshtml" />
     <Content Include="Views\Admin\Set.cshtml" />
+    <Content Include="Views\Admin\AddBlog.cshtml" />
+    <Content Include="Views\Admin\ChangeBlog.cshtml" />
+    <Content Include="Views\Admin\BlogItem.cshtml" />
+    <Content Include="Views\Blog\BlogItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
