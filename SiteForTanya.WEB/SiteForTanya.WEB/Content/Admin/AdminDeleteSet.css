@@ -10,6 +10,6 @@ h2 {
 .page-content {
     margin-top:70px;
     padding:10px;
-    background-color:#f4f1e4;
+    background-color:var(--secondColor);
     height:200px;
 }

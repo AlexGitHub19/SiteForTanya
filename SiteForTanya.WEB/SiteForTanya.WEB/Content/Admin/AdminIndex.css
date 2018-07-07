@@ -2,6 +2,6 @@
 .temp {
     height:300px;
     width:70%;
-    background-color: #f4f1e4;
+    background-color:var(--secondColor); 
     margin: 100px;
 }

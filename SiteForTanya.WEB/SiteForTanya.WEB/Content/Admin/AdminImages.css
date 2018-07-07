@@ -4,7 +4,7 @@
 }
 
 .addImage {
-    background-color:#f4f1e4;      
+    background-color:var(--secondColor);      
     padding-top:15px;
     padding-bottom:15px;
 }
@@ -48,7 +48,7 @@
     position:absolute;
     bottom: 0;
     left: 0;
-    background-color: #f4f1e4;
+    background-color:var(--secondColor); 
     height:0px;
     width:100%;
     overflow:hidden;

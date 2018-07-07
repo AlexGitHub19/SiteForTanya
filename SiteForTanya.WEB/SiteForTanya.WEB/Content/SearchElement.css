@@ -98,7 +98,7 @@ ul#menu li ul li a:hover{background: #ddd;}
 .ui-state-hover, .ui-state-active {
     color: #ffffff;
     text-decoration: none;
-    background-color: #f4f1e4;
+    background-color:var(--secondColor); 
     border-radius: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
