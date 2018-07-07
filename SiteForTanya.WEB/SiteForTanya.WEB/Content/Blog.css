@@ -3,6 +3,14 @@
     display: none;
     margin-bottom:20px;
     width:unset;
+    background-color: var(--secondColor);
+    border: solid;
+    border-width:1px;
+    border-radius:5px; 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left:10px;
+    padding-right:10px;
 }
 
 #loadingAnimation {
@@ -14,8 +22,8 @@
 #blogItemsContainer {
     margin-top: 20px;
     margin-bottom:10px;
-    padding-left:30px;
-    padding-right: 30px;
+    padding-left:20px;
+    padding-right:20px;
     text-align: left;
 }
 

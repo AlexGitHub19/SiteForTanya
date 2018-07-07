@@ -58,10 +58,10 @@
 
             for (var i = 0; i < result.BlogInfos.length; i++)
             {
-                html += '<div class="blogItemContainer">' +
-                            '<div class="itemName"><a href="/Blog/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><span>' + result.BlogInfos[i].Name + '</span></a></div>' +
+                html += '<a href="/Blog/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><div class="blogItemContainer">' +
+                            '<div class="itemName"><span>' + result.BlogInfos[i].Name + '</span></div>' +
                             '<div class="shortDescription"><span>' + result.BlogInfos[i].ShortDescription + '</span></div>' +
-                        '</div>';
+                        '</div></a>';
             }
 
             $('#blogItemsContainer').html(html);

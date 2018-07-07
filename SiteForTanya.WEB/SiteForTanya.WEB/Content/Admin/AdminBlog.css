@@ -9,6 +9,12 @@
 .deleteBlogItemBtn {
     position: absolute;
     top: 20px;
-    right: -5px;
+    right: -30px;
     cursor: pointer;
+}
+#blogItemsContainer {
+
+    padding-left:20px;
+    padding-right:50px;
+
 }

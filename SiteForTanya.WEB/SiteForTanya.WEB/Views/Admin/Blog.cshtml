@@ -68,11 +68,11 @@
 
             for (var i = 0; i < result.BlogInfos.length; i++)
             {
-                html += '<div class="blogItemContainer">' +
-                            '<div class="itemName"><a href="/Admin/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><span>' + result.BlogInfos[i].Name + '</span></a></div>' +
+                html += '<a href="/Admin/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><div class="blogItemContainer">' +
+                            '<div class="itemName"><span>' + result.BlogInfos[i].Name + '</span></div>' +
                             '<div class="shortDescription"><span>' + result.BlogInfos[i].ShortDescription + '</span></div>' +
                             '<i id="deleteBlogItemBtn-' + result.BlogInfos[i].Id + '" class="fa fa-trash-o deleteBlogItemBtn" style="font-size:23px;" aria-hidden="true"></i>' +
-                        '</div>';
+                        '</div></a>';
             }
             
             $('#blogItemsContainer').html(html);
