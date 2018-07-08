@@ -400,6 +400,7 @@ namespace SiteForTanya.WEB.Controllers
                 ViewBag.Text = "Set is changed!";
                 ViewBag.Title = "Info";
                 ViewBag.ViewName = "Info";
+                DeleteTempFolders();
                 return View("ShowInfo");
             }
             catch (Exception ex)
@@ -489,12 +490,27 @@ namespace SiteForTanya.WEB.Controllers
                 ViewBag.Text = "Set is saved!";
                 ViewBag.ViewName = "Info";
                 ViewBag.Title = "Info";
+                DeleteTempFolders();
                 return View("ShowInfo");
             }
             catch (Exception ex)
             {
                 return ProcessException(ex);
             }           
+        }
+
+        private void DeleteTempFolders()
+        {
+            string tempDirectoryPath = Server.MapPath("~/Content/Images/Temp");
+            DirectoryInfo tempSetDirectory = new DirectoryInfo(tempDirectoryPath);
+            DirectoryInfo[] folders = tempSetDirectory.GetDirectories();
+            foreach (DirectoryInfo folder in folders)
+            {
+                if ((DateTime.Now - Directory.GetCreationTime(folder.FullName)).Hours > 10)
+                {
+                    folder.Delete(true);
+                }
+            }
         }
 
         private void changeMainImageSizeAndSaveToSetFolder(string newPath, string tempPath, int newHeight, int newWidth)
