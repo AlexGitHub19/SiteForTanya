@@ -14,6 +14,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.ViewName = "WorkIndex";
+            ViewBag.Title = "Work";
             return View();
         }
 
@@ -21,6 +22,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Sets()
         {
             ViewBag.ViewName = "WorkSets";
+            ViewBag.Title = "Sets";
             return View();
         }
 
@@ -28,6 +30,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Images()
         {
             ViewBag.ViewName = "WorkImages";
+            ViewBag.Title = "Images";
             return View();
         }
 
@@ -45,6 +48,7 @@ namespace SiteForTanya.WEB.Controllers
 
 
                 ViewBag.ViewName = "WorkSet";
+                ViewBag.Title = "Set " + name;
                 SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
                 return View(vm);
             }

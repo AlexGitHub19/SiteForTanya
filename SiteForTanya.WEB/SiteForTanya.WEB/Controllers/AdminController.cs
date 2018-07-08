@@ -21,6 +21,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.ViewName = "AdminIndex";
+            ViewBag.Title = "Admin Home";
             return View();
         }
 
@@ -29,6 +30,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Exceptions()
         {
             ViewBag.ViewName = "AdminExceptions";
+            ViewBag.Title = "Admin Exception";
             return View();
         }
 
@@ -37,6 +39,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Sets()
         {
             ViewBag.ViewName = "AdminSets";
+            ViewBag.Title = "Admin Sets";
             return View();
         }
 
@@ -54,6 +57,7 @@ namespace SiteForTanya.WEB.Controllers
                 }
 
                 ViewBag.ViewName = "AdminSet";
+                ViewBag.Title = "Set " + name;
                 SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
                 return View(vm);
             }
@@ -68,6 +72,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Images()
         {
             ViewBag.ViewName = "AdminImages";
+            ViewBag.Title = "Admin Images";
             return View();
         }
 
@@ -76,6 +81,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Blog()
         {
             ViewBag.ViewName = "AdminBlog";
+            ViewBag.Title = "Admin Blog";
             return View();
         }
 
@@ -88,6 +94,7 @@ namespace SiteForTanya.WEB.Controllers
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
                 BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
                 ViewBag.ViewName = "AdminBlogItem";
+                ViewBag.Title = "Admin blog " + blogName;
                 return View(blogEntity);
             }
             catch (Exception ex)
@@ -101,6 +108,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult AddBlog()
         {
             ViewBag.ViewName = "AdminAddBlog";
+            ViewBag.Title = "Admin Add Blog";
             return View();
         }
 
@@ -116,6 +124,7 @@ namespace SiteForTanya.WEB.Controllers
                 blogRepository.Create(blogEntity);
 
                 ViewBag.Text = "Blog item is saved!";
+                ViewBag.Title = "Info";
                 ViewBag.ViewName = "Info";
                 return View("ShowInfo");
             }
@@ -134,6 +143,7 @@ namespace SiteForTanya.WEB.Controllers
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
                 BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
                 ViewBag.ViewName = "AdminChangeBlog";
+                ViewBag.Title = "Admin Change Blog " + blogName;
                 return View(blogEntity);
             }
             catch (Exception ex)
@@ -157,6 +167,7 @@ namespace SiteForTanya.WEB.Controllers
 
                 ViewBag.Text = "Blog item is changed!";
                 ViewBag.ViewName = "Info";
+                ViewBag.Title = "Info";
                 return View("ShowInfo");
             }
             catch (Exception ex)
@@ -237,6 +248,7 @@ namespace SiteForTanya.WEB.Controllers
             try
             {
                 ViewBag.ViewName = "AdminAddSet";
+                ViewBag.Title = "Admin Add Set";
                 Repository<SetsInfo> repositorySetInfo = new Repository<SetsInfo>();
                 SetsInfo setInfo = repositorySetInfo.GetList().First();
                 if (setInfo.TempSetNumber == int.MaxValue)
@@ -261,6 +273,7 @@ namespace SiteForTanya.WEB.Controllers
             try
             {
                 ViewBag.ViewName = "AdminChangeSet";
+                ViewBag.Title = "Admin Change Set " + setName;
 
                 AdminChangeSetViewModel viewModel = new AdminChangeSetViewModel();
                 Repository<SetsInfo> repositorySetInfo = new Repository<SetsInfo>();
@@ -384,8 +397,8 @@ namespace SiteForTanya.WEB.Controllers
                 sets.Add(set);
                 recalculateAllTags<SetsInfo>(sets);
                 setsRepository.Update(set);
-                ViewBag.ViewName = "AdminSuccessfulSetSaving";
                 ViewBag.Text = "Set is changed!";
+                ViewBag.Title = "Info";
                 ViewBag.ViewName = "Info";
                 return View("ShowInfo");
             }
@@ -475,6 +488,7 @@ namespace SiteForTanya.WEB.Controllers
                 repository.Create(set);
                 ViewBag.Text = "Set is saved!";
                 ViewBag.ViewName = "Info";
+                ViewBag.Title = "Info";
                 return View("ShowInfo");
             }
             catch (Exception ex)

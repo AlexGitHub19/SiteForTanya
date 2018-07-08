@@ -10,6 +10,7 @@ namespace SiteForTanya.WEB.Controllers
     {
         public ActionResult PageNotFound()
         {
+            ViewBag.Title = "PageNotFound";
             return View();
         }
     }

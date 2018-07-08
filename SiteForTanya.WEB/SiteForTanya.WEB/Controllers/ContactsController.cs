@@ -8,10 +8,10 @@ namespace SiteForTanya.WEB.Controllers
 {
     public class ContactsController : Controller
     {
-        // GET: Contacts
         public ActionResult Index()
         {
             ViewBag.ViewName = "ContactsIndex";
+            ViewBag.Title = "Contacts";
             return View();
         }
     }

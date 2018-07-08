@@ -11,16 +11,8 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.ViewName = "HomeIndex";
+            ViewBag.Title = "Home";
             return View();
         }
-
-        public ActionResult Product(string id)
-        {
-            ViewBag.ViewName = "HomeProduct";
-            ViewBag.Message = "Pruduct page";
-
-            return View(id);
-        }
-
     }
 }

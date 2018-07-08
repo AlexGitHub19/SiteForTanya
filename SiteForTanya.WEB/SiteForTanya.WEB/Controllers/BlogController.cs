@@ -13,6 +13,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.ViewName = "BlogIndex";
+            ViewBag.Title = "Blog";
             return View();
         }
 
@@ -24,6 +25,7 @@ namespace SiteForTanya.WEB.Controllers
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
                 BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
                 ViewBag.ViewName = "BlogBlogItem";
+                ViewBag.Title = "Blog " + blogName;
                 return View(blogEntity);
             }
             catch (Exception ex)
