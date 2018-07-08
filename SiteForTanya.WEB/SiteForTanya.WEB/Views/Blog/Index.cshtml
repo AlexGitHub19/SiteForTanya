@@ -49,6 +49,7 @@
             if (result.BlogItemsCount == 0) {
                 $('#loadingAnimation').css('display', 'none');
                 $('#blogItemsContainer').html('<h4 style="margin-top:50px;">No sets are found by this search criteria</h4>');
+                $('#blogItemsContainer').css('text-align', 'center');
                 $('#blogItemsContainer').css('display', 'block');
                 return;
             }
@@ -65,6 +66,7 @@
             }
 
             $('#blogItemsContainer').html(html);
+            $('#blogItemsContainer').css('text-align', 'left');
             $('#blogItemsContainer').css('display', 'block').ready(function () {
                 var blogItems = $('.blogItemContainer');
                 $('#loadingAnimation').css('display', 'none');
