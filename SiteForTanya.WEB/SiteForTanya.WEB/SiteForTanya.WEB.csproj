@@ -249,6 +249,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
+    <Content Include="Content\Images\icons8-google-64.png" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\PaginationElement.css" />

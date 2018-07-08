@@ -180,7 +180,7 @@
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#images').append('<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 imageContainer" style="display:block;">' +
-                       '<img src = "' + e.target.result + '" class="image"/>' +
+                       '<img src = "' + e.target.result + '" class="image" alt="image cant be loaded"/>' +
                        '</div>');
                 }
                 reader.readAsDataURL(this.files[i]);
@@ -458,7 +458,7 @@
                     '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
                     '<div class="zoomMenu"></div>' +
                     '<div class="zoomedImageContainer">' +
-                        '<img src="' + $(image).attr('src') + '" alt="Sample Photo" class="zoomedImage"/>' +
+                        '<img src="' + $(image).attr('src') + '" alt="image cant be loaded" class="zoomedImage"/>' +
                     '</div>' +
                 '</div>').ready(function () {
                     setTimeout(function () {
