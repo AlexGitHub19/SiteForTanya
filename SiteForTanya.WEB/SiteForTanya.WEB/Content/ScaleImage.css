@@ -1,6 +1,10 @@
 ﻿.body-content {
-    -webkit-transition: 0.3s -webkit-filter linear;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear;
 }
+
 
 .overlay {
     position: fixed;

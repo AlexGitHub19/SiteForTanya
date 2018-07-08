@@ -248,18 +248,9 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
-    <Content Include="Content\Images\Balloon_Product\1.jpg" />
-    <Content Include="Content\Images\Balloon_Product\2.jpg" />
-    <Content Include="Content\Images\Balloon_Product\3.jpg" />
-    <Content Include="Content\Images\Balloon_Product\4.jpg" />
-    <Content Include="Content\Images\Balloon_Product\5.jpg" />
-    <Content Include="Content\Images\Balloon_Product\6.jpg" />
-    <Content Include="Content\Images\Balloon_Product\7.jpg" />
-    <Content Include="Content\Images\Balloon_Product\8.jpg" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\PaginationElement.css" />
-    <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\ScaleImage.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
@@ -307,8 +298,6 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\Work\WorkIndex.css" />
-    <Content Include="Content\Work\WorkSets.css" />
-    <Content Include="Content\Work\WorkImages.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

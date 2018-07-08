@@ -3,7 +3,10 @@
     background-color: white;
     height: 37px;
     position:inherit;
-     -webkit-transition: 0.3s -webkit-filter linear;
+    -webkit-transition: 0.3s linear;
+   -moz-transition: 0.3s linear;
+   -o-transition: 0.3s linear;
+   transition: 0.3s linear;
 }
 
     .main-menu ul {
