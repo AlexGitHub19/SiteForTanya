@@ -1,28 +1,40 @@
 ﻿@model SiteForTanya.WEB.Models.LoginViewModels.LoginViewModel
 
 @{
-    ViewBag.Title = "Login";
     Layout = null;
 }
 
-<h2>Sign In</h2>
 
+<!DOCTYPE html>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link type="text/css" rel="stylesheet" href="~/Content/Site.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/bootstrap.min.css" />
+</head>
+<body>
+    <div class="body-content">
+        <h2>Sign In</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-    <div>
-        @Html.ValidationSummary()
-        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
-        <p>
-            <label>Login</label><br />
-            @Html.EditorFor(x => x.Login)
-        </p>
-        <p>
-            <label>Password</label><br />
-            @Html.EditorFor(x => x.Password)
-        </p>
-        <p><button type="submit">Sign in</button></p>
+            <div>
+                @Html.ValidationSummary()
+                <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+                <p>
+                    <label>Login</label><br />
+                    @Html.EditorFor(x => x.Login, new { htmlAttributes = new { @class = "form-control", @style = "width:250px; display: inline-block" } })
+                </p>
+                <p>
+                    <label>Password</label><br />
+                    @Html.EditorFor(x => x.Password, new { htmlAttributes = new { @class = "form-control", @style = "width:250px; display: inline-block" } })
+                </p>
+                <p><button type="submit" class="my-btn btn">Sign in</button></p>
+            </div>
+        }
     </div>
-}
+</body>
+</html>

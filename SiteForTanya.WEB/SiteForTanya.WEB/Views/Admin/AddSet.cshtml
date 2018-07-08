@@ -327,10 +327,6 @@
                         var encodedHtml2 = encodeHtml(html2);
                         $('#resultHtmlWithoutNotResultElements').val(encodedHtml2);
                     }
-                },
-                error: function (xhr, status, p3) {
-                    alert('error');
-                    return 'False';
                 }
             });
 
@@ -354,9 +350,6 @@
                     data: data,
                     success: function (result) {
                         $('#imageLoadingAnimation' + cellNumber).remove();
-                    },
-                    error: function (xhr, status, p3) {
-                        alert(xhr.responseText);
                     }
                 });
             } else {

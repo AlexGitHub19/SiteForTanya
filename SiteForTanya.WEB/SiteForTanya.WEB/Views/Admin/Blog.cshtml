@@ -44,9 +44,6 @@
                 data: { pageNumber: pageNumber },
                 success: function (result) {
                     fillBlogItems(result, pageNumber);
-                },
-                error: function (xhr, status, p3) {
-                    alert('error');
                 }
             });
         }
@@ -206,9 +203,6 @@
                             getBlogInfosFromServer(1);
                         }, 3000);
                     }
-                },
-                error: function (xhr, status, p3) {
-                    alert('error');
                 }
             });  
         })

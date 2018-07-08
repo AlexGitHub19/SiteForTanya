@@ -117,9 +117,6 @@
                             createPagination(result.imageCount, pageNumber);
                         }                       
                     }
-                },
-                error: function (xhr, status, p3) {
-                    alert('error');
                 }
             });
         }
@@ -254,9 +251,6 @@
                                 $('#deletingAnimation-' + imageId).fadeOut('slow');
                             }, 2000);                           
                         }
-                    },
-                    error: function (xhr, status, p3) {
-                        alert('error');
                     }
                 });
             });
@@ -354,11 +348,6 @@
                             $('.addImage').css('background-color', '#f4f1e4');
                             $('#searchInput').val();
                             getImagNamesFromServer(1);
-                        },
-                        error: function (xhr, status, p3) {
-                            alert('error');
-                            $('#loading').css('display', 'none');
-                            $('.addImage').css('background-color', '#f4f1e4');
                         }
                     });
                 } else {

@@ -258,7 +258,6 @@
     <Content Include="Content\Images\Balloon_Product\8.jpg" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
-    <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\PaginationElement.css" />
     <Content Include="Content\Products\Balloon_Product.css" />
     <Content Include="Content\ScaleImage.css" />
@@ -334,8 +333,6 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
-    <Content Include="Scripts\jquery.magnific-popup.js" />
-    <Content Include="Scripts\jquery.magnific-popup.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -369,7 +366,6 @@
     <Content Include="Views\Admin\Sets.cshtml" />
     <Content Include="Views\Admin\Images.cshtml" />
     <Content Include="Views\Admin\Blog.cshtml" />
-    <Content Include="Views\Admin\DeleteSet.cshtml" />
     <Content Include="Views\Admin\ShowInfo.cshtml" />
     <Content Include="Views\Admin\ChangeSet.cshtml" />
     <Content Include="Views\Work\Set.cshtml" />
