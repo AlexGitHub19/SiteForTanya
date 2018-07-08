@@ -2,10 +2,6 @@
     ViewBag.Title = "Sets";
 }
 
-<div class="tokenContainer">
-    @Html.AntiForgeryToken()
-</div>
-
 <div id="bacgroundColorContainer">Sets</div>
 <div>
     <div id="itemSeacher">
@@ -73,9 +69,9 @@
             var setsCountOnPage = parseInt($('#itemsCountBtn').text());
 
             $.ajax({
-                type: "POST",
+                type: "Get",
                 url: '@Url.Action("GetSetsNames", "Work")',
-                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, setsCountOnPage: setsCountOnPage, pageNumber: pageNumber },
+                data: { keyWords: keyWords, setsCountOnPage: setsCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
                     loadedBeginNumber = 0;
                     loadedEndNumber = result.sets.length;
@@ -146,10 +142,6 @@
             }
             $('#existingSets').html(html);
             $('#existingSets').css('display', 'block');
-        }
-
-        function getAntiForgeryToken() {
-            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
         }
 
         $('#pagination').on('click', '.paginationBtn', function (e) {

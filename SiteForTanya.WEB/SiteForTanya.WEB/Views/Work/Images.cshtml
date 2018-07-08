@@ -2,10 +2,6 @@
     ViewBag.Title = "Images";
 }
 
-<div class="tokenContainer">
-    @Html.AntiForgeryToken()
-</div>
-
 <div id="bacgroundColorContainer">Images</div>
 <div>
     <div id="itemSeacher">
@@ -72,9 +68,9 @@
             var imagesCountOnPage = parseInt($('#itemsCountBtn').text());
 
             $.ajax({
-                type: "POST",
+                type: "Get",
                 url: '@Url.Action("GetImagesNames", "Work")',
-                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
+                data: { keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
                 success: function (result) {
                     loadedBeginNumber = 0;
                     loadedEndNumber = result.imageInfos.length;
@@ -150,36 +146,6 @@
             }
             $('#existingImages').html(html);
             $('#existingImages').css('display', 'block');
-        }
-
-        //function changeImageSizes()
-        //{
-        //    $('.existingItemsRow').each(function (index, element) {
-        //        var imagesInRow = $(element).find('.image');
-        //        var minHeight;
-        //        for (var i = 0; i < imagesInRow.length; i++)
-        //        {
-        //            alert(imagesInRow[i].offsetHeight);
-        //            if (i == 0 || imagesInRow[i].offsetHeight < minHeight)
-        //            {
-        //                minHeight = imagesInRow[i].offsetHeight;
-        //            }
-        //        }
-        //        alert('minHeight  ' + minHeight);
-
-        //        for (var i = 0; i < imagesInRow.length; i++)
-        //        {
-        //            if (imagesInRow[i].offsetHeight > minHeight)
-        //            {
-        //                imagesInRow[i].css('max-heiht', minHeight)
-        //            }
-        //        }
-
-        //    });
-        //}
-
-        function getAntiForgeryToken() {
-            return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
         }      
 
         $('#pagination').on('click', '.paginationBtn', function (e) {
