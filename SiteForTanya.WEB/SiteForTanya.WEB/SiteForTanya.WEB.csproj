@@ -213,6 +213,8 @@
     <Compile Include="Models\CommonViewModels\AutocompleteViewModel.cs" />
     <Compile Include="Models\CommonViewModels\SetViewModel.cs" />
     <Compile Include="Models\DbInitializer.cs" />
+    <Compile Include="Models\ExceptionEntity.cs" />
+    <Compile Include="Models\ExceptionProcessor.cs" />
     <Compile Include="Models\IEntity.cs" />
     <Compile Include="Models\IEntityInfo.cs" />
     <Compile Include="Models\ImageEntity.cs" />
@@ -234,6 +236,7 @@
     <Content Include="Content\Admin\AdminBlog.css" />
     <Content Include="Content\Admin\AdminChangeSet.css" />
     <Content Include="Content\Admin\AdminDeleteSet.css" />
+    <Content Include="Content\Admin\AdminExceptions.css" />
     <Content Include="Content\Admin\AdminImages.css" />
     <Content Include="Content\Admin\AdminIndex.css" />
     <Content Include="Content\Admin\AdminSets.css" />
@@ -241,7 +244,6 @@
     <Content Include="Content\BlogItem.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\CommonStyle.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
@@ -262,7 +264,6 @@
     <Content Include="Content\ScaleImage.css" />
     <Content Include="Content\SearchElement.css" />
     <Content Include="Content\Set.css" />
-    <Content Include="Content\SetShowingStyle.css" />
     <Content Include="Content\SetStyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -353,7 +354,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Balloon_Product.cshtml" />
@@ -378,6 +378,10 @@
     <Content Include="Views\Admin\ChangeBlog.cshtml" />
     <Content Include="Views\Admin\BlogItem.cshtml" />
     <Content Include="Views\Blog\BlogItem.cshtml" />
+    <Content Include="Views\Blog\Exception.cshtml" />
+    <Content Include="Views\Admin\Exception.cshtml" />
+    <Content Include="Views\Work\Exception.cshtml" />
+    <Content Include="Views\Admin\Exceptions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,7 +9,7 @@ namespace SiteForTanya.WEB.Controllers
 {
     public class BlogController : Controller
     {
-        // GET: Blog
+        [HttpGet]
         public ActionResult Index()
         {
             ViewBag.ViewName = "BlogIndex";
@@ -28,15 +28,29 @@ namespace SiteForTanya.WEB.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Exception");
+                return ProcessException(ex);
             }
         }
 
         [HttpGet]
         public ActionResult GetBlogInfos(int pageNumber)
+        {           
+            try
+            {
+                BlogProcessor blogProcessor = new BlogProcessor();
+                return Json(blogProcessor.GetBlogInfos(pageNumber), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
+        }
+
+        private ActionResult ProcessException(Exception exception)
         {
-            BlogProcessor blogProcessor = new BlogProcessor();
-            return Json(blogProcessor.GetBlogInfos(pageNumber), JsonRequestBehavior.AllowGet);
+            ExceptionProcessor exceptionProcessor = new ExceptionProcessor();
+            exceptionProcessor.process(exception);
+            return View("Exception");
         }
     }
 }

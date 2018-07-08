@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div id="bacgroundColorContainer">Exceptions</div>
+
+<div id="loadingAnimation" style="margin-top:100px;">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>
+
+<div id="dateContainer">
+    <input id="dateFrom" type="date" name="dateFrom" class="form-control">
+    <input id ="dateTo" type="date" name="dateTo" class="form-control">
+    <input id="applyDateBtn" type="button" value="Apply" class="my-btn btn">
+</div>
+
+<div id="exceptionsContainer"></div>
+
+
+<script>
+    $(document).ready(function () {
+        getExceptionInfosFromServer(null, null);
+
+        function getExceptionInfosFromServer(from, to) {
+            $('#loadingAnimation').css('display', 'block');
+
+            $.ajax({
+                type: "Get",
+                url: '@Url.Action("GetExceptionInfos", "Admin")',
+                data: { dateFrom: from, dateTo: to},
+                success: function (result) {
+                    fillExceptions(result);
+                }
+            });
+        }
+
+        function fillExceptions(result)
+        {
+            $('#loadingAnimation').css('display', 'none');
+            if (result.length == 0) {
+                $('#exceptionsContainer').html('<h2>No exception occured</h2>');
+            }
+            else
+            {
+                var resultHtml = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><table class="table"><tbody><tr><th>Date</th><th>Message</th><th>StackTrace</th></tr>';
+                for (var i = 0; i < result.length; i++)
+                {
+                    resultHtml += '<tr><td>' + result[i].Date + '</td><td>' + result[i].Message + '</td><td>' + result[i].StackTrace + '</td></tr>'
+                }
+                resultHtml += ' </tbody></table></div></div>';
+                $('#exceptionsContainer').html(resultHtml);
+                $('#dateContainer').css('display', 'block');
+            }
+        }
+
+        $('#applyDateBtn').bind('click', function () {
+            getExceptionInfosFromServer(document.getElementById("dateFrom").value, document.getElementById("dateTo").value);
+        });
+    });
+</script>

@@ -10,7 +10,7 @@
 .imageContainer {
     background-size: cover;
     min-height:100px;
-    display:none;
+    /*display:none;*/
 }
 
 .image {

@@ -1,0 +1,28 @@
+﻿.form-control {
+    display:inline-block;
+    width:150px;
+}
+#dateContainer {
+    margin-top:15px;
+    display: none;
+}
+
+#exceptionsContainer {
+    margin-top:20px;
+}
+
+th {
+    text-align:center;
+}
+
+tr {
+    text-align:left;
+}
+
+@media (max-width:715px) {
+
+   #bacgroundColorContainer {
+       margin-top:40px;
+       font-size:20px;
+    }
+}

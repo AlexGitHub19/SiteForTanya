@@ -12,6 +12,7 @@ namespace SiteForTanya.WEB.Models
         public DbSet<BlogEntity> BlogEntities { get; set; }
         public DbSet<ImagesInfo> ImagesInfos { get; set; }
         public DbSet<SetsInfo> SetsInfos { get; set; }
+        public DbSet<ExceptionEntity> ExceptionEntities { get; set; }
 
         public static ApplicationContext Create()
         {

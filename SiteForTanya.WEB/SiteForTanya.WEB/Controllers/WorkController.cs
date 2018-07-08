@@ -33,34 +33,55 @@ namespace SiteForTanya.WEB.Controllers
 
         [HttpGet]
         public ActionResult Set(string name)
-        {
-            Repository<SetEntity> setRepostory = new Repository<SetEntity>();
-            SetEntity set = setRepostory.GetList().FirstOrDefault(s=>s.Name == name);
-            if (set == null)
+        {         
+            try
             {
-                return RedirectToAction("Home");
+                Repository<SetEntity> setRepostory = new Repository<SetEntity>();
+                SetEntity set = setRepostory.GetList().FirstOrDefault(s => s.Name == name);
+                if (set == null)
+                {
+                    return RedirectToAction("Home");
+                }
+
+
+                ViewBag.ViewName = "WorkSet";
+                SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
+                return View(vm);
             }
-
-
-            ViewBag.ViewName = "WorkSet";
-            SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements};
-            return View(vm);
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GetSetsNames(string keyWords, int setsCountOnPage, int pageNumber)
         {
-            SetProcessor setProcessor = new SetProcessor();
-            return Json(setProcessor.GetSetsNames(keyWords, setsCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
+            try
+            {
+                SetProcessor setProcessor = new SetProcessor();
+                return Json(setProcessor.GetSetsNames(keyWords, setsCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
+            }          
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GetImagesNames(string keyWords, int imagesCountOnPage, int pageNumber)
-        {
-            ImageProcessor imageProcessor = new ImageProcessor();
-            return Json(imageProcessor.GetImagesNames(keyWords, imagesCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
+        {            
+            try
+            {
+                ImageProcessor imageProcessor = new ImageProcessor();
+                return Json(imageProcessor.GetImagesNames(keyWords, imagesCountOnPage, pageNumber), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpGet]
@@ -73,6 +94,13 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult ImagesAutocompleteSearch(string term)
         {
             return Json(CommonMethods.AutocompleteSearch<ImagesInfo>(term), JsonRequestBehavior.AllowGet);
+        }
+
+        private ActionResult ProcessException(Exception exception)
+        {
+            ExceptionProcessor exceptionProcessor = new ExceptionProcessor();
+            exceptionProcessor.process(exception);
+            return View("Exception");
         }
     }
 }
