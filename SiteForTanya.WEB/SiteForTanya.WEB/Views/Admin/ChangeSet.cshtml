@@ -3,6 +3,13 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminChangeSet.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+}
+
 <div id="bacgroundColorContainer">
     Set Changing
 </div>
@@ -105,7 +112,7 @@
 
         function getImageRowHtml() {
             return '<div id="imageContainer' + cellCount + '" class="imageContainer noPadding clearfix">' +
-                   '<img id="image' + cellCount + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                   '<img id="image' + cellCount + '" class="image" alt="image cant be loaded"/>' +
                    '<div id="settingsContainer' + cellCount + '" class ="settingsContainer not-result">' +
                    getSettingsRowHtml(cellCount) +
                    '</div>' +

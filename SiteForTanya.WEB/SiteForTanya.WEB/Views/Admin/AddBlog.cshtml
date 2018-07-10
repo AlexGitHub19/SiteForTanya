@@ -2,6 +2,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddBlog.css" />
+}
+
 <div id="bacgroundColorContainer">Add blog item</div>
 
 @using (Html.BeginForm("AddBlog", "Admin", FormMethod.Post))

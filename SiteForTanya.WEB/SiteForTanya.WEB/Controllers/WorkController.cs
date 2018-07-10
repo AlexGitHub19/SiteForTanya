@@ -13,25 +13,43 @@ namespace SiteForTanya.WEB.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ViewBag.ViewName = "WorkIndex";
-            ViewBag.Title = "Work";
-            return View();
+            try
+            {
+                ViewBag.Title = "Work";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpGet]
         public ActionResult Sets()
         {
-            ViewBag.ViewName = "WorkSets";
-            ViewBag.Title = "Sets";
-            return View();
+            try
+            {
+                ViewBag.Title = "Sets";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpGet]
         public ActionResult Images()
         {
-            ViewBag.ViewName = "WorkImages";
-            ViewBag.Title = "Images";
-            return View();
+            try
+            {
+                ViewBag.Title = "Images";
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
         }
 
         [HttpGet]
@@ -41,13 +59,7 @@ namespace SiteForTanya.WEB.Controllers
             {
                 Repository<SetEntity> setRepostory = new Repository<SetEntity>();
                 SetEntity set = setRepostory.GetList().FirstOrDefault(s => s.Name == name);
-                if (set == null)
-                {
-                    return RedirectToAction("Home");
-                }
 
-
-                ViewBag.ViewName = "WorkSet";
                 ViewBag.Title = "Set " + name;
                 SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
                 return View(vm);

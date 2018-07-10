@@ -3,6 +3,10 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/BlogItem.css" />
+}
+
 <div id="bacgroundColorContainer">@Model.Name</div>
 
 <div class="blogText">@Model.Text</div>

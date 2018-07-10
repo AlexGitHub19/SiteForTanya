@@ -1,5 +1,9 @@
 ﻿@model SiteForTanya.WEB.Models.BlogEntity
 
+@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/BlogItem.css" />
+}
+
 <div id="bacgroundColorContainer">@Model.Name</div>
 
 <div class="blogText">@Model.Text</div>

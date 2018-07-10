@@ -10,7 +10,6 @@ namespace SiteForTanya.WEB.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.ViewName = "ContactsIndex";
             ViewBag.Title = "Contacts";
             return View();
         }

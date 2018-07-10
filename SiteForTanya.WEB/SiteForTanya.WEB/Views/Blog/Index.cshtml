@@ -1,4 +1,11 @@
-﻿
+﻿@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Blog.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
+}
+
 <div id="bacgroundColorContainer">Blog</div>
 
 <div id="blogItemsContainer" class="clearfix"></div>
@@ -46,7 +53,7 @@
         function fillBlogItems(result, pageNumber) {
             if (result.BlogItemsCount == 0) {
                 $('#loadingAnimation').css('display', 'none');
-                $('#blogItemsContainer').html('<h4 style="margin-top:50px;">No sets are found by this search criteria</h4>');
+                $('#blogItemsContainer').html('<h4 style="margin-top:50px;">No blog items are found</h4>');
                 $('#blogItemsContainer').css('text-align', 'center');
                 $('#blogItemsContainer').css('display', 'block');
                 return;

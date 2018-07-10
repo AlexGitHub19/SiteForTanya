@@ -236,7 +236,6 @@
     <Content Include="Content\Admin\AdminAddSet.css" />
     <Content Include="Content\Admin\AdminBlog.css" />
     <Content Include="Content\Admin\AdminChangeSet.css" />
-    <Content Include="Content\Admin\AdminDeleteSet.css" />
     <Content Include="Content\Admin\AdminExceptions.css" />
     <Content Include="Content\Admin\AdminImages.css" />
     <Content Include="Content\Admin\AdminIndex.css" />

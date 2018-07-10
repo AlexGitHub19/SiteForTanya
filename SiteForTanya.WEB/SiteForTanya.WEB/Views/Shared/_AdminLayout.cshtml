@@ -5,87 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link rel="icon" type="image/png" href="~/Content/Images/icons8-google-64.png" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    <link type="text/css" rel="stylesheet" href="~/Content/AdminLayout.css" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/jquery/css")
     @Scripts.Render("~/bundles/bootstrap")
-
-    <link type="text/css" rel="stylesheet" href="~/Content/AdminLayout.css" />
+    @RenderSection("scripts", required: false)
 
     @if (ViewBag.ViewName == "AdminIndex")
     {
         <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
     }
-    else if (ViewBag.ViewName == "AdminSets")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminSets.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-        <link type="text/css" rel="stylesheet" href="~/Content/SearchElement.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Set.css" />
-        <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
-    }
-    else if (ViewBag.ViewName == "AdminImages")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Images.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminImages.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-        <link type="text/css" rel="stylesheet" href="~/Content/SearchElement.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
-        <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
-    }
-    else if (ViewBag.ViewName == "AdminAddSet")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-    }
-    else if (ViewBag.ViewName == "AdminDeleteSet")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminDeleteSet.css" />
-    }
-    else if (ViewBag.ViewName == "AdminChangeSet")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddSet.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminChangeSet.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-    }
-    else if (ViewBag.ViewName == "AdminSet")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/SetShowingStyle.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-    }
-    else if (ViewBag.ViewName == "AdminBlog")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Blog.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminBlog.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/PaginationElement.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
-        <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-        <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
-    }
-    else if (ViewBag.ViewName == "AdminAddBlog")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddBlog.css" />
-    }
-    else if (ViewBag.ViewName == "AdminBlogItem")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/BlogItem.css"/>
-    }
-    else if (ViewBag.ViewName == "AdminExceptions")
-    {
-        <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminExceptions.css" />
-        <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
-    }
-
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 
 </head>
 <body>
