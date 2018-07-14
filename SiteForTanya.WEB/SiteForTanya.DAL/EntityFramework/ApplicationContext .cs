@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using SiteForTanya.Models;
 
-namespace SiteForTanya.WEB.Models
+namespace SiteForTanya.DAL.EntityFramework
 {
     public class ApplicationContext : DbContext
     {

@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using SiteForTanya.WEB.Models.WorkViewModels;
 using SiteForTanya.Models;
+using SiteForTanya.DAL.EntityFramework;
 
 namespace SiteForTanya.WEB.Controllers
 {

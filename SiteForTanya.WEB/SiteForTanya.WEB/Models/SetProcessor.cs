@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using SiteForTanya.Models;
+using SiteForTanya.DAL.EntityFramework;
 
 namespace SiteForTanya.WEB.Models
 {

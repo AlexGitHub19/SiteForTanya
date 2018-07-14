@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using SiteForTanya.WEB.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -12,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SiteForTanya.WEB.Models.AspNetIdentity;
 using SiteForTanya.Models;
+using SiteForTanya.DAL.EntityFramework;
 
 namespace SiteForTanya.WEB.Controllers
 {

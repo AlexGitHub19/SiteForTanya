@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace SiteForTanya.WEB.Models
+namespace SiteForTanya.DAL.EntityFramework
 {
     public class Repository<TEntity> where TEntity:class
     {

@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using SiteForTanya.Models;
+using SiteForTanya.DAL.EntityFramework;
 
 namespace SiteForTanya.WEB.Controllers
 {

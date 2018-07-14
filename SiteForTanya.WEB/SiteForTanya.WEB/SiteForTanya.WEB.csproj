@@ -204,7 +204,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminVewModels\AdminChangeSetViewModel.cs" />
-    <Compile Include="Models\ApplicationContext .cs" />
     <Compile Include="Models\AspNetIdentity\ApplicationUserManager.cs" />
     <Compile Include="Models\AspNetIdentity\AspNetIdentityContext.cs" />
     <Compile Include="Models\BlogProcessor.cs" />
@@ -216,7 +215,6 @@
     <Compile Include="Models\ImageProcessor.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
-    <Compile Include="Models\Repository.cs" />
     <Compile Include="Models\SetProcessor.cs" />
     <Compile Include="Models\WorkViewModels\SetVewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -377,6 +375,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SiteForTanya.DAL\SiteForTanya.DAL.csproj">
+      <Project>{965920ba-e36f-4253-abb0-5a7e4c0da78e}</Project>
+      <Name>SiteForTanya.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SiteForTanya.Models\SiteForTanya.Models.csproj">
       <Project>{8a0933f2-ef7e-40b1-a7ab-c8198a119283}</Project>
       <Name>SiteForTanya.Models</Name>

@@ -1,5 +1,6 @@
 ﻿using System;
 using SiteForTanya.Models;
+using SiteForTanya.DAL.EntityFramework;
 
 namespace SiteForTanya.WEB.Models
 {
