@@ -11,6 +11,7 @@ using SiteForTanya.WEB.Models.LoginViewModels;
 using System.Security.Claims;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SiteForTanya.WEB.Models.AspNetIdentity;
+using SiteForTanya.Models;
 
 namespace SiteForTanya.WEB.Controllers
 {

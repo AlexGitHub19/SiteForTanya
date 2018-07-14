@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using SiteForTanya.WEB.Models;
 using SiteForTanya.WEB.Models.AdminVewModels;
@@ -11,6 +10,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using SiteForTanya.WEB.Models.WorkViewModels;
+using SiteForTanya.Models;
 
 namespace SiteForTanya.WEB.Controllers
 {

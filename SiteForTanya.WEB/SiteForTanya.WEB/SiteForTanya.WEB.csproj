@@ -205,7 +205,7 @@
     </Compile>
     <Compile Include="Models\AdminVewModels\AdminChangeSetViewModel.cs" />
     <Compile Include="Models\ApplicationContext .cs" />
-    <Compile Include="Models\ApplicationUserManager.cs" />
+    <Compile Include="Models\AspNetIdentity\ApplicationUserManager.cs" />
     <Compile Include="Models\AspNetIdentity\AspNetIdentityContext.cs" />
     <Compile Include="Models\BlogProcessor.cs" />
     <Compile Include="Models\BlogViewModel.cs" />

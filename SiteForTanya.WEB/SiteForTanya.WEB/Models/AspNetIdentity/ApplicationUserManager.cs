@@ -2,9 +2,8 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using SiteForTanya.WEB.Models.AspNetIdentity;
 
-namespace SiteForTanya.WEB.Models
+namespace SiteForTanya.WEB.Models.AspNetIdentity
 {
     public class ApplicationUserManager : UserManager<IdentityUser>
     {

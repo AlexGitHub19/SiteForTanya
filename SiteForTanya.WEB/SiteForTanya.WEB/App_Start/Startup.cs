@@ -1,6 +1,5 @@
 ﻿using Microsoft.Owin;
 using Owin;
-using SiteForTanya.WEB.Models;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using System;

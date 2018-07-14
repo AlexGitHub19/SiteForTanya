@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SiteForTanya.WEB.Models.CommonViewModels;
+using SiteForTanya.Models;
 
 namespace SiteForTanya.WEB.Models
 {
