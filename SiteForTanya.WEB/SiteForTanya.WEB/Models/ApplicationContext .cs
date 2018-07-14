@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SiteForTanya.WEB.Models
 {
-    public class ApplicationContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext() : base("DbConnection") { }
 
@@ -13,10 +13,5 @@ namespace SiteForTanya.WEB.Models
         public DbSet<ImagesInfo> ImagesInfos { get; set; }
         public DbSet<SetsInfo> SetsInfos { get; set; }
         public DbSet<ExceptionEntity> ExceptionEntities { get; set; }
-
-        public static ApplicationContext Create()
-        {
-            return new ApplicationContext();
-        }
     }
 }

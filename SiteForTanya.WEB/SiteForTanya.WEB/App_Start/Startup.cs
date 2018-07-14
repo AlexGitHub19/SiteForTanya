@@ -4,6 +4,7 @@ using SiteForTanya.WEB.Models;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.AspNet.Identity;
 using System;
+using SiteForTanya.WEB.Models.AspNetIdentity;
 
 [assembly: OwinStartup(typeof(SiteForTanya.WEB.App_Start.Startup))]
 
@@ -13,8 +14,7 @@ namespace SiteForTanya.WEB.App_Start
     {
         public void Configuration(IAppBuilder app)
         {
-            // настраиваем контекст и менеджер
-            app.CreatePerOwinContext<ApplicationContext>(ApplicationContext.Create);
+            app.CreatePerOwinContext<AspNetIdentityContext>(AspNetIdentityContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {

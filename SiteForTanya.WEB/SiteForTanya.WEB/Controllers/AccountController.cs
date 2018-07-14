@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -10,6 +9,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SiteForTanya.WEB.Models.LoginViewModels;
 using System.Security.Claims;
+using Microsoft.AspNet.Identity.EntityFramework;
+using SiteForTanya.WEB.Models.AspNetIdentity;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -43,7 +44,9 @@ namespace SiteForTanya.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser user = await UserManager.FindAsync(model.Login, model.Password);
+                createAdmin();
+
+                IdentityUser user = await UserManager.FindAsync(model.Login, model.Password);
                 if (user == null)
                 {
                     ModelState.AddModelError("", "Incorrect login or password");
@@ -66,6 +69,26 @@ namespace SiteForTanya.WEB.Controllers
             return View(model);
         }
 
+        private void createAdmin()
+        {
+            AspNetIdentityContext context = new AspNetIdentityContext();
+
+            if (context.Users.ToList().Count == 0)
+            {
+                var userManager = new ApplicationUserManager(new UserStore<IdentityUser>(context));
+                var admin = new IdentityUser { UserName = "admin" };
+                string password = "123456";
+                var result = userManager.Create(admin, password);
+                context.SaveChanges();
+
+                Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
+                imageInfoRepository.Create(new ImagesInfo { AllTags = String.Empty });
+
+                Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>();
+                setsInfoRepository.Create(new SetsInfo { AllTags = String.Empty });
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
@@ -73,32 +96,5 @@ namespace SiteForTanya.WEB.Controllers
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-
-        //public ActionResult Register()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult> Register(RegisterModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email, Year = model.Year };
-        //        IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-        //        if (result.Succeeded)
-        //        {
-        //            return RedirectToAction("Login", "Account");
-        //        }
-        //        else
-        //        {
-        //            foreach (string error in result.Errors)
-        //            {
-        //                ModelState.AddModelError("", error);
-        //            }
-        //        }
-        //    }
-        //    return View(model);
-        //}
     }
 }

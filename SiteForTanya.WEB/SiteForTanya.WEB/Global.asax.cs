@@ -14,8 +14,6 @@ namespace SiteForTanya.WEB
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<ApplicationContext>(new DbInitializer());
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
