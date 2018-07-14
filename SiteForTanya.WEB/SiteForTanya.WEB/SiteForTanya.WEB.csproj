@@ -207,25 +207,17 @@
     <Compile Include="Models\ApplicationContext .cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\AspNetIdentity\AspNetIdentityContext.cs" />
-    <Compile Include="Models\BlogEntity.cs" />
     <Compile Include="Models\BlogProcessor.cs" />
     <Compile Include="Models\BlogViewModel.cs" />
     <Compile Include="Models\CommonMethods.cs" />
     <Compile Include="Models\CommonViewModels\AutocompleteViewModel.cs" />
     <Compile Include="Models\CommonViewModels\SetViewModel.cs" />
-    <Compile Include="Models\ExceptionEntity.cs" />
     <Compile Include="Models\ExceptionProcessor.cs" />
-    <Compile Include="Models\IEntity.cs" />
-    <Compile Include="Models\IEntityInfo.cs" />
-    <Compile Include="Models\ImageEntity.cs" />
     <Compile Include="Models\ImageProcessor.cs" />
-    <Compile Include="Models\ImagesInfo.cs" />
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Repository.cs" />
-    <Compile Include="Models\SetEntity.cs" />
     <Compile Include="Models\SetProcessor.cs" />
-    <Compile Include="Models\SetsInfo.cs" />
     <Compile Include="Models\WorkViewModels\SetVewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -383,6 +375,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SiteForTanya.Models\SiteForTanya.Models.csproj">
+      <Project>{8a0933f2-ef7e-40b1-a7ab-c8198a119283}</Project>
+      <Name>SiteForTanya.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

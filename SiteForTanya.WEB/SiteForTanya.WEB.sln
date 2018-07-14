@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteForTanya.WEB", "SiteForTanya.WEB\SiteForTanya.WEB.csproj", "{C641C544-85E8-418F-B373-2784F2A6580E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteForTanya.DAL", "SiteForTanya.DAL\SiteForTanya.DAL.csproj", "{965920BA-E36F-4253-ABB0-5A7E4C0DA78E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteForTanya.Models", "SiteForTanya.Models\SiteForTanya.Models.csproj", "{8A0933F2-EF7E-40B1-A7AB-C8198A119283}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C641C544-85E8-418F-B373-2784F2A6580E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C641C544-85E8-418F-B373-2784F2A6580E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C641C544-85E8-418F-B373-2784F2A6580E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{965920BA-E36F-4253-ABB0-5A7E4C0DA78E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965920BA-E36F-4253-ABB0-5A7E4C0DA78E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965920BA-E36F-4253-ABB0-5A7E4C0DA78E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965920BA-E36F-4253-ABB0-5A7E4C0DA78E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0933F2-EF7E-40B1-A7AB-C8198A119283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0933F2-EF7E-40B1-A7AB-C8198A119283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0933F2-EF7E-40B1-A7AB-C8198A119283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0933F2-EF7E-40B1-A7AB-C8198A119283}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
