@@ -41,7 +41,7 @@
             <label id="setTagsLabel" class="setInfolabel">Change Set's Tags: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea id="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')" autocomplete="off"></textarea>
+            <textarea id="setTags" name="setTags" rows="3" class="form-control setInfoInput" placeholder="Enter Tags (separate each tag by symbol ';')" autocomplete="off">@Model.Tags</textarea>
         </div>
     </div>
 
@@ -64,8 +64,30 @@
 
 <script>
     $(document).ready(function () {
-        $('#setTags').text('@Model.Tags');
+        @*$('#setTags').text('@Model.Tags');*@
         $('#setName').val('@Model.SetName');
+
+        var imageContainers = $('.imageContainer');
+        imageContainers.each(function (index, element) {
+            var id = getRowOrCellNumber(element);
+            var marginTop = $(element).css('margin-top');
+            $('#inputTop' + id).val(marginTop);
+            var marginBottom = $(element).css('margin-bottom');
+            $('#inputBot' + id).val(marginBottom);
+            var marginRight = $(element).css('margin-right');
+            $('#inputRight' + id).val(marginRight);
+            var marginLeft = $(element).css('margin-left');
+            $('#inputLeft' + id).val(marginLeft);
+        });
+
+        var images = $('.image');
+        images.each(function (index, element) {
+            var id = getRowOrCellNumber(element);
+            var maxHeight = $(element).css('max-height');
+            $('#maxHeightInput' + id).val(maxHeight);
+        });
+
+
 
         var rowCount = parseInt(getRowOrCellNumber($('.mainRow').last())) + 1;
         var cellCount = parseInt(getRowOrCellNumber($('.imageContainer').last())) + 1;
