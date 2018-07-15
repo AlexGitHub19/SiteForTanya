@@ -333,7 +333,7 @@ namespace SiteForTanya.WEB.Controllers
                 viewModel.TempSetNumber = setInfo.TempSetNumber;
                 viewModel.SetName = set.Name;
                 viewModel.Html = set.Html;
-                viewModel.Tags = set.Tags.Replace(",", ";");
+                viewModel.Tags = set.Tags;
                 return View(viewModel);
             }
             catch (Exception ex)
@@ -400,14 +400,23 @@ namespace SiteForTanya.WEB.Controllers
                 string resultTags = String.Empty;
                 if (!String.IsNullOrEmpty(setTags))
                 {
-                    string[] tagsList = setTags.Split(';');
+                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(';');
                     for (int i = 0; i < tagsList.Length; i++)
                     {
                         string tag = tagsList[i].Trim().ToLower();
-                        resultTags += tag;
-                        if (i != tagsList.Length - 1)
+                        if (tag.Contains(' '))
                         {
-                            resultTags += ",";
+                            string[] splittedTags = tag.Split(' ');
+                            for (int j = 0; j < splittedTags.Length; j++)
+                            {
+                                resultTags += splittedTags[j].Trim();
+                                resultTags += ";";
+                            }
+                        }
+                        else
+                        {
+                            resultTags += tag;
+                            resultTags += ";";
                         }
                     }
                 }
@@ -417,7 +426,7 @@ namespace SiteForTanya.WEB.Controllers
                 SetEntity set = setsRepository.GetList().First(s => s.Name == setName);
                 set.HtmlWithoutNotResultElements = html;
                 set.Html = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">");
-                set.Tags = resultTags;
+                set.Tags = resultTags != string.Empty ? DeleteLastSemicolon(resultTags) : null;
                 if (mainImageChanged)
                 {
                     set.MainImageName = mainImageName;
@@ -425,7 +434,6 @@ namespace SiteForTanya.WEB.Controllers
 
                 List<SetEntity> sets = setsRepository.GetList().ToList();
                 sets.Add(set);
-                recalculateAllTags<SetsInfo>(sets);
                 setsRepository.Update(set);
                 ViewBag.Text = "Set is changed!";
                 ViewBag.Title = "Info";
@@ -472,37 +480,28 @@ namespace SiteForTanya.WEB.Controllers
 
                 string html = resultHtmlWithoutNotResultElements.Replace("&lt;", "<").Replace("&gt;", ">");
 
-                Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>();
-                SetsInfo setsIfo = setsInfoRepository.GetList().First();
                 string resultTags = String.Empty;
-                bool isSetInfoModified = false;
                 if (!String.IsNullOrEmpty(setTags))
                 {
-                    string[] tagsList = setTags.Split(';');
+                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(';');
                     for (int i = 0; i < tagsList.Length; i++)
                     {
                         string tag = tagsList[i].Trim().ToLower();
-                        resultTags += tag;
-                        if (i != tagsList.Length - 1)
+                        if (tag.Contains(' '))
                         {
-                            resultTags += ",";
-                        }
-
-                        if (!setsIfo.AllTags.Contains(tag))
-                        {
-                            if (setsIfo.AllTags != String.Empty)
+                            string[] splittedTags = tag.Split(' ');
+                            for (int j = 0; j < splittedTags.Length; j++)
                             {
-                                setsIfo.AllTags += ",";
+                                resultTags += splittedTags[j].Trim();
+                                resultTags += ";";
                             }
-                            setsIfo.AllTags += tagsList[i].Trim().ToLower();
-                            isSetInfoModified = true;
                         }
+                        else
+                        {
+                            resultTags += tag;
+                            resultTags += ";";
+                        }                                               
                     }
-                }
-
-                if (isSetInfoModified)
-                {
-                    setsInfoRepository.Update(setsIfo);
                 }
 
                 SetEntity set = new SetEntity
@@ -510,7 +509,7 @@ namespace SiteForTanya.WEB.Controllers
                     Name = setName.Trim(),
                     Html = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">"),
                     HtmlWithoutNotResultElements = html,
-                    Tags = resultTags,
+                    Tags = resultTags != string.Empty ? DeleteLastSemicolon(resultTags) : null,
                     AddingTime = DateTime.Now,
                     MainImageName = mainImageName
                 };
@@ -659,23 +658,23 @@ namespace SiteForTanya.WEB.Controllers
                                 if (basicTag != null)
                                 {
                                     foundTags = Encoding.Unicode.GetString(basicTag.Value).Replace("\0", string.Empty);
-                                    string[] tagsList = foundTags.Split(';');
+                                    string[] tagsList = DeleteLastSemicolon(foundTags.Trim()).Split(';');
                                     for (int i = 0; i < tagsList.Length; i++)
                                     {
                                         string tag = tagsList[i].Trim().ToLower();
-                                        resultTags += tag;
-                                        if (i != tagsList.Length - 1)
+                                        if (tag.Contains(' '))
                                         {
-                                            resultTags += ",";
-                                        }
-
-                                        if (!imgInfo.AllTags.Contains(tag))
-                                        {
-                                            if (imgInfo.AllTags != String.Empty)
+                                            string[] splittedTags = tag.Split(' ');
+                                            for (int j = 0; j < splittedTags.Length; j++)
                                             {
-                                                imgInfo.AllTags += ",";
+                                                resultTags += splittedTags[j].Trim();
+                                                resultTags += ";";
                                             }
-                                            imgInfo.AllTags += tagsList[i].Trim().ToLower();
+                                        }
+                                        else
+                                        {
+                                            resultTags += tag;
+                                            resultTags += ";";
                                         }
                                     }
                                 }
@@ -689,7 +688,7 @@ namespace SiteForTanya.WEB.Controllers
                         }
 
                         upload.SaveAs(Server.MapPath("~/Content/Images/Images/" + fileName));
-                        ImageEntity image = new ImageEntity { Name = fileName, Tags = resultTags != string.Empty ? resultTags : null, AddingTime = DateTime.Now };
+                        ImageEntity image = new ImageEntity { Name = fileName, Tags = resultTags != string.Empty ? DeleteLastSemicolon(resultTags) : null, AddingTime = DateTime.Now };
                         imageRepository.Create(image);
                         isImgInfoModified = true;
                     }
@@ -713,13 +712,13 @@ namespace SiteForTanya.WEB.Controllers
         [HttpGet]
         public ActionResult ImagesAutocompleteSearch(string term)
         {
-            return Json(CommonMethods.AutocompleteSearch<ImagesInfo>(term), JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<ImageEntity>(term), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult SetsAutocompleteSearch(string term)
         {
-            return Json(CommonMethods.AutocompleteSearch<SetsInfo>(term), JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<SetEntity>(term), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -757,11 +756,6 @@ namespace SiteForTanya.WEB.Controllers
                         System.IO.File.Delete(strFileFullPath);
                     }
 
-                    if (!String.IsNullOrEmpty(image.Tags))
-                    {
-                        recalculateAllTags<ImagesInfo>(imageRepository.GetList());
-                    }
-
                     return Json(new { result = "Success" }, JsonRequestBehavior.AllowGet);
                 }
 
@@ -792,10 +786,6 @@ namespace SiteForTanya.WEB.Controllers
                         Directory.Delete(setDirectoryPath, true);
                     }
 
-                    if (!String.IsNullOrEmpty(set.Tags))
-                    {
-                        recalculateAllTags<SetsInfo>(setsRepository.GetList());
-                    }
                     return Json(new { result = "Success" }, JsonRequestBehavior.AllowGet);
                 }
 
@@ -843,40 +833,22 @@ namespace SiteForTanya.WEB.Controllers
             }
         }
 
-        private void recalculateAllTags<T>(IEnumerable<IEntity> entities) where T:class, IEntityInfo
-        {
-            Repository<T> entityInfoRepository = new Repository<T>();
-            T entityInfo = entityInfoRepository.GetList().First();
-            string resultAllTags = String.Empty;
-            foreach (IEntity entity in entities)
-            {
-                if (!String.IsNullOrEmpty(entity.Tags))
-                {
-                    string[] tagsList = entity.Tags.Split(',');
-                    for (int i = 0; i < tagsList.Length; i++)
-                    {
-                        if (!resultAllTags.Contains(tagsList[i]))
-                        {
-                            if (resultAllTags != String.Empty)
-                            {
-                                resultAllTags += ",";
-                            }
-                            resultAllTags += tagsList[i];
-                        }
-                    }
-                }
-            }
-
-            entityInfo.AllTags = resultAllTags;
-            entityInfoRepository.Update(entityInfo);
-        }
-
-
         private ActionResult ProcessException(Exception exception)
         {
             ExceptionProcessor exceptionProcessor = new ExceptionProcessor();
             exceptionProcessor.process(exception);
             return View("Exception");
+        }
+
+        private string DeleteLastSemicolon(string line)
+        {
+            string result = line;
+            if (line.ToCharArray().Last() == ';')
+            {
+                result = line.Substring(0, line.Length - 1);
+            }
+
+            return result;
         }
 
     }

@@ -5,10 +5,9 @@ using System.Web;
 
 namespace SiteForTanya.Models
 {
-    public class SetsInfo: IEntityInfo
+    public class SetsInfo
     {
         public int Id { get; set; }
-        public string AllTags { get; set; }
         public int TempSetNumber { get; set; }
     }
 }

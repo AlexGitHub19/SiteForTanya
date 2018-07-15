@@ -38,7 +38,12 @@ h2 {
 }
 
 h3, h5{ 
+  font-size:18px;
   font-family:'Raleway', Arial, sans-serif;
+}
+
+h4 {
+    font-family:'Raleway', Arial, sans-serif;
 }
 
 input {

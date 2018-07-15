@@ -43,7 +43,6 @@
     <Compile Include="BlogEntity.cs" />
     <Compile Include="ExceptionEntity.cs" />
     <Compile Include="IEntity.cs" />
-    <Compile Include="IEntityInfo.cs" />
     <Compile Include="ImageEntity.cs" />
     <Compile Include="ImagesInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

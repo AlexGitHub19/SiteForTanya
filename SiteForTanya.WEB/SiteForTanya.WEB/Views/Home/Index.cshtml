@@ -1,185 +1,64 @@
-﻿
-2222222222222222222222
-<div class="row">
-    <div class="col-md-4">
-        asaasd
+﻿@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Home/HomeIndex.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+}
+<script type="text/javascript">
+    function imgLoaded(img) {
+        $(img).css('opacity', '1');
+
+        setTimeout(function () {
+            $('.scale').each(function (index, element) {
+                setTimeout(function () {
+                    $(element).css('opacity', '1');
+                }, 100 * index);
+            });
+        }, 700);
+    };
+</script>
+
+<div class="buttonsContainer">
+    <div class="buttonContainer scale">
+        <i class="fa fa-facebook" aria-hidden="true" style="font-size:24px;"></i>
     </div>
-    <div class="col-md-4" style="text-align:right">
-        <select>
-            <option>Eng</option>
-            <option>Rus</option>
-            <option>GER</option>
-        </select> 
+    <div class="buttonContainer scale">
+        <i class="fa fa-instagram" aria-hidden="true" style="font-size:24px;"></i>
     </div>
-    <div class="col-md-4">
-        <div style="display: inline-block; width:60%;">
-            aa
+    <div class="buttonContainer scale">
+        <i class="fa fa-envelope-o" aria-hidden="true" style="font-size:24px;"></i>
+    </div>
+    @*<div class="buttonContainer">
+        <div style="font-size:24px; background-image:url('../Content/Images/shatterstockLogo.png'); background-size:cover;">
+        <div style="width:32px; height:35px; background-color:blue; background-size:cover;">
+            <img src="~/Content/Images/shatterstockLogo.png" style="width:100%; height:100%">
         </div>
-        <div style="display: inline-block;">
-            vv
+        <i class="fa" style="font-size:24px; height:35px"><img src="~/Content/Images/shatterstockLogo.png" style="width:100%; height:100%"></i>
+    </div>*@
+    <img class="scale" src="~/Content/Images/shatterstockLogo.png" style="width:32px; height:35px; margin-top:-10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); border-radius:3px;">
+</div>
+
+<div class="row photoAndDescription">
+    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 imageContainer">
+        <img id="myPfoto" src="~/Content/Images/picture.gif" alt="image cant be loaded" onload="imgLoaded(this)">
+    </div>
+    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9 textContainer">
+        <div class="text">
+            Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock.
         </div>
-        LLLLLLLLLLLLLLLLLLLLLLLLLLL
     </div>
 </div>
 
-<img src="~/Content/Images/Balloon_Product/7.jpg" alt="Sample Photo" class="my-image"/>
-<div><img src="~/Content/Images/Balloon_Product/6.jpg" alt="Sample Photo" class="my-image" /></div>
-<div><img src="~/Content/Images/Balloon_Product/5.jpg" alt="Sample Photo" class="my-image" /></div>
-<div><img src="~/Content/Images/Balloon_Product/4.jpg" alt="Sample Photo" class="my-image" /></div>
-<div><img src="~/Content/Images/Balloon_Product/3.jpg" alt="Sample Photo" class="my-image" /></div>
-<div><img src="~/Content/Images/Balloon_Product/2.jpg" alt="Sample Photo" class="my-image" /></div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
+    <script type="text/javascript">
+        $(document).ready(function () {
 
-        $(window).resize(function () {
-            var element = $('.scaleClass');
-            if (element.length > 0)
-            {
-                removeScale(element.first());
-            }
+            //$('.scale').each(function (index, element) {
+            //    setTimeout(function () {
+            //        $(element).css('opacity', '1');
+            //    }, 100 * index);
+            //});
+            //$('.buttonContainer').bind('click', function () {
+            //    alert('dd');
+            //});
         });
-
-        $('.body-content').on('click', '.my-image', function (e) {
-            $('.body-content').append('<div class="zoomContainer">' +
-                    '<div class="overlay"></div>' +
-                    '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
-                    '<div class="zoomMenu"></div>' +
-                    '<div class="zoomedImageContainer">' +
-                        '<img src="' + $(this).attr('src') + '" alt="Sample Photo" class="zoomedImage"/>' +
-                    '</div>' +
-                '</div>').ready(function () {
-                    $('.overlay').animate({ 'opacity': '1' }, 400, function () {
-                        $('.zoomMenu').css('opacity', '0.5');
-                        $('.resizeBtn').animate({ 'opacity': '1' });
-                        $('.closeImageBtn').animate({ 'opacity': '1' });
-                    });
-                    $('.zoomedImage').css('transform', 'scale(1)');
-                    $('body').css('overflow', 'hidden');
-                });
-        });
-
-        $('.body-content').on('click', '.zoomedImageContainer', function (e) {
-            removeZoomContainer();
-        });
-
-        $('.body-content').on('click', '.zoomedImage', function (e) {
-            e.stopPropagation();
-            scaleImage(this);
-        });
-
-        $('.body-content').on('click', '.resizeBtn', function (e) {
-            if ($(this).hasClass('fa-search-plus'))
-            {
-                $(this).removeClass('fa-search-plus');
-                $(this).addClass('fa-search-minus');
-            }
-            else
-            {
-                $(this).removeClass('fa-search-minus');
-                $(this).addClass('fa-search-plus');
-            }
-            scaleImage($('.zoomedImage').first());
-        });
-
-        $('.body-content').on('click', '.closeImageBtn', function (e) {
-            removeZoomContainer();
-        });
-
-    });
-
-    function returnImage(elem, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow) {
-        var left;
-        var top;
-        if (isImageWidthBiggerThanWindow)
-        {
-            if ($(elem).position().left > 0)
-            {
-                left = ($(elem).width() * 2 - $(window).width()) / 2;
-            }
-            else if ($(elem).position().left < $(window).width() - $(elem).width() * 2)
-            {
-                var result = ($(elem).width() * 2 - $(window).width()) / 2;
-                left = "-" + result;
-            }
-        }
-        if (isImageHeightBiggerThanWindow)
-        {
-            if ($(elem).position().top > 30)
-            {
-                top = (($(elem).height() * 2 - $(window).height()) / 2) - 6;
-            }
-            else if ($(elem).position().top < $(window).height() - $(elem).height() * 2)
-            {
-                var result = (($(elem).height() * 2 - $(window).height()) / 2) + 45;
-                top = "-" + result;
-            }
-        }
-        $(elem).animate({ top: parseFloat(top) + parseFloat("30"), left: left }, 400);
-    }
-
-    function removeScale(elem)
-    {
-        $(elem).draggable({ disabled: true });
-        $(elem).css('transform', 'scale(1)');
-        $(elem).animate({ left: "0px", top: "0px" }, 600);
-        $(elem).toggleClass('scaleClass');
-        $(elem).css('cursor', 'zoom-in');
-    }
-
-    function removeZoomContainer()
-    {
-        $('.resizeBtn').remove();
-        $('.closeImageBtn').remove();
-
-        $('.zoomContainer').animate({ 'opacity': '0' }, 400, function () {
-            $('.zoomContainer').remove();
-        });
-        if ($('.zoomedImage').hasClass('scaleClass'))
-        {
-            $('.zoomedImage').css('transform', 'scale(8)');
-        }
-        else
-        {
-            $('.zoomedImage').css('transform', 'scale(5)');
-        }
-
-        $('body').css('overflow', 'scroll');
-    }
-
-    function scaleImage(element)
-    {
-        if ($(element).hasClass('scaleClass'))
-        {
-            removeScale(element);
-        }
-        else
-        {
-            var isImageWidthBiggerThanWindow = $(element).width() * 2 > $(window).width();
-            var isImageHeightBiggerThanWindow = $(element).height() * 2 > $(window).height();
-
-            var axis = "";
-            if (isImageHeightBiggerThanWindow) {
-                axis += "y";
-            }
-            if (isImageWidthBiggerThanWindow) {
-                axis += "x";
-            }
-            if (axis != "") {
-                $(element).draggable({
-                    disabled: false,
-                    axis: axis,
-                    stop: function () {
-                        returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
-                    },
-                    scroll: false
-                });
-            }
-            $(element).toggleClass('scaleClass');
-            $(element).css('transform', 'scale(2)');
-            $(element).css('cursor', '-webkit-grab');
-            $(element).css('cursor', '-moz-grab');
-            $(element).css('cursor', 'grab');
-        }
-    }
-</script>
+    </script>

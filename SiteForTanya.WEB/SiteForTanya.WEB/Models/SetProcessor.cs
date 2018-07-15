@@ -14,7 +14,7 @@ namespace SiteForTanya.WEB.Models
             Repository<SetEntity> setEntityRepository = new Repository<SetEntity>();
             SetViewModel setViewModel = new SetViewModel();
 
-            if (keyWords == String.Empty)
+            if (keyWords == null || keyWords == String.Empty)
             {
                 var allSets = setEntityRepository.GetList();
                 List<SetBriefInfo> sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).
@@ -23,8 +23,8 @@ namespace SiteForTanya.WEB.Models
             }
             else
             {
-                List<string> words = keyWords.Split(' ').ToList();
-                var allSets = setEntityRepository.GetList().Where(set => CommonMethods.TagContainsWord(set, words));
+                List<string> words = keyWords.Trim().Split(' ').ToList();
+                var allSets = setEntityRepository.GetList().Where(set => CommonMethods.TagsContainWords(set, words));
                 List<SetBriefInfo> sets = allSets.OrderByDescending(set => set.AddingTime).Skip((pageNumber - 1) * setsCountOnPage).
                     Take(setsCountOnPage).Select(set => new SetBriefInfo { setName = set.Name, mainImageName = set.MainImageName }).ToList();
                 return new SetViewModel { sets = sets, setsCount = allSets.Count() };

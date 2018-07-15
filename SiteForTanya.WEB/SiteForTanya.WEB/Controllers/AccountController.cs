@@ -83,10 +83,10 @@ namespace SiteForTanya.WEB.Controllers
                 context.SaveChanges();
 
                 Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
-                imageInfoRepository.Create(new ImagesInfo { AllTags = String.Empty });
+                imageInfoRepository.Create(new ImagesInfo());
 
                 Repository<SetsInfo> setsInfoRepository = new Repository<SetsInfo>();
-                setsInfoRepository.Create(new SetsInfo { AllTags = String.Empty });
+                setsInfoRepository.Create(new SetsInfo());
             }
         }
 

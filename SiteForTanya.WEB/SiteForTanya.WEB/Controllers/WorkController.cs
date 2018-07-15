@@ -101,13 +101,13 @@ namespace SiteForTanya.WEB.Controllers
         [HttpGet]
         public ActionResult SetsAutocompleteSearch(string term)
         {
-            return Json(CommonMethods.AutocompleteSearch<SetsInfo>(term), JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<SetEntity>(term), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         public ActionResult ImagesAutocompleteSearch(string term)
         {
-            return Json(CommonMethods.AutocompleteSearch<ImagesInfo>(term), JsonRequestBehavior.AllowGet);
+            return Json(CommonMethods.AutocompleteSearch<ImageEntity>(term), JsonRequestBehavior.AllowGet);
         }
 
         private ActionResult ProcessException(Exception exception)

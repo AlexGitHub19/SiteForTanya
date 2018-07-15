@@ -4,7 +4,7 @@
     margin-bottom:20px;
     width:unset;
     background-color: var(--secondColor);
-    border: solid;
+    /*border: solid;*/
     border-width:1px;
     border-radius:5px; 
     padding-top: 5px;
@@ -47,12 +47,6 @@ a:hover,
 a:focus {
   color: black;
   text-decoration: none;
-}
-
-a:focus {
-  outline: thin dotted #333;
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
 }
 
 @media (max-width:600px) {

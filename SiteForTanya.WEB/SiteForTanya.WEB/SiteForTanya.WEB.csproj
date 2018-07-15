@@ -233,11 +233,14 @@
     <Content Include="Content\BlogItem.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Contacts\ContactsIndex.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
     <Content Include="Content\Images\icons8-google-64.png" />
+    <Content Include="Content\Images\picture.gif" />
+    <Content Include="Content\Images\shatterstockLogo.png" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\PaginationElement.css" />
@@ -362,7 +365,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Account\" />
     <Folder Include="Content\Blog\" />
-    <Folder Include="Content\Contacts\" />
     <Folder Include="Content\Images\Images\" />
     <Folder Include="Content\Images\Sets\" />
     <Folder Include="Content\Images\Temp\" />
