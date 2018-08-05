@@ -238,9 +238,14 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
+    <Content Include="Content\Images\ContactImage.jpg" />
+    <Content Include="Content\Images\HomeImage1.jpg" />
+    <Content Include="Content\Images\HomeMainImage.jpg" />
     <Content Include="Content\Images\icons8-google-64.png" />
-    <Content Include="Content\Images\picture.gif" />
+    <Content Include="Content\Images\Photo.jpg" />
     <Content Include="Content\Images\shatterstockLogo.png" />
+    <Content Include="Content\Images\WorkProjectsImage.jpg" />
+    <Content Include="Content\Images\WorkSingleImages.jpg" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\Loading.css" />
     <Content Include="Content\PaginationElement.css" />
@@ -305,6 +310,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\BlackHawk.ttf" />
+    <Content Include="fonts\insigne-Ainslie-NorReg.otf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -365,6 +372,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Account\" />
     <Folder Include="Content\Blog\" />
+    <Folder Include="Content\Fonts\" />
     <Folder Include="Content\Images\Images\" />
     <Folder Include="Content\Images\Sets\" />
     <Folder Include="Content\Images\Temp\" />

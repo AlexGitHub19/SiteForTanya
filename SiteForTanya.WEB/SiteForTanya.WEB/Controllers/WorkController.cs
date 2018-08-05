@@ -16,6 +16,7 @@ namespace SiteForTanya.WEB.Controllers
             try
             {
                 ViewBag.Title = "Work";
+                ViewBag.Controller = "Work";
                 return View();
             }
             catch (Exception ex)
@@ -30,6 +31,7 @@ namespace SiteForTanya.WEB.Controllers
             try
             {
                 ViewBag.Title = "Sets";
+                ViewBag.Controller = "Work";
                 return View();
             }
             catch (Exception ex)
@@ -44,6 +46,7 @@ namespace SiteForTanya.WEB.Controllers
             try
             {
                 ViewBag.Title = "Images";
+                ViewBag.Controller = "Work";
                 return View();
             }
             catch (Exception ex)
@@ -61,6 +64,7 @@ namespace SiteForTanya.WEB.Controllers
                 SetEntity set = setRepostory.GetList().FirstOrDefault(s => s.Name == name);
 
                 ViewBag.Title = "Set " + name;
+                ViewBag.Controller = "Work";
                 SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
                 return View(vm);
             }

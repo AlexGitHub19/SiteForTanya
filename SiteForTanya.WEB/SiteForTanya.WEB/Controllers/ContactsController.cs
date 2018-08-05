@@ -7,6 +7,7 @@ namespace SiteForTanya.WEB.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Contacts";
+            ViewBag.Controller = "Contacts";
             return View();
         }
     }

@@ -1,22 +1,60 @@
 ﻿.photoAndDescription {
     margin-top:50px;
-    text-align:left;
+    margin-bottom :50px;
+    /*text-align:left;*/
+    margin-left:50px;
+    margin-right:50px;
+}
+
+.column {
+    height: 350px;
+    padding:0px;
 }
 
 .textContainer {
-    padding-right:40px;
-    padding-top:50px;
+    /*padding-right:40px;
+    padding-left:40px;*/
+    /*padding-top:150px;*/
+    text-align:left;
+    padding-left:30px;
 }
 
-.imageContainer {
-    padding-left:40px;
-    /*padding-right:40px;*/
+.photoContainer {
+    /*padding-left:70px;*/
 }
+
+.mainImageContainer {
+    width:100%;
+}
+
+
+#mainImage {
+    max-width:100%;
+    max-height: 100%;
+    opacity: 0;
+    /*-webkit-transition: opacity 0.7s ease-in-out;
+    -moz-transition: opacity 0.7s ease-in-out;
+    -ms-transition: opacity 0.7s ease-in-out;
+    -o-transition: opacity 0.7s ease-in-out;
+    transition: opacity 0.7s ease-in-out;*/
+}
+
+#image1 {
+    max-width:100%;
+    max-height: 100%;
+    opacity: 1;
+    /*-webkit-transition: opacity 0.7s ease-in-out;
+    -moz-transition: opacity 0.7s ease-in-out;
+    -ms-transition: opacity 0.7s ease-in-out;
+    -o-transition: opacity 0.7s ease-in-out;
+    transition: opacity 0.7s ease-in-out;*/
+}
+
 
 #myPfoto {
-    max-height: 350px;
+    max-height: 100%;
     max-width:100%;
-    opacity:0;
+    /*opacity:0;*/
     -webkit-transition: opacity 1s ease-in-out;
     -moz-transition: opacity 1s ease-in-out;
     -ms-transition: opacity 1s ease-in-out;
@@ -29,6 +67,7 @@
     top:87px;
     right:100px;
     z-index:100;
+    display:none;
 }
 
 .buttonContainer {
@@ -63,19 +102,52 @@
         margin-top:5px;
     }
 
-@media (max-width:447px) {
 
-    .imageContainer, .textContainer {
+/*@media (max-width:1005px) {
+    #myPfoto {
+        height: 300px;
+    }
+}*/
+
+@media (max-width:889px) {
+    .image1Container {
+        width:100%;
+    }
+
+    .textContainer {
+        width:75%;
+    }
+}
+
+
+@media (max-width:696px) {
+
+    .photoContainer, .textContainer {
         width:100%;
         padding-left:15px;
         padding-right: 15px;
     }
 
+    #myPfoto {
+        max-height: 250px;
+    }
+
+    .photoAndDescription {
+        margin-left:15px;
+        margin-right:15px;
+    }
+
     .textContainer {
         margin-top:20px;
+        padding-left:0px;
+        padding-right:0px;
+    }
+
+    .photoContainer {
+        height:260px;
     }
 
     .photoAndDescription {
         text-align:center;
-}
+    }
 }

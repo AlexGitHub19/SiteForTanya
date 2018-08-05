@@ -6,29 +6,96 @@
     <link type="text/css" rel="stylesheet" href="~/Content/Work/WorkIndex.css" />
 }
 
-<div id="bacgroundColorContainer">Work</div>
-
-<div class="content">
-    <div class="row">
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="~/Work/Sets" style="display:block">
-                <div class="item item-left">
-                    <div class="item-content">
-                        <h3 class="text">SETS</h3>
-                        <h5>View products</h5>
-                    </div>
+<div class="row ">
+    <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <a href="~/Work/Sets" style="display:block">
+            <div class="item item-left">
+                <img id="projectsImage" src="~/Content/Images/WorkProjectsImage.jpg" alt="image cant be loaded">
+                <div class="item-content">
+                    <h3 class="text">SETS</h3>
                 </div>
-            </a>
-        </div>
-        <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <a href="~/Work/Images" style="display:block">
-                <div class="item item-right">
-                    <div class="item-content">
-                        <h3 class="text">IMAGES</h3>
-                        <h5>View products</h5>
-                    </div>
+            </div>
+        </a>
+    </div>
+    <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-12">
+        <a href="~/Work/Images" style="display:block">
+            <div class="item item-right">
+                <img id="imagesImage" src="~/Content/Images/WorkSingleImages.jpg" alt="image cant be loaded">
+                <div class="item-content">
+                    <h3 class="text">IMAGES</h3>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
 </div>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var projectsImage = document.getElementById("projectsImage");
+        projectsImage.addEventListener("load", showProjectsImg(), false);
+        function showProjectsImg() {
+            //$('#projectsImage').css('opacity', '1');
+            centerBodyContent();
+            $('#projectsImage').animate({
+                'opacity': '1'
+            }, 700, function () {
+                $('#projectsImage+.item-content').animate({
+                    'opacity': '1'
+                }, 700);
+            });
+        };
+
+        var imagesImage = document.getElementById("imagesImage");
+        imagesImage.addEventListener("load", showImageImg(), false);
+        function showImageImg() {
+            centerBodyContent();
+            //$('#imagesImage').css('opacity', '1');
+            $('#imagesImage').animate({
+                'opacity': '1'
+            }, 700, function () {
+                $('#imagesImage+.item-content').animate({
+                    'opacity': '1'
+                }, 700);
+            });
+        };
+    });
+
+    $(window).resize(function () {
+        centerBodyContent();
+    });
+
+    function centerBodyContent()
+    {
+        var windowHeight = $(document).height();
+        var bodyHeight = windowHeight - 123;
+        // alert("bodyHeight" + bodyHeight + 'body-content' + $('.body-content').height());
+        //$('.body-content').css('height', bodyHeight - 25);
+       // $('.item').css('height', bodyHeight - 25);
+        //alert($(window).height());
+        var windowWidth = $(window).width();
+        if (windowWidth > 767) {
+            var bodyContentHeight = $('.body-content').height();
+            if (bodyHeight > bodyContentHeight) {
+                var marging = (bodyHeight - bodyContentHeight) / 2;
+                //alert('bodyHeight ' + bodyHeight + ' bodyContentHeight: ' + bodyContentHeight);
+                if (marging > 80)
+                {
+                    marging = 80;
+                }
+                else if (marging < 15)
+                {
+                    marging = 15;
+                }
+                $('.body-content').css('margin-top', marging);
+            }
+        }
+        else
+        {
+            $('.body-content').css('margin-top', 0);
+            $('.item').css('height', 'unset');
+        }
+    }
+</script>

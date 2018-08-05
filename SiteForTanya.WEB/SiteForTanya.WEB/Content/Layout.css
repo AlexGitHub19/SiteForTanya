@@ -1,13 +1,21 @@
-﻿.main-menu {
-    font-size: 12px;
-    background-color: white;
-    height: 37px;
-    position:inherit;
-    -webkit-transition: 0.3s linear;
-   -moz-transition: 0.3s linear;
-   -o-transition: 0.3s linear;
-   transition: 0.3s linear;
+﻿.main-menu-container {
+    height:123px;
+    /*opacity:0;*/
 }
+
+.main-menu {
+    z-index:5;
+    background-color: white;
+    -webkit-transition: 0.3s linear;
+    -moz-transition: 0.3s linear;
+    -o-transition: 0.3s linear;
+    transition: 0.3s linear;
+    margin-top:30px;
+    margin-bottom:40px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
 
     .main-menu ul {
         text-align: center;
@@ -18,25 +26,76 @@
 
         .main-menu ul li{
             display: inline-block;
-            margin: 10px 30px;
+            margin-right: 60px;
+            margin-left: 60px;
         }
 
             .main-menu ul li a{
                 color: black;
                 display: block;
-                font-weight: 400;
-                text-transform: uppercase;
-                font-style: normal;
-                font-size: 14px;
-                letter-spacing: 1px;
+                /*letter-spacing: 1px;*/
                 text-decoration: none;
                 cursor: pointer;
-                transition-duration: 0.3s;
+                transition-duration: 0.2s;
             }
 
-                .main-menu ul li a:hover{
-                    color: #ebe8e8; 
+                .main-menu ul li a:hover, .menu-item-logotip:hover{
+                    color: var(--thirdColor);/*#ebe8e8;*/ 
                 }
+
+.menu-item {
+    font-size: 16px;
+    text-transform: uppercase;
+    -webkit-transform: translate3d(0,-16px,0);
+    -moz-transform: translate3d(0,-16px,0);
+    -ms-transform: translate3d(0,-16px,0); 
+    -o-transform: translate3d(0,-16px,0);
+	transform: translate3d(0,-16px,0);
+}
+
+.menu-item-logotip {
+    height:50px;
+    font-size: 70px;
+    font-family: BlackHawk;
+    line-height: 0.7;
+    color: black;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+
+.logotip {
+    text-align:center;
+    height:123px;
+    padding-top:30px;
+    /*margin-top:30px;
+    margin-bottom:44px;*/
+}
+
+    .logotip a {
+         text-decoration: none;
+    }
+
+#menu-ckecked {
+    position:absolute;
+    top:67px;
+    left: -23px;
+    width:23px;
+    height:3px;
+    background: var(--thirdColor);
+    z-index:10;
+}
+
+.pageName {
+    position:absolute;
+    font-size: 16px;
+    top:85px;
+    width:100%;
+    text-align:center;
+    font-family:insigne-Ainslie-NorReg;
+    z-index:1;
+}
 
 #nav-icon{
   width: 30px;
@@ -63,8 +122,6 @@
   height: 3px;
   width: 100%;
   background: black;
-  border-radius: 10px;
-  opacity: 1;
   left: 0;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -133,7 +190,7 @@
 }
  
 .mobile-menu li {
-  font-family: 'Open Sans', sans-serif;
+  font-family:insigne-Ainslie-NorReg, 'Open Sans', sans-serif;
   line-height: 45px;
   padding-bottom: 3px;
   padding-left: 20px;
@@ -157,15 +214,96 @@
     }
 
 
-@media (max-width:600px){
-    .main-menu {
+@media (max-width:1230px){
+     .main-menu ul li{
+            margin-right: 40px;
+            margin-left: 40px;
+        }
+}
+
+@media (max-width:1012px){
+     .main-menu ul li{
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+}
+
+@media (max-width:912px){
+    .main-menu, #menu-ckecked {
         display:none;
+    }
+
+    .main-menu-container {
+        height: 0px;
     }
 }
 
-@media (min-width:601px){
+@media (max-width:440px){
+    .logotip {
+        padding-top:10px;
+        height:93px;
+    }
+
+    .menu-item-logotip {
+        /*height:50px;*/
+        font-size: 50px;
+    }
+
+    .pageName {
+        top:55px;
+    }
+}
+
+@media (max-width:360px){
+    .logotip {
+        height:88px;
+    }
+
+    .menu-item-logotip {
+        /*height:50px;*/
+        font-size: 45px;
+    }
+
+    .pageName {
+        top:50px;
+    }
+}
+
+
+
+/*@media (max-width:400px){
+    .menu-item-logotip {
+        font-size: 65px;
+    }
+
+    .pageName {
+        top:90px;
+    }
+}
+
+@media (max-width:340px){
+    .menu-item-logotip {
+        font-size: 55px;
+    }
+
+    .pageName {
+        top:85px;
+        font-size: 14px;
+    }
+}*/
+
+@media (min-width:913px){
 
     #nav-icon {
         display:none;
+    }
+
+    .logotip {
+        display:none;
+    }
+
+    .menu-item-logotip {
+        width:330px;
+        height:50px;
     }
 }

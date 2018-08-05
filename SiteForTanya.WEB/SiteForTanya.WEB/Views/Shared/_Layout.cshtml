@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     <link rel="icon" type="image/png" href="~/Content/Images/icons8-google-64.png" />
-    <link type="text/css" rel="stylesheet" href="~/Content/Layout.css" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    @*<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Styles.Render("~/jquery/css")
     @RenderSection("scripts", required: false)
+    <link type="text/css" rel="stylesheet" href="~/Content/Layout.css" />
 
     @*@if (ViewBag.ViewName == "HomeIndex")
     {
@@ -35,18 +35,22 @@
             <li><a href="/Blog">Blog</a></li>
         </ul>
     </div>
-    <div class="row">
-        <div class="main-menu col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div style="display:inline-block; width: 100%;">
+    <div class="row main-menu-container">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-menu">
+            <div>
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/Work">Work</a></li>
-                    <li><a href="/Contacts">Contacts</a></li>
-                    <li><a href="/Blog">Blog</a></li>
+                    <li><a href="/Work" id ="menu-item-Work" class="menu-item">Work</a></li>
+                    <li><a href="/" id ="menu-item-About" class="menu-item">About</a></li>
+                    <li><a href="/" class="menu-item-logotip">Tetiana Pavliuchenko</a></li>                    
+                    <li><a href="/Blog" id ="menu-item-Blog" class="menu-item">Blog</a></li>
+                    <li><a href="/Contacts" id ="menu-item-Contacts" class="menu-item">Contacts</a></li>
                 </ul>
             </div>                           
         </div>
     </div>
+    <span id="menu-ckecked"></span>
+    <div class="logotip"><a href="/" class="menu-item-logotip">Tetiana Pavliuchenko</a></div>
+    <div class="pageName">illustration</div>
     <div id="nav-icon">
         <span></span>
         <span></span>
@@ -57,14 +61,57 @@
         @RenderBody()
     </div>
             <script>
+                //$('.menu-item-logotip').ready(function () {
+                //    alert('s');
+                //});
+
                 $(document).ready(function () {
+                    //alert('Layout');
+                    //alert('document ready')
+
+                    //$('.main-menu-container').animate({
+                    //    opacity: 1
+                    //}, 200);
+
+                    @{
+                        string controllerName = ViewBag.Controller;
+                        if (controllerName == "Work")
+                        {
+
+                             <text>
+                                $('#menu-ckecked').animate({
+                                left: $('#menu-item-Work').offset().left
+                                }, 400, "linear");
+                             </text>
+                        }
+                        else if (controllerName == "Contacts")
+                        {
+                             <text>
+                                $('#menu-ckecked').css('left', 'unset');
+                                $('#menu-ckecked').css('right','-23px');
+                                $('#menu-ckecked').animate({
+                                    left: $('#menu-item-Contacts').offset().left
+                                }, 400, "linear");
+                             </text>
+                        }
+                        else if (controllerName == "Blog")
+                        {
+                            <text>
+                                $('#menu-ckecked').css('left', 'unset');
+                                $('#menu-ckecked').css('right','-23px');
+                                $('#menu-ckecked').animate({
+                                    left: $('#menu-item-Blog').offset().left
+                                }, 400, "linear");
+                             </text>
+                        }
+                    }
 
                     $('#nav-icon').click(function () {
                         $(this).toggleClass('open');
                         var windowWidth = $(window).width();
                         if ($(this).hasClass('open')) {
                             $('.mobile-menu').animate({
-                                width: windowWidth*0.78
+                                width: windowWidth * 0.78
                             }, 200);
                             $('body').animate({
                                 left: -windowWidth * 0.78
@@ -81,8 +128,7 @@
                     });
 
                     $(window).resize(function () {
-                        if ($(this).width() >= 600 && $('#nav-icon').first().hasClass('open'))
-                        {
+                        if ($(this).width() >= 600 && $('#nav-icon').first().hasClass('open')) {
                             $('#nav-icon').first().removeClass('open');
                             $('.mobile-menu').animate({
                                 width: 0
@@ -92,16 +138,37 @@
                             }, 200);
                         }
 
-                        if ($('#nav-icon').first().hasClass('open'))
-                        {
-                            var windowWidth = $(window).width();                      
-                            $('.mobile-menu').width(windowWidth*0.78);
+                        if ($('#nav-icon').first().hasClass('open')) {
+                            var windowWidth = $(window).width();
+                            $('.mobile-menu').width(windowWidth * 0.78);
                             $('body').animate({
-                            left: -windowWidth * 0.78
+                                left: -windowWidth * 0.78
                             }, 0);
 
                         }
- 
+
+                         @{
+                            if (controllerName == "Work")
+                            {
+
+                                <text>
+                                   $('#menu-ckecked').css('left', $('#menu-item-Work').offset().left);
+                                </text>
+                            }
+                            else if (controllerName == "Contacts")
+                            {
+                                <text>
+                                     $('#menu-ckecked').css('left', $('#menu-item-Contacts').offset().left);
+                        </text>
+                            }
+                            else if (controllerName == "Blog")
+                            {
+                                <text>
+                                    $('#menu-ckecked').css('left', $('#menu-item-Blog').offset().left);
+                                </text>
+                            }
+                        }
+
                     });
 
                 });

@@ -2,19 +2,6 @@
     <link type="text/css" rel="stylesheet" href="~/Content/Home/HomeIndex.css" />
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
-<script type="text/javascript">
-    function imgLoaded(img) {
-        $(img).css('opacity', '1');
-
-        setTimeout(function () {
-            $('.scale').each(function (index, element) {
-                setTimeout(function () {
-                    $(element).css('opacity', '1');
-                }, 100 * index);
-            });
-        }, 700);
-    };
-</script>
 
 <div class="buttonsContainer">
     <div class="buttonContainer scale">
@@ -26,39 +13,83 @@
     <div class="buttonContainer scale">
         <i class="fa fa-envelope-o" aria-hidden="true" style="font-size:24px;"></i>
     </div>
-    @*<div class="buttonContainer">
-        <div style="font-size:24px; background-image:url('../Content/Images/shatterstockLogo.png'); background-size:cover;">
-        <div style="width:32px; height:35px; background-color:blue; background-size:cover;">
-            <img src="~/Content/Images/shatterstockLogo.png" style="width:100%; height:100%">
-        </div>
-        <i class="fa" style="font-size:24px; height:35px"><img src="~/Content/Images/shatterstockLogo.png" style="width:100%; height:100%"></i>
-    </div>*@
     <img class="scale" src="~/Content/Images/shatterstockLogo.png" style="width:32px; height:35px; margin-top:-10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); border-radius:3px;">
 </div>
 
+<div class="mainImageContainer">
+    <img id="mainImage" src="~/Content/Images/HomeMainImage.jpg" alt="image cant be loaded">
+</div>
+
 <div class="row photoAndDescription">
-    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3 imageContainer">
-        <img id="myPfoto" src="~/Content/Images/picture.gif" alt="image cant be loaded" onload="imgLoaded(this)">
+    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 photoContainer column">
+        <img id="myPfoto" src="~/Content/Images/Photo.jpg" alt="image cant be loaded">
     </div>
-    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9 textContainer">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 column textContainer">
         <div class="text">
-            Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
-            Facebook and Shatterstock.
+            <p>Hi</p>
+            @*Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock.*@
+            <p>I'm graphic disagner and illustrator. You can find my portfolio on  this site</p>
+            <p>Feel free to write me in case asd as d. Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock</p>
+            <p>Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock.</p>
         </div>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 image1Container column">
+        <img id="image1" src="~/Content/Images/HomeImage1.jpg" alt="image cant be loaded">
     </div>
 </div>
 
+@*<script type="text/javascript">
+    function imgLoaded(img) {
+        $(img).css('opacity', '1');
+
+        setTimeout(function () {
+            $('.scale').each(function (index, element) {
+                setTimeout(function () {
+                    $(element).css('opacity', '1');
+                }, 100 * index);
+            });
+        }, 700);
+    };
+</script>*@
 
     <script type="text/javascript">
+
+        var mainImage = document.getElementById("mainImage");
+        mainImage.addEventListener("load", showImg(), false);
+        function showImg() {
+            //$('#mainImage').css('opacity', '1');
+            $('#mainImage').animate({
+                'opacity': '1'
+            }, 700);
+        };
+
+        $(window).on('load', function () {
+            setTimeout(function () {
+                $('.scale').each(function (index, element) {
+                    setTimeout(function () {
+                        $(element).css('opacity', '1');
+                    }, 100 * index);
+                });
+            }, 700);
+        });
+
         $(document).ready(function () {
 
-            //$('.scale').each(function (index, element) {
-            //    setTimeout(function () {
-            //        $(element).css('opacity', '1');
-            //    }, 100 * index);
-            //});
-            //$('.buttonContainer').bind('click', function () {
-            //    alert('dd');
+            //$("#mainImage").one("load", function () {
+            //    alert('s')
+            //})
+
+            //$('.photoAndDescription').each(function () {
+            //    var highestBox = 0;
+            //    $('.column', this).each(function () {
+            //        if ($(this).height() > highestBox) {
+            //            highestBox = $(this).height();
+            //        }
+            //    });
+            //    $('.column', this).height(highestBox);
             //});
         });
     </script>
