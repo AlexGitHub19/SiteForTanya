@@ -12,6 +12,7 @@ using System.Drawing.Drawing2D;
 using SiteForTanya.WEB.Models.WorkViewModels;
 using SiteForTanya.Models;
 using SiteForTanya.DAL.EntityFramework;
+using System.Web;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -150,13 +151,25 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult AddBlog(string blogName, string blogShortDescription, string blogText)
+        public ActionResult AddBlog(string blogName, string blogShortDescription, string blogText, HttpPostedFileBase inputImage)
         {
             try
             {
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
                 BlogEntity blogEntity = new BlogEntity { Name = blogName.Trim(), Text = blogText, ShortDescription = blogShortDescription, AddingTime = DateTime.Now };
                 blogRepository.Create(blogEntity);
+
+                string fileName = null;
+                if (blogEntity.Id != 0)
+                {
+                    fileName = blogEntity.Id + inputImage.FileName.Substring(inputImage.FileName.LastIndexOf('.'));
+                    inputImage.SaveAs(Server.MapPath("~/Content/Images/BlogImages/" + fileName));
+                }
+
+                BlogEntity savedBlogItem = blogRepository.GetList().First(b => b.Id == blogEntity.Id);
+                savedBlogItem.ImageName = fileName;
+                blogRepository.Update(savedBlogItem);
+
 
                 ViewBag.Text = "Blog item is saved!";
                 ViewBag.Title = "Info";
@@ -170,13 +183,13 @@ namespace SiteForTanya.WEB.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult ChangeBlog(string blogName)
+        public ActionResult ChangeBlog(int id)
         {
             try
             {
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
-                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == blogName);
-                ViewBag.Title = "Admin Change Blog " + blogName;
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Id == id);
+                ViewBag.Title = "Admin Change Blog " + blogEntity.Name;
                 return View(blogEntity);
             }
             catch (Exception ex)
@@ -188,14 +201,23 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveChangingBlog(string Name, string shortDescription, string blogText)
+        public ActionResult SaveChangingBlog(int id, string blogName, string shortDescription, string blogText, HttpPostedFileBase inputImage)
         {
             try
             {
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
-                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Name == Name);
+                BlogEntity blogEntity = blogRepository.GetList().First(b => b.Id == id);
+                blogEntity.Name = blogName;
                 blogEntity.Text = blogText;
                 blogEntity.ShortDescription = shortDescription;
+
+                if (inputImage != null)
+                {
+                    string fileName = blogEntity.Id + inputImage.FileName.Substring(inputImage.FileName.LastIndexOf('.'));
+                    inputImage.SaveAs(Server.MapPath("~/Content/Images/BlogImages/" + fileName));
+                    blogEntity.ImageName = fileName;
+                }
+
                 blogRepository.Update(blogEntity);
 
                 ViewBag.Text = "Blog item is changed!";

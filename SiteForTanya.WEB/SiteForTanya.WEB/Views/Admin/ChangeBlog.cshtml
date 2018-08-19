@@ -3,30 +3,50 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @section scripts {
-    
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddBlog.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
 
-@using (Html.BeginForm("SaveChangingBlog", "Admin", FormMethod.Post))
+<div id="bacgroundColorContainer">Change blog item</div>
+
+@using (Html.BeginForm("SaveChangingBlog", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    <input id="Name" name="Name" type="hidden" autocomplete="off" class="form-control blogInfoInput">
-    <h2>@Model.Name</h2>
+
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div id="imageContainer">
+        <img id="blogImage" class="image" src="~/Content/Images/BlogImages/@Model.ImageName" />
+        <input id="inputImage" name="inputImage" type="file" style="display:none" />
+        <div id="imageblackout">
+            <i id="downloadImageBtnAfterAddingImage" class="fa fa-picture-o fa-lg downloadImageBtnAfterAddingImage" style="font-size:30px;" aria-hidden="true"></i>
+        </div>
+    </div>
+
+    <div class="row blogInfoRow">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <label id="blogNameLabel" class="blogInfolabel">Name: </label>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+            <input id="blogName" name="blogName" type="text" autocomplete="off" class="form-control blogInfoInput" value="@Model.Name">
+        </div>
+    </div>
 
     <div class="row blogInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
             <label id="blogShortDescriptionLabel" class="blogInfolabel">Description: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea id="ShortDescription" name="ShortDescription" rows="2" ro class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off">@Model.ShortDescription</textarea>
+            <textarea id="ShortDescription" name="shortDescription" rows="2" ro class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off">@Model.ShortDescription</textarea>
         </div>
     </div>
 
     <div class="row blogInfoRow">
         <div>
-            <label id="blogTextLabel" class="blogInfolabel">Text: </label>
+            <label id="blogTextLabel">Text: </label>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <textarea id="Text" name="Text" rows="20" class="form-control blogInfoInput" placeholder="Enter blog item Text" autocomplete="off">@Model.Text</textarea>
+            <textarea id="text" name="blogText" rows="20" class="form-control" placeholder="Enter blog item Text" autocomplete="off">@Model.Text</textarea>
         </div>
     </div>
 
@@ -36,18 +56,39 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#imageblackout').css('display', 'block');
+
+        $('#imageContainer').on('click', '.downloadImageBtnAfterAddingImage', function (e) {
+            $("#inputImage").click();
+        });
+
+        $('#inputImage').change(function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blogImage').attr('src', e.target.result);;
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        });
+
         $('#saveButton').on('click', function (e) {
 
-            if ($('#Text').val() == '') {
+            if ($('#text').val() == '') {
                 e.preventDefault();
                 alert("Blog text can't be empty!");
                 return;
             }
-            else if ($('#ShortDescription').val() == '') {
+            else if ($('#shortDescription').val() == '') {
                 e.preventDefault();
-                alert("Blog shprt description can't be empty!");
+                alert("Blog short description can't be empty!");
                 return;
-            }               
+            }
+            else if ($('#blogName').val() == '') {
+                e.preventDefault();
+                alert("Blog name can't be empty!");
+                return;
+            }
         });
 
     });

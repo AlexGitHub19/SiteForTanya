@@ -79,6 +79,8 @@
                             '<div class="itemName"><span>' + result.BlogInfos[i].Name + '</span></div>' +
                             '<div class="shortDescription"><span>' + result.BlogInfos[i].ShortDescription + '</span></div>' +
                             '<i id="deleteBlogItemBtn-' + result.BlogInfos[i].Id + '" class="fa fa-trash-o deleteBlogItemBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                            '<i id="changeBlogBtn-' + result.BlogInfos[i].Id + '" class="fa fa-cog changeBlogBtn" aria-hidden="true" style="font-size:23px;"></i>' +
+                            '<a id="hiddenLink-' + result.BlogInfos[i].Id + '" href="/Admin/ChangeBlog?id=' + result.BlogInfos[i].Id + '" class="hiddenLink"></a>' +
                         '</div></a>';
             }
             
@@ -217,6 +219,16 @@
                 }
             });  
         })
+
+        $('#blogItemsContainer').on('click', '.changeBlogBtn', function (e) {
+            var id = $(this).attr('id');
+            var hyphenId = id.indexOf('-');
+            var bloglId = id.substring(hyphenId + 1);
+
+            var link = $('[id="hiddenLink-' + bloglId + '"]');
+            link[0].click();
+            e.preventDefault();
+        });
 
         function getAntiForgeryToken() {
             return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();

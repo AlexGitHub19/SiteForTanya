@@ -6,15 +6,41 @@
     margin-top:20px;
 }
 
+.blogItemContainer {
+    position: relative;
+    display: none;
+    margin-bottom:20px;
+    background-color: var(--secondColor);
+}
+
 .deleteBlogItemBtn {
     position: absolute;
     top: 20px;
     right: -30px;
     cursor: pointer;
 }
+
+.deleteBlogItemBtn {
+    position: absolute;
+    top: 20px;
+    right: -30px;
+    cursor: pointer;
+}
+
+.changeBlogBtn {
+    position: absolute;
+    top: 20px;
+    right: -60px;
+    cursor: pointer;
+}
+
 #blogItemsContainer {
 
     padding-left:20px;
-    padding-right:50px;
+    padding-right:70px;
 
+}
+
+.hiddenLink {
+    display: none;
 }

@@ -4,13 +4,25 @@
 
 @section scripts {
     <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminAddBlog.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
 
 <div id="bacgroundColorContainer">Add blog item</div>
 
-@using (Html.BeginForm("AddBlog", "Admin", FormMethod.Post))
+@using (Html.BeginForm("AddBlog", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
+
+    <div id="imageContainer">
+        <img id="blogImage" class="image" />
+        <input id="inputImage" name="inputImage" type="file" style="display:none" />
+        <label>Choose blog image: </label>
+        <i id="downloaImageBtnBeforeAdding" class="fa fa-picture-o fa-lg downloaImageBtnBeforeAdding" style="font-size:30px;" aria-hidden="true"></i>
+        <label> it will be resized to 300*450 px</label>
+        <div id="imageblackout">
+            <i id="downloadImageBtnAfterAddingImage" class="fa fa-picture-o fa-lg downloadImageBtnAfterAddingImage" style="font-size:30px;" aria-hidden="true"></i>
+        </div>
+    </div>
 
     <div class="row blogInfoRow">
         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -26,7 +38,7 @@
             <label id="blogShortDescriptionLabel" class="blogInfolabel">Enter short description: </label>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-            <textarea id="blogShortDescription" name="blogShortDescription" rows="2" class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off"></textarea>
+            <textarea id="blogShortDescription" name="blogShortDescription" rows="3" class="form-control blogInfoInput" placeholder="Enter blog short description" autocomplete="off"></textarea>
         </div>
     </div>
 
@@ -46,7 +58,35 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#downloaImageBtnBeforeAdding').click(function (e) {
+            $("#inputImage").click();
+        });
+
+        $('#imageContainer').on('click', '.downloadImageBtnAfterAddingImage', function (e) {
+            $("#inputImage").click();
+        });
+
+        $('#inputImage').change(function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#blogImage').attr('src', e.target.result);
+                $('#blogImage').addClass('srcChanged');
+                $('#imageContainer > label').remove();
+                $('#imageContainer > #downloaImageBtnBeforeAdding').remove();
+                $('#imageContainer > #imageblackout').css('display', 'block');
+            }
+
+            reader.readAsDataURL(this.files[0]);
+        });
+
         $('#saveButton').on('click', function (e) {
+
+            if ($('#blogImage').attr('src') == undefined) {
+                alert('please choose image!');
+                e.preventDefault();
+                return;
+            }
 
             var blogName = $('#blogName').val();
             if (blogName == '') {

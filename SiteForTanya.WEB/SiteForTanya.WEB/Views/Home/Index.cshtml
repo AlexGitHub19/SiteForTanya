@@ -3,28 +3,15 @@
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
 
-<div class="buttonsContainer">
-    <div class="buttonContainer scale">
-        <i class="fa fa-facebook" aria-hidden="true" style="font-size:24px;"></i>
-    </div>
-    <div class="buttonContainer scale">
-        <i class="fa fa-instagram" aria-hidden="true" style="font-size:24px;"></i>
-    </div>
-    <div class="buttonContainer scale">
-        <i class="fa fa-envelope-o" aria-hidden="true" style="font-size:24px;"></i>
-    </div>
-    <img class="scale" src="~/Content/Images/shatterstockLogo.png" style="width:32px; height:35px; margin-top:-10px; box-shadow: 0 0 10px rgba(0,0,0,0.5); border-radius:3px;">
-</div>
-
 <div class="mainImageContainer">
-    <img id="mainImage" src="~/Content/Images/HomeMainImage.jpg" alt="image cant be loaded">
+    <img id="mainImage" src="~/Content/Images/MainImageLarge.jpg" alt="image cant be loaded">
 </div>
 
 <div class="row photoAndDescription">
-    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 photoContainer column">
-        <img id="myPfoto" src="~/Content/Images/Photo.jpg" alt="image cant be loaded">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 photoContainer">
+        <img id="pfoto" src="~/Content/Images/Photo.jpg" alt="image cant be loaded">
     </div>
-    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 column textContainer">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 textContainer">
         <div class="text">
             <p>Hi</p>
             @*Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
@@ -35,25 +22,30 @@
             <p>Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
             Facebook and Shatterstock.</p>
         </div>
+        <div class="buttonsContainer">
+            <img class="scale" src="~/Content/Images/instagramLogo.jpg">
+            <img class="scale" src="~/Content/Images/FacebookLogo.jpg">
+            <img class="scale" src="~/Content/Images/CreativeMarketLogo.jpg">
+        </div>
     </div>
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 image1Container column">
-        <img id="image1" src="~/Content/Images/HomeImage1.jpg" alt="image cant be loaded">
+    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 cactusImageContainer">
+        <img id="cactusImage" src="~/Content/Images/Cactus.jpg" alt="image cant be loaded">
     </div>
 </div>
 
 @*<script type="text/javascript">
-    function imgLoaded(img) {
-        $(img).css('opacity', '1');
+        function imgLoaded(img) {
+            $(img).css('opacity', '1');
 
-        setTimeout(function () {
-            $('.scale').each(function (index, element) {
-                setTimeout(function () {
-                    $(element).css('opacity', '1');
-                }, 100 * index);
-            });
-        }, 700);
-    };
-</script>*@
+            setTimeout(function () {
+                $('.scale').each(function (index, element) {
+                    setTimeout(function () {
+                        $(element).css('opacity', '1');
+                    }, 100 * index);
+                });
+            }, 700);
+        };
+    </script>*@
 
     <script type="text/javascript">
 
@@ -63,18 +55,28 @@
             //$('#mainImage').css('opacity', '1');
             $('#mainImage').animate({
                 'opacity': '1'
-            }, 700);
+            }, 700, function () {
+                $('.photoAndDescription').animate({
+                    'opacity': '1'
+                }, 400, function () {
+                    $('.scale').each(function (index, element) {
+                        setTimeout(function () {
+                            $(element).css('opacity', '1');
+                        }, 100 * index);
+                    });
+                });
+            });
         };
 
-        $(window).on('load', function () {
-            setTimeout(function () {
-                $('.scale').each(function (index, element) {
-                    setTimeout(function () {
-                        $(element).css('opacity', '1');
-                    }, 100 * index);
-                });
-            }, 700);
-        });
+        //$(window).on('load', function () {
+        //    setTimeout(function () {
+        //        $('.scale').each(function (index, element) {
+        //            setTimeout(function () {
+        //                $(element).css('opacity', '1');
+        //            }, 100 * index);
+        //        });
+        //    }, 700);
+        //});
 
         $(document).ready(function () {
 

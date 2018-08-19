@@ -1,16 +1,29 @@
 ﻿.blogItemContainer {
-    position: relative;
     display: none;
     margin-bottom:20px;
-    width:unset;
-    background-color: var(--secondColor);
-    /*border: solid;*/
-    border-width:1px;
-    border-radius:5px; 
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left:10px;
-    padding-right:10px;
+}
+
+.image {
+    width: 230px;
+    height: 150px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.blogTextContainer {
+    display: inline-block;
+    vertical-align: top;
+    height: 150px;
+    margin-left: 50px;
+    margin-right: 20px;
+    max-width:700px;
+    position: relative;
+}
+
+.imageContainer {
+    display: inline-block;
+    vertical-align: top;
+    height: 150px;
+    margin-left: 100px;
 }
 
 #loadingAnimation {
@@ -22,21 +35,35 @@
 #blogItemsContainer {
     margin-top: 20px;
     margin-bottom:10px;
-    padding-left:20px;
-    padding-right:20px;
+    /*padding-left:20px;
+    padding-right:20px;*/
     text-align: left;
 }
 
 .itemName span{
     font-size:25px;
-    border-bottom:solid;
+    /*border-bottom:solid;
     border-bottom-width:2px;
-    border-bottom-color:  var(--thirdColor); 
+    border-bottom-color:  var(--thirdColor);*/ 
 }
 
 /*.shortDescription span{
-    color: var(--thirdColor); 
+    max-height: 110px;
 }*/
+
+.shortDescription {
+    overflow: hidden;
+    max-height:92px;
+    padding-top: 10px;
+}
+
+.dateContainer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: var(--thirdColor);
+}
+
 
 a {
   color: black; 
@@ -49,6 +76,53 @@ a:focus {
   text-decoration: none;
 }
 
+@media (max-width:1120px) {
+
+    .blogTextContainer {
+        max-width:500px;
+    }
+}
+
+@media (max-width:980px) {
+
+    .imageContainer {
+     margin-left: 70px;
+    }
+}
+
+@media (max-width:930px) {
+
+    /*.blogTextContainer {
+        max-width:500px;
+    }*/
+
+    .imageContainer {
+     margin-left: 50px;
+    }
+}
+
+@media (max-width:880px) {
+
+    .blogTextContainer {
+        margin-left:20px;
+    }
+
+    .imageContainer {
+     margin-left: 20px;
+    }
+}
+@media (max-width:807px) {
+
+    .blogTextContainer {
+        max-width:760px;
+    }
+
+    .imageContainer {
+        display: none;
+    }
+}
+
+
 @media (max-width:600px) {
 
    #addBlogContainer {
@@ -57,6 +131,10 @@ a:focus {
 
    .itemName span{
         font-size:20px;
+    }
+
+   .shortDescription {
+        font-size:12px;
     }
 }
 
@@ -67,3 +145,10 @@ a:focus {
         margin-bottom: 80px;
     }
 }
+
+/*@media (max-width:450px) {
+
+   .shortDescription {
+        font-size:12px;
+    }
+}*/

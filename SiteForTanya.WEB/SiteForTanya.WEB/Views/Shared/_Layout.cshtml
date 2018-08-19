@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>TP - @ViewBag.Title</title>
     <link rel="icon" type="image/png" href="~/Content/Images/icons8-google-64.png" />
     @*<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />*@
     @Styles.Render("~/Content/css")
@@ -61,11 +61,30 @@
         @RenderBody()
     </div>
             <script>
+                //$(document.body).overflow(function () {
+                //    alert('Hi I am bound to the body!');
+                //});
+
+                //$(document.body).bind('overflow', function () {
+                //    alert('Привет мир!');
+                //});
+
+                //document.body.addEventListener('overflow', function () {
+                //    console.log('scollbar is visible');
+                //});
+
+                //document.body.addEventListener('overflow', function () {
+                //    console.log('scollbar is invisible')
+                //}, true);
+
+                //document.body.addEventListener('underflow', function () {
+                //    console.log('scollbar is invisible');
+                //});
                 //$('.menu-item-logotip').ready(function () {
                 //    alert('s');
                 //});
 
-                $(document).ready(function () {
+                $('.main-menu').ready(function () {
                     //alert('Layout');
                     //alert('document ready')
 
@@ -79,29 +98,28 @@
                         {
 
                              <text>
+                                $('#menu-ckecked').css('left', $('#menu-item-Work').offset().left);
                                 $('#menu-ckecked').animate({
-                                left: $('#menu-item-Work').offset().left
-                                }, 400, "linear");
+                                    'opacity': '1'
+                                }, 700);
                              </text>
                         }
                         else if (controllerName == "Contacts")
                         {
                              <text>
-                                $('#menu-ckecked').css('left', 'unset');
-                                $('#menu-ckecked').css('right','-23px');
+                                $('#menu-ckecked').css('left', $('#menu-item-Contacts').offset().left);
                                 $('#menu-ckecked').animate({
-                                    left: $('#menu-item-Contacts').offset().left
-                                }, 400, "linear");
+                                    'opacity': '1'
+                                }, 700);
                              </text>
                         }
                         else if (controllerName == "Blog")
                         {
                             <text>
-                                $('#menu-ckecked').css('left', 'unset');
-                                $('#menu-ckecked').css('right','-23px');
+                                $('#menu-ckecked').css('left', $('#menu-item-Blog').offset().left);
                                 $('#menu-ckecked').animate({
-                                    left: $('#menu-item-Blog').offset().left
-                                }, 400, "linear");
+                                    'opacity': '1'
+                                }, 700);
                              </text>
                         }
                     }

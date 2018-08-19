@@ -6,8 +6,6 @@
     <script src='@Url.Content("~/Scripts/PaginationElement.js")' type="text/javascript"></script>
 }
 
-<div id="bacgroundColorContainer">Blog</div>
-
 <div id="blogItemsContainer" class="clearfix"></div>
 
 <div id="pagination"></div>
@@ -62,8 +60,12 @@
             for (var i = 0; i < result.BlogInfos.length; i++)
             {
                 html += '<a href="/Blog/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><div class="blogItemContainer">' +
+                            '<div class="imageContainer"><img class="image" src="/Content/Images/BlogImages/' + result.BlogInfos[i].ImageName + '" /></div>' +
+                            '<div class="blogTextContainer">' + 
                             '<div class="itemName"><span>' + result.BlogInfos[i].Name + '</span></div>' +
-                            '<div class="shortDescription"><span>' + result.BlogInfos[i].ShortDescription + '</span></div>' +
+                            '<div class="shortDescription">' + result.BlogInfos[i].ShortDescription + '</div>' +
+                            '<div class="dateContainer">' + result.BlogInfos[i].Date + '</div>' +
+                            '</div>' + 
                         '</div></a>';
             }
 

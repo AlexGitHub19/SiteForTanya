@@ -13,7 +13,7 @@ namespace SiteForTanya.WEB.Models
 
             List<BlogEntity> AllBlogEntities = blogEntityRepository.GetList().ToList();
             List<BlogInfo> resultBlogEntities = AllBlogEntities.OrderByDescending(b => b.AddingTime).Skip((pageNumber - 1) * 10).Take(10).
-                Select(b => new BlogInfo { Name = b.Name, ShortDescription = b.ShortDescription, Id = b.Id}).ToList();
+                Select(b => new BlogInfo { Name = b.Name, ShortDescription = b.ShortDescription, Id = b.Id, ImageName = b.ImageName, Date = b.AddingTime.ToShortDateString()}).ToList();
             return new BlogViewModel { BlogInfos = resultBlogEntities, BlogItemsCount = AllBlogEntities.Count() };
         }
     }

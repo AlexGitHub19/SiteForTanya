@@ -238,12 +238,15 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
-    <Content Include="Content\Images\ContactImage.jpg" />
-    <Content Include="Content\Images\HomeImage1.jpg" />
-    <Content Include="Content\Images\HomeMainImage.jpg" />
+    <Content Include="Content\Images\Cactus.jpg" />
+    <Content Include="Content\Images\CreativeMarketLogo.jpg" />
+    <Content Include="Content\Images\FacebookLogo.jpg" />
     <Content Include="Content\Images\icons8-google-64.png" />
+    <Content Include="Content\Images\instagramLogo.jpg" />
+    <Content Include="Content\Images\MainImageLarge.jpg" />
+    <Content Include="Content\Images\MainImageLittle.jpg" />
     <Content Include="Content\Images\Photo.jpg" />
-    <Content Include="Content\Images\shatterstockLogo.png" />
+    <Content Include="Content\Images\SearchImage.jpg" />
     <Content Include="Content\Images\WorkProjectsImage.jpg" />
     <Content Include="Content\Images\WorkSingleImages.jpg" />
     <Content Include="Content\Layout.css" />
@@ -373,6 +376,7 @@
     <Folder Include="Content\Account\" />
     <Folder Include="Content\Blog\" />
     <Folder Include="Content\Fonts\" />
+    <Folder Include="Content\Images\BlogImages\" />
     <Folder Include="Content\Images\Images\" />
     <Folder Include="Content\Images\Sets\" />
     <Folder Include="Content\Images\Temp\" />
