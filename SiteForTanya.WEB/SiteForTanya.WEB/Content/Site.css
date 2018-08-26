@@ -39,8 +39,8 @@ body {
 }
 
 .form-control:focus {
-        border:1px solid #ccc3a1;
-        box-shadow:0 0 10px #ccc3a1;
+        border:1px solid #b1f1de;
+        box-shadow:0 0 10px #b1f1de;
 }
 
 

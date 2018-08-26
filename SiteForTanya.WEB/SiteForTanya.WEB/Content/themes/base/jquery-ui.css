@@ -897,7 +897,7 @@ body .ui-tooltip {
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid #c5c5c5;
+	border: 1px solid #b1f1de;
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
@@ -980,7 +980,7 @@ a.ui-button:focus {
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	background: #f4f1e4;
+	background: #b1f1de;
 	font-weight: normal;
 	color: black;
 }

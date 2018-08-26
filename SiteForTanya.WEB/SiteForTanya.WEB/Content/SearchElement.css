@@ -7,84 +7,87 @@
 
 #searchInput {
     display:inline;
-    padding-left:40px;
-    padding-right:40px;
-    border-radius:23px;
-    max-width:500px;
+    padding-left:5px;
+    padding-right:5px;
+    border-radius:3px;
+    max-width:300px;
 }
 
 #searchBtn {
-    border-radius:23px;
-    height:45px;
-    width:60px;
-    display:inline;
+    height:28px;
+    width: 28px;
+    margin-left:8px;
+    cursor:pointer;
 }
 
 #itemsCountContainer {
     display:inline-block;
+    vertical-align:top;
+    width:50px;
+    margin-top: 8px;
+    font-size: 16px;
 }
 
-.itemsCountBtn {
-    border-radius:23px;
-    height:45px;
-    width:70px;
-    font-size:16px;
+.topBtn {
+    border-bottom: 1px solid #cccccc;
+}
+
+.bottomBtn {
+    border-top: 1px solid #cccccc;
+}
+
+
+label {
+    margin-top: 7px;
+    vertical-align: top;
 }
 
 #itemsCountBtn {
     position:relative;
+    cursor: pointer;
+    color: var(--thirdColor);
 }
 
 .hiddenBtnImageCount{
-    margin-top:5px;
+    width: 50px;
+    background-color: white;
+    height: 30px;
+    padding-top:5px;
+    cursor: pointer;
 }
 
-#hiddden-ImageCount {
+.hiddenBtnImageCount:hover{
+    background-color: var(--thirdColor);
+}
+
+#hidddenItemsCount {
     position:absolute;
     z-index:100;  
     display:none;  
+    border: 1px solid #cccccc;
+    margin-top: 5px;
+    border-radius: 3px;
 }
 
 .fa-caret-down {
     position:absolute;
-    right:5px;
-     margin-top:2px;
+    right:0px;
+    margin-top:2px;
+    color: black;
 }
 
 #searchInfoContainer {
-    display:inline-block;
-}
-
-
-ul#menu, ul#menu ul{
-  list-style:none;
-  margin: 0px;
-  padding: 0px;
-  width: 250px;
-  -webkit-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
-  -moz-box-shadow:0px 0px 5px 0px rgba(50, 50, 50, 0.2);
-  box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.2);}
-ul#menu a,ul#menu span{display: block; text-decoration: none;}
-ul#menu li {margin-top: 1px;}
-ul#menu li a,ul#menu li span{
-  background: #1ba600;
-  color: #fff;
-  padding: 7px;}
-ul#menu li a:hover,ul#menu li span:hover{background: #333;}
-ul#menu li ul li a{
-  background: #eee;
-  color: #000;
-  padding-left: 20px;}
-ul#menu li ul li a:hover{background: #ddd;}
-#sd {
-    position:absolute;
-    z-index:100;
+    top:0;
+    right:60px;
+    position: absolute;
+    float:right;
+    height: 34px;
 }
 
  .ui-autocomplete {
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -96,91 +99,39 @@ ul#menu li ul li a:hover{background: #ddd;}
 }
 
 .ui-state-hover, .ui-state-active {
-    color: #ffffff;
-    text-decoration: none;
-    background-color:var(--secondColor); 
-    border-radius: 0px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    background-image: none;
     font-size:16px;
 }
 
 
 .ui-menu-item-wrapper {
-    border-radius:10px;
+    border-radius:3px;
 }
 
+@media (max-width:900px) {
+    #searchInfoContainer {
+        display:inline-block;
+        vertical-align:top;
+        top:unset;
+        right:unset;
+        position: unset;
+        float:unset;
+    }
+}
 
-
-
-@media (max-width:801px) {
+@media (max-width:592px) {
 
     #searchInput {
-        max-width:70%;
-        padding-left:15px;
-        padding-right:15px
+        max-width:calc(100% - 229px);
     }
 }
 
-@media (max-width:730px) {
+@media (max-width:490px) {
 
-    #searchInput {
-        max-width:65%;
+    #searchInfoContainer {
+        display:none;
+    }
+
+     #searchInput {
+        max-width:calc(100% - 75px);
     }
 }
-
-@media (max-width:643px) {
-
-    #searchInput {
-        max-width:60%;
-    }
-}
-
-@media (max-width:576px) {
-    #searchInput {
-        height: 30px;
-        max-width:70%;
-        font-size:14px;
-    }
-
-    #searchBtn {
-        height: 30px;
-        width:40px;
-        padding: 0px;
-    }
-
-    .itemsCountBtn {
-        height: 30px;
-        width:40px;
-        padding: 0px;
-    }
-
-    #searchInfoContainer label {
-        margin-top:10px;
-    }
-
-    .fa-caret-down {
-        right:1px;
-    }
-}
-
-@media (max-width:563px) {
-    #searchInput {
-        max-width:60%;
-    }
-}
-
-@media (max-width:451px) {
-    #searchInput {
-        max-width:80%;
-    }
-}
-
-@media (max-width:340px) {
-    #itemSeacher {
-        padding-left:10px;
-        padding-right:10px;
-    }
-}
-
