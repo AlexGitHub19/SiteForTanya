@@ -4,12 +4,7 @@
 }
 
 .main-menu {
-    z-index:5;
     background-color: white;
-    -webkit-transition: 0.3s linear;
-    -moz-transition: 0.3s linear;
-    -o-transition: 0.3s linear;
-    transition: 0.3s linear;
     margin-top:30px;
     margin-bottom:40px;
     padding-left:0px;
@@ -83,7 +78,6 @@
     width:23px;
     height:3px;
     background: var(--thirdColor);
-    z-index:10;
     opacity:0;
 }
 

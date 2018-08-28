@@ -14,8 +14,10 @@
 
 
 <script type="text/javascript">
-    $(document).ready(function () {
+    var canShowZoomedImage = false;
+    var isZoomedImageAlreadyLoaded = false;
 
+    $(document).ready(function () {
         var imageContainersData = [];
         var imageContainers = $('.imageContainer');
         imageContainers.each(function (index, element) {
@@ -88,31 +90,26 @@
 
 
         $('.body-content').on('click', '.image', function (e) {
-            $('.body-content').css('filter', 'blur(15px)');
-            $('.main-menu').css('filter', 'blur(15px)');
-            $('#nav-icon').css('filter', 'blur(15px)');
-            $('.logOff').css('filter', 'blur(15px)');
-
+            var src = $(this).attr('src');
             $('body').append('<div class="zoomContainer">' +
                     '<div class="overlay"></div>' +
                     '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
                     '<div class="zoomMenu"></div>' +
                     '<div class="zoomedImageContainer">' +
-                        '<img src="' + $(this).attr('src') + '" alt="image cant be loaded" class="zoomedImage"/>' +
+                        '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
                     '</div>' +
                 '</div>').ready(function () {
-                    setTimeout(function () {
+                    canShowZoomedImage = true;
+                    if (isZoomedImageAlreadyLoaded) {
                         $('.zoomedImage').css('transform', 'scale(1)');
-                        $('body').css('overflow', 'hidden');
+                        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
+                            $('.zoomMenu').css('opacity', '0.3');
+                            $('.resizeBtn').animate({ 'opacity': '1' });
+                            $('.closeImageBtn').animate({ 'opacity': '1' });
+                        });
+                    }
 
-                        setTimeout(function () {
-                            $('.overlay').animate({ 'opacity': '0.8' }, 600, function () {
-                                $('.zoomMenu').css('opacity', '0.3');
-                                $('.resizeBtn').animate({ 'opacity': '1' });
-                                $('.closeImageBtn').animate({ 'opacity': '1' });
-                            });
-                        }, 600);
-                    }, 300);
+                    $('body').css('overflow', 'hidden');
                 });
         });
 
@@ -155,7 +152,17 @@
             $(img).parent().fadeIn(600);          
     };
 
-
+    function zoomedImgLoaded(img) {
+        isZoomedImageAlreadyLoaded = true;
+        if (canShowZoomedImage) {
+            $('.zoomedImage').css('transform', 'scale(1)');
+            $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
+                $('.zoomMenu').css('opacity', '0.3');
+                $('.resizeBtn').animate({ 'opacity': '1' });
+                $('.closeImageBtn').animate({ 'opacity': '1' });
+            });
+        }
+    };
 
     function returnImage(elem, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow) {
         var left;
@@ -195,11 +202,6 @@
         $('.resizeBtn').remove();
         $('.closeImageBtn').remove();
 
-        $('.body-content').css('filter', 'blur(0px)');
-        $('.main-menu').css('filter', 'blur(0px)');
-        $('#nav-icon').css('filter', 'blur(0px)');
-        $('.logOff').css('filter', 'blur(0px)');
-
         $('.zoomContainer').animate({ 'opacity': '0' }, 400, function () {
             $('.zoomContainer').remove();
         });
@@ -210,7 +212,9 @@
             $('.zoomedImage').css('transform', 'scale(5)');
         }
 
-        $('body').css('overflow', 'scroll');
+        $('body').css('overflow', 'overlay');
+        canShowZoomedImage = false;
+        isZoomedImageAlreadyLoaded = false;
     }
 
     function scaleImage(element) {
