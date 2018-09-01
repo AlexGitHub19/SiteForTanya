@@ -36,7 +36,29 @@
                 url: '@Url.Action("GetBlogInfos", "Blog")',
                 data: { pageNumber: pageNumber },
                 success: function (result) {
-                    fillBlogItems(result, pageNumber);
+                    loadedBeginNumber = 0;
+                    loadedEndNumber = result.BlogInfos.length;
+                    loadedResultImageCount = result.BlogItemsCount;
+                    loadedPageNumber = pageNumber;
+                    fillBlogItems(result);
+
+                    setTimeout(showIfNotAllImagesAreLoaded, 12000);
+
+                    function showIfNotAllImagesAreLoaded() {
+                        var areNotDisplayed = false;
+                        $('#loadingAnimation').css('display', 'none');
+                        var blogItemContainers = $('.blogItemContainer');
+                        blogItemContainers.each(function (index, element) {
+                            if ($(element).css('display') == 'none') {
+                                $(element).fadeIn(600);
+                                areNotDisplayed = true;
+                            }
+                        });
+
+                        if (areNotDisplayed) {
+                            createPagination(loadedResultImageCount, loadedPageNumber);
+                        }
+                    }
                 }
             });
         }
@@ -45,7 +67,7 @@
             $('#loadingAnimation').css('display', 'block');
         }
 
-        function fillBlogItems(result, pageNumber) {
+        function fillBlogItems(result) {
             if (result.BlogItemsCount == 0) {
                 $('#loadingAnimation').css('display', 'none');
                 $('#blogItemsContainer').html('<h4 style="margin-top:50px;">No blog items are found</h4>');
@@ -60,7 +82,7 @@
             for (var i = 0; i < result.BlogInfos.length; i++)
             {
                 html += '<a href="/Blog/BlogItem?blogName=' + result.BlogInfos[i].Name + '"><div class="blogItemContainer">' +
-                            '<div class="imageContainer"><img class="image" src="/Content/Images/BlogImages/' + result.BlogInfos[i].ImageName + '" /></div>' +
+                            '<div class="imageContainer"><img class="image" src="/Content/Images/BlogImages/' + result.BlogInfos[i].ImageName + '" onload="imgLoaded(this)"/></div>' +
                             '<div class="blogTextContainer">' + 
                             '<div class="itemName"><span>' + result.BlogInfos[i].Name + '</span></div>' +
                             '<div class="shortDescription">' + result.BlogInfos[i].ShortDescription + '</div>' +
@@ -71,20 +93,7 @@
 
             $('#blogItemsContainer').html(html);
             $('#blogItemsContainer').css('text-align', 'left');
-            $('#blogItemsContainer').css('display', 'block').ready(function () {
-                var blogItems = $('.blogItemContainer');
-                $('#loadingAnimation').css('display', 'none');
-                blogItems.each(function (index, element) {
-                    if (index == blogItems.length - 1) {
-                        $(element).delay(100 * index).fadeIn(600, function () {
-                            createPagination(result.BlogItemsCount, pageNumber);
-                        });
-                    }
-                    else {
-                        $(element).delay(100 * index).fadeIn(600);
-                    }
-                });
-            });
+            $('#blogItemsContainer').css('display', 'block');;
         }
 
         $('#pagination').on('click', '.paginationBtn', function (e) {
@@ -160,15 +169,37 @@
                 }
             }
         })
-
-        function createPagination(totalSetsCount, pageNumber) {
-            var html = getPaginationHtml(totalSetsCount, 10, pageNumber)
-
-            $('#pagination').html(html);
-            $('#paginationBtn-' + pageNumber).addClass('current');
-            $('#pagination').fadeIn();
-        }
     });
+
+    function createPagination(totalSetsCount, pageNumber) {
+        var html = getPaginationHtml(totalSetsCount, 10, pageNumber)
+
+        $('#pagination').html(html);
+        $('#paginationBtn-' + pageNumber).addClass('current');
+        $('#pagination').fadeIn();
+    }
+
+    var loadedBeginNumber = 0;
+    var loadedEndNumber = 0;
+    var loadedResultImageCount = 0;
+    var loadedPageNumber = 0;
+    function imgLoaded(img) {
+        loadedBeginNumber++;
+        if (loadedBeginNumber == loadedEndNumber) {
+            var blogItemContainers = $('.blogItemContainer');
+            $('#loadingAnimation').css('display', 'none');
+            blogItemContainers.each(function (index, element) {
+                if (index == blogItemContainers.length - 1) {
+                    $(element).delay(100 * index).fadeIn(600, function () {
+                        createPagination(loadedResultImageCount, loadedPageNumber);
+                    });
+                }
+                else {
+                    $(element).delay(100 * index).fadeIn(600);
+                }
+            });
+        }
+    };
 
 </script>
 
