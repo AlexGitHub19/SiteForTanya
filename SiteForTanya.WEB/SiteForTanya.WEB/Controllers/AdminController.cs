@@ -859,7 +859,7 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePasword(string currentPassword, string newPassword)
+        public ActionResult ChangePassword(string currentPassword, string newPassword)
         {
             try
             {

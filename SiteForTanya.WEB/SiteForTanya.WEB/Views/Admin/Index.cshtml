@@ -107,7 +107,7 @@
             $('.footer').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i>');
             $.ajax({
                 type: "POST",
-                url: '@Url.Action("ChangePasword", "Admin")',
+                url: '@Url.Action("ChangePassword", "Admin")',
                 data: { __RequestVerificationToken: getAntiForgeryToken(), currentPassword: oldPassword, newPassword: newPassword },
                 success: function (result) {
                     if (result == "OK") {
@@ -126,27 +126,6 @@
         });
 
     });
-
-
-    @*function sendChangePassword(cellNumber) {
-        var file = $('#inputFile' + cellNumber)[0].files[0];
-        var tempSetNumber = $('#tempSetNumber').val();
-        if (window.FormData !== undefined) {
-
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("UploadSetImage", "Admin")',
-                contentType: false,
-                processData: false,
-                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
-                success: function (result) {
-                    $('#imageLoadingAnimation' + cellNumber).remove();
-                }
-            });
-        } else {
-            alert("Your browser doesn't allow to upload files HTML5!");
-        }
-    };*@
 
     function getAntiForgeryToken() {
         return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();

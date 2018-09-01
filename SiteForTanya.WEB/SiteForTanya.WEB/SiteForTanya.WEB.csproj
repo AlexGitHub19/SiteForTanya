@@ -193,6 +193,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\ContactsController.cs" />
@@ -370,6 +371,7 @@
     <Content Include="Views\Work\Exception.cshtml" />
     <Content Include="Views\Admin\Exceptions.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

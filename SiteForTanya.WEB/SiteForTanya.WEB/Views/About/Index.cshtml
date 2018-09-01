@@ -1,0 +1,57 @@
+﻿@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Home/HomeIndex.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+}
+
+<div class="row photoAndDescription">
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 photoContainer">
+        <img id="pfoto" src="~/Content/Images/Photo.jpg" alt="image cant be loaded">
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 textContainer">
+        <div class="text">
+            <p>Hi</p>
+            @*Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+                Facebook and Shatterstock.*@
+            <p>I'm graphic disagner and illustrator. You can find my portfolio on  this site</p>
+            <p>
+                Feel free to write me in case asd as d. Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+                Facebook and Shatterstock
+            </p>
+            <p>
+                Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+                Facebook and Shatterstock.
+            </p>
+        </div>
+        <div class="buttonsContainer">
+            <img class="scale" src="~/Content/Images/instagramLogo.jpg">
+            <img class="scale" src="~/Content/Images/FacebookLogo.jpg">
+            <img class="scale" src="~/Content/Images/CreativeMarketLogo.jpg">
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3 cactusImageContainer">
+        <img id="cactusImage" src="~/Content/Images/Cactus.jpg" alt="image cant be loaded">
+    </div>
+</div>
+
+<script type="text/javascript">
+
+        var count = 0;
+
+        document.getElementById("pfoto").addEventListener("load", imgLoaded(), false);
+        document.getElementById("cactusImage").addEventListener("load", imgLoaded(), false);
+
+        function imgLoaded() {
+            count++;
+            if (count == 2) {
+                $('.photoAndDescription').animate({
+                    'opacity': '1'
+                }, 400, function () {
+                    $('.scale').each(function (index, element) {
+                        setTimeout(function () {
+                            $(element).css('opacity', '1');
+                        }, 100 * index);
+                    });
+                });
+            }
+        };       
+</script>
