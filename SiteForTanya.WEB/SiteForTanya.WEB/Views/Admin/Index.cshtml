@@ -3,24 +3,155 @@
     Layout = Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Admin info</h2>
-<div class="temp">
-</div>
-<div class="row">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        @using (Html.BeginForm("AddSet", "Admin", FormMethod.Post))
-        {
-            <button class="my-btn btn btn-default" type="submit">Add set</button>
-        }
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-        @using (Html.BeginForm("AddImage", "Admin", FormMethod.Post))
-        {
-            <button class="my-btn btn btn-default" type="submit">Add image</button>
-        }
-    </div>
+@section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Admin/AdminIndex.css" />
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+}
+
+<h2>Statistics</h2>
+
+<h3>Will be added later</h3>
+
+<div class="tokenContainer">
+    @Html.AntiForgeryToken()
 </div>
 
+<div class="changePasswordBtnContainer">
+    <button class="my-btn btn btn-default changePasswordBtn">Change password</button>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('body').on('click', '.changePasswordBtn', function (e) {
+            $('body').append('<div class="changePasswordContainer">' +
+                                '<div class="changePasswordWindowContainer">' +
+                                    '<div class="overlay"></div>' +
+                                    '<div class="changePasswordWindow">' +
+                                        '<div class ="header">Password Changing</div>' +
+                                        '<div class ="content">' +
+                                            '<div class="row-container">' +
+                                                '<div class="labelContainer">' +
+                                                    '<label class="passwordLabel">Enter old password</label>' +
+                                                '</div>' +
+                                                '<div class="inputContainer">' +
+                                                    '<input id="oldPasswordInput" type="text" autocomplete="off" class="form-control passwordInput">' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="row-container">' +
+                                                '<div class="labelContainer">' +
+                                                    '<label class="passwordLabel">Enter new password</label>' +
+                                                '</div>' +
+                                                '<div class="inputContainer">' +
+                                                    '<input id="newPasswordInput" type="text" autocomplete="off" class="form-control passwordInput">' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="row-container">' +
+                                                '<div class="labelContainer">' +
+                                                    '<label class="passwordLabel">Confirm new password</label>' +
+                                                '</div>' +
+                                                '<div class="inputContainer">' +
+                                                    '<input id="newPasswordConfirmInput" type="text" autocomplete="off" class="form-control passwordInput">' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class ="footer"><button class="my-btn btn btn-default confirmchangePasswordBtn">Change password</button></div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>').ready(function () {
+
+                    $('.changePasswordWindow').css('transform', 'scale(1)');
+                    $('.overlay').animate({ 'opacity': '0.6' });
+                    $('body').css('overflow', 'hidden');
+                });
+        });
+
+        $('body').on('click', '.overlay', function (e) {
+            $('.changePasswordWindow').css('transform', 'scale(0)');
+            $('.changePasswordContainer').animate({ 'opacity': '0' }, 400, function () {
+                $('.changePasswordContainer').remove();
+            });
+            $('body').css('overflow', 'overlay');
+        });
+
+        $('body').on('click', '.confirmchangePasswordBtn', function (e) {
+
+            var oldPassword = $('#oldPasswordInput').val();
+            var newPassword = $('#newPasswordInput').val();
+            var newPasswordConfirm = $('#newPasswordConfirmInput').val();
+            if (oldPassword == '')
+            {
+                alert('please fill old password!');
+                e.preventDefault();
+                return;
+            }
+            else if (newPassword == '') {
+                alert('please fill new password!');
+                e.preventDefault();
+                return;
+            }
+            else if (newPasswordConfirm == '') {
+                alert('please fill new password confirmation!');
+                e.preventDefault();
+                return;
+            }
+
+            if (newPassword != newPasswordConfirm) {
+                alert('passwords should match!');
+                e.preventDefault();
+                return;
+            }
+
+            $('#loading').css('display', 'block');
+            $('.footer').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i>');
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ChangePasword", "Admin")',
+                data: { __RequestVerificationToken: getAntiForgeryToken(), currentPassword: oldPassword, newPassword: newPassword },
+                success: function (result) {
+                    if (result == "OK") {
+                        $('.footer').html('Password is changed!');
+                    }
+                    else {
+                        $('.footer').html('Fail!');
+                    }
+                },
+                error: function (result) {
+                    $('.footer').html('Server error!');
+                }
+            });
+
+
+        });
+
+    });
+
+
+    @*function sendChangePassword(cellNumber) {
+        var file = $('#inputFile' + cellNumber)[0].files[0];
+        var tempSetNumber = $('#tempSetNumber').val();
+        if (window.FormData !== undefined) {
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadSetImage", "Admin")',
+                contentType: false,
+                processData: false,
+                data: { __RequestVerificationToken: getAntiForgeryToken(), keyWords: keyWords, imagesCountOnPage: imagesCountOnPage, pageNumber: pageNumber },
+                success: function (result) {
+                    $('#imageLoadingAnimation' + cellNumber).remove();
+                }
+            });
+        } else {
+            alert("Your browser doesn't allow to upload files HTML5!");
+        }
+    };*@
+
+    function getAntiForgeryToken() {
+        return $(".tokenContainer > input[type='hidden'][name$='RequestVerificationToken']").val();
+    };
+</script>
 
 
 

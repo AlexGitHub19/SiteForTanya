@@ -13,6 +13,7 @@ using SiteForTanya.WEB.Models.WorkViewModels;
 using SiteForTanya.Models;
 using SiteForTanya.DAL.EntityFramework;
 using System.Web;
+using SiteForTanya.WEB.Models.AspNetIdentity;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -848,6 +849,28 @@ namespace SiteForTanya.WEB.Controllers
                     }
                 }
                 return Json(exceptionRepository.GetList().Where(condition).Select(e=>new {Date = e.Date.ToString(), Message = e.Mesage, StackTrace = e.StackTrace}).ToList(), JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return ProcessException(ex);
+            }
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePasword(string currentPassword, string newPassword)
+        {
+            try
+            {
+                if (ApplicationUserManager.ChangePassword(currentPassword, newPassword))
+                {
+                    return Json("OK");
+                }
+                else
+                {
+                    return Json("Fail");
+                }
             }
             catch (Exception ex)
             {
