@@ -4,11 +4,6 @@
 }
 
 @font-face {
-    font-family: BlackHawk;
-    src: url(/fonts/BlackHawk.ttf);
-}
-
-@font-face {
     font-family: insigne-Ainslie-NorReg;
     src: url(/fonts/insigne-Ainslie-NorReg.otf);
 }
@@ -39,23 +34,23 @@ body {
 }
 
 .form-control:focus {
-        border:1px solid #b1f1de;
-        box-shadow:0 0 10px #b1f1de;
+        border:1px solid #b8e1ba;
+        box-shadow:0 0 10px #b8e1ba;
 }
 
 
 h2 {
   font-size:25px;
-  font-family:insigne-Ainslie-NorReg, 'Raleway', Arial, sans-serif;
+  font-family:insigne-Ainslie-NorReg, Arial, sans-serif;
 }
 
 h3, h5{ 
   font-size:18px;
-  font-family:insigne-Ainslie-NorReg, 'Raleway', Arial, sans-serif;
+  font-family:insigne-Ainslie-NorReg, Arial, sans-serif;
 }
 
 h4 {
-    font-family:insigne-Ainslie-NorReg, 'Raleway', Arial, sans-serif;
+    font-family:insigne-Ainslie-NorReg, Arial, sans-serif;
 }
 
 input {
@@ -91,7 +86,7 @@ input {
     padding-top:10px;
     padding-bottom:10px;
     font-size: 25px;
-    font-family:insigne-Ainslie-NorReg, 'Raleway', Arial, sans-serif;
+    font-family:insigne-Ainslie-NorReg, Arial, sans-serif;
 }
 
 /*Delete*/

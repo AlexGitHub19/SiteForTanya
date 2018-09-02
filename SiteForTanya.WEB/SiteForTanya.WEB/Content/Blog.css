@@ -35,21 +35,13 @@
 #blogItemsContainer {
     margin-top: 20px;
     margin-bottom:10px;
-    /*padding-left:20px;
-    padding-right:20px;*/
     text-align: left;
 }
 
 .itemName span{
     font-size:25px;
-    /*border-bottom:solid;
-    border-bottom-width:2px;
-    border-bottom-color:  var(--thirdColor);*/ 
+ 
 }
-
-/*.shortDescription span{
-    max-height: 110px;
-}*/
 
 .shortDescription {
     overflow: hidden;
@@ -61,7 +53,7 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    color: var(--thirdColor);
+    color: #b8e1ba;
 }
 
 
@@ -145,10 +137,3 @@ a:focus {
         margin-bottom: 80px;
     }
 }
-
-/*@media (max-width:450px) {
-
-   .shortDescription {
-        font-size:12px;
-    }
-}*/

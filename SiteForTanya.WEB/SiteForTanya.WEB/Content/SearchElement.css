@@ -45,7 +45,7 @@ label {
 #itemsCountBtn {
     position:relative;
     cursor: pointer;
-    color: var(--thirdColor);
+    color: #b8e1ba;
 }
 
 .hiddenBtnImageCount{
@@ -57,7 +57,7 @@ label {
 }
 
 .hiddenBtnImageCount:hover{
-    background-color: var(--thirdColor);
+    background-color: #b8e1ba;
 }
 
 #hidddenItemsCount {
