@@ -240,12 +240,15 @@
     <Content Include="Content\Home\HomeIndex.css" />
     <Content Include="Content\Images.css" />
     <Content Include="Content\Images\Cactus.jpg" />
+    <Content Include="Content\Images\CaptionLarge.jpg" />
+    <Content Include="Content\Images\CaptionSmall.jpg" />
     <Content Include="Content\Images\CreativeMarketLogo.jpg" />
     <Content Include="Content\Images\FacebookLogo.jpg" />
     <Content Include="Content\Images\icons8-google-64.png" />
     <Content Include="Content\Images\instagramLogo.jpg" />
     <Content Include="Content\Images\MainImageLarge.jpg" />
     <Content Include="Content\Images\MainImageLittle.jpg" />
+    <Content Include="Content\Images\MainImageMiddle.jpg" />
     <Content Include="Content\Images\Photo.jpg" />
     <Content Include="Content\Images\SearchImage.jpg" />
     <Content Include="Content\Images\WorkProjectsImage.jpg" />

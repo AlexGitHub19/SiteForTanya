@@ -3,8 +3,16 @@
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
 
-<div class="mainImageContainer">
-    <img id="mainImage" src="~/Content/Images/MainImageLarge.jpg" alt="image cant be loaded">
+<div class="mainImageLargeContainer">
+    <img class="mainImage" src="~/Content/Images/MainImageLarge.jpg" alt="image cant be loaded">
+</div>
+
+<div class="mainImageMiddleContainer">
+    <img class="mainImage" src="~/Content/Images/MainImageMiddle.jpg" alt="image cant be loaded">
+</div>
+
+<div class="mainImageSmallContainer">
+    <img class="mainImage" src="~/Content/Images/MainImageLittle.jpg" alt="image cant be loaded">
 </div>
 
 <div class="row photoAndDescription">
@@ -24,7 +32,7 @@
         </div>
         <div class="buttonsContainer">
             <img class="scale" src="~/Content/Images/instagramLogo.jpg">
-            <img class="scale" src="~/Content/Images/FacebookLogo.jpg">
+            <img class="scale center-element" src="~/Content/Images/FacebookLogo.jpg">
             <img class="scale" src="~/Content/Images/CreativeMarketLogo.jpg">
         </div>
     </div>
@@ -33,27 +41,38 @@
     </div>
 </div>
 
-@*<script type="text/javascript">
-        function imgLoaded(img) {
-            $(img).css('opacity', '1');
+<div class="mobile-veiw-container">
+    <div class="mobile-text">
+        <p><img id="mobile-pfoto" src="~/Content/Images/Photo.jpg" alt="image cant be loaded">
+        <p>Hi</p>
+        @*Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock.*@
+        <p>I'm graphic disagner and illustrator. You can find my portfolio on  this site</p>
+        <p>
+            Feel free to write me in case asd as d. Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock
+        </p>
+        <p>
+            Hello, my name is Tanya Pavluchenko. I am a graphic designer. I create images, logotips... You can see my works in this site. Also to see more you can go to my account in Instagramm,
+            Facebook and Shatterstock.
+        </p>
+        </p>
+    </div>
+    <div class="mobile-buttonsContainer">
+        <img class="scale" src="~/Content/Images/instagramLogo.jpg">
+        <img class="scale center-element" src="~/Content/Images/FacebookLogo.jpg">
+        <img class="scale" src="~/Content/Images/CreativeMarketLogo.jpg">
+    </div>
+</div>
 
-            setTimeout(function () {
-                $('.scale').each(function (index, element) {
-                    setTimeout(function () {
-                        $(element).css('opacity', '1');
-                    }, 100 * index);
-                });
-            }, 700);
-        };
-    </script>*@
+<script type="text/javascript">
 
-    <script type="text/javascript">
-
-        var mainImage = document.getElementById("mainImage");
-        mainImage.addEventListener("load", showImg(), false);
-        function showImg() {
-            //$('#mainImage').css('opacity', '1');
-            $('#mainImage').animate({
+    var mainImages = document.getElementsByClassName("mainImage");
+    for (var i = 0; i < mainImages.length; i++) {
+        mainImages[i].addEventListener("load", showImg(mainImages[i]), false);
+    }
+    function showImg(elem) {
+        $(elem).animate({
                 'opacity': '1'
             }, 700, function () {
                 $('.photoAndDescription').animate({
@@ -68,30 +87,7 @@
             });
         };
 
-        //$(window).on('load', function () {
-        //    setTimeout(function () {
-        //        $('.scale').each(function (index, element) {
-        //            setTimeout(function () {
-        //                $(element).css('opacity', '1');
-        //            }, 100 * index);
-        //        });
-        //    }, 700);
+        //$(window).resize(function () {
+        //    $('#mainImage').css('opacity', '1');
         //});
-
-        $(document).ready(function () {
-
-            //$("#mainImage").one("load", function () {
-            //    alert('s')
-            //})
-
-            //$('.photoAndDescription').each(function () {
-            //    var highestBox = 0;
-            //    $('.column', this).each(function () {
-            //        if ($(this).height() > highestBox) {
-            //            highestBox = $(this).height();
-            //        }
-            //    });
-            //    $('.column', this).height(highestBox);
-            //});
-        });
     </script>
