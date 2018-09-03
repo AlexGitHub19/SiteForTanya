@@ -5,12 +5,6 @@
     display:none;
 }
 
-/*.imageContainer:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-    }*/
 
 .image {
     max-width: 100%;

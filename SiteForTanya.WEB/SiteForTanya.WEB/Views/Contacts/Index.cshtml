@@ -2,26 +2,28 @@
     <link type="text/css" rel="stylesheet" href="~/Content/Contacts/ContactsIndex.css" />
 }
 
-<div id="bacgroundColorContainer">Contacts</div>
+<div class="text">If you want to offer cooperation, ask a question or just to chat - send me a letter to this email: </div>
 
-<h3>Email: <a href="mail">nusha_tkachuk@gmail.com</a></h3>
+<h2 class="email">tetianapavliuchenko@gmail.com</h2>
 
-<h3>Instagram: <a href="instagram">Tanya instagramm</a></h3>
-<h3>Facebook: <a href="facebook">facbook/tanya.tkachuk</a></h3>
+<div class="socials">
+    <div style="font-size: 16px;"><p>Also you can find me in social networks:</p></div>
+    <div class="buttonsContainer">
+        <a href="https://www.instagram.com/tanya_pavluchenko_/" target="_blank"><img class="scale" src="~/Content/Images/instagramLogo.jpg"></a>
+        <a href="https://www.facebook.com/tanya.tkachuk.18" target="_blank"><img class="scale center-element" src="~/Content/Images/FacebookLogo.jpg"></a>
+        <a href="https://creativemarket.com/Pikovit" target="_blank"><img class="scale" src="~/Content/Images/CreativeMarketLogo.jpg"></a>
+</div>
+</div>
 
-<br />
-<h2>Feel free to cantact wiw me:)</h2>
-<h3>Email: <a href="mail">nusha_tkachuk@gmail.com</a></h3>
+<div class="imageContainer"><img class="cactusImage" src="~/Content/Images/ContactsCactus.jpg" /></div> 
 
-<h3>Instagram: <a href="instagram">Tanya instagramm</a></h3>
-<h3>Facebook: <a href="facebook">facbook/tanya.tkachuk</a></h3>
+<script>
 
-<br />
-<h2>Feel free to cantact wiw me:)</h2>
-<h3>Email: <a href="mail">nusha_tkachuk@gmail.com</a></h3>
-
-<h3>Instagram: <a href="instagram">Tanya instagramm</a></h3>
-<h3>Facebook: <a href="facebook">facbook/tanya.tkachuk</a></h3>
-
-<br />
-<h2>Feel free to cantact wiw me:)</h2>
+    $(document).ready(function () {
+        $('.scale').each(function (index, element) {
+            setTimeout(function () {
+                $(element).css('opacity', '1');
+            }, 100 * index);
+        });
+    });
+</script>
