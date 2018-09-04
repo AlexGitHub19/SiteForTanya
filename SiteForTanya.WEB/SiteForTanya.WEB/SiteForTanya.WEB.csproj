@@ -242,15 +242,16 @@
     <Content Include="Content\Images\Cactus.jpg" />
     <Content Include="Content\Images\CaptionLarge.jpg" />
     <Content Include="Content\Images\CaptionSmall.jpg" />
+    <Content Include="Content\Images\ContactsCactus.jpg" />
     <Content Include="Content\Images\CreativeMarketLogo.jpg" />
     <Content Include="Content\Images\FacebookLogo.jpg" />
-    <Content Include="Content\Images\icons8-google-64.png" />
     <Content Include="Content\Images\instagramLogo.jpg" />
     <Content Include="Content\Images\MainImageLarge.jpg" />
     <Content Include="Content\Images\MainImageLittle.jpg" />
     <Content Include="Content\Images\MainImageMiddle.jpg" />
     <Content Include="Content\Images\Photo.jpg" />
     <Content Include="Content\Images\SearchImage.jpg" />
+    <Content Include="Content\Images\siteImage.png" />
     <Content Include="Content\Images\WorkProjectsImage.jpg" />
     <Content Include="Content\Images\WorkSingleImages.jpg" />
     <Content Include="Content\Layout.css" />
@@ -319,6 +320,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\BlackHawk.ttf" />
     <Content Include="fonts\insigne-Ainslie-NorReg.otf" />
+    <None Include="Properties\PublishProfiles\tanyaSite.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -338,7 +340,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

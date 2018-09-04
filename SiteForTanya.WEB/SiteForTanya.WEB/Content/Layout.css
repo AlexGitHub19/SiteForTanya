@@ -217,7 +217,7 @@
 
 @media (max-width:425px){
     .logotip-image-large {
-        display:none;
+        max-height:30px;
     }
 
     .pageName {       
@@ -238,8 +238,8 @@
     }
 }
 
-@media (min-width:425px){
+/*@media (min-width:425px){
     .logotip-image-small {
         display: none;
     }
-}
+}*/

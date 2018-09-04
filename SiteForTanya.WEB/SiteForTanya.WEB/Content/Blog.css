@@ -1,12 +1,12 @@
 ﻿.blogItemContainer {
     display: none;
-    margin-bottom:20px;
+    margin-bottom:30px;
 }
 
 .image {
     width: 230px;
     height: 150px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(140, 120, 120, 0.38);
 }
 
 .blogTextContainer {
@@ -52,7 +52,7 @@
 .dateContainer {
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: 7px;
     color: #b8e1ba;
 }
 

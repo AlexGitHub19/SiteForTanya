@@ -80,7 +80,7 @@ input {
 /*Delete*/
 
 #bacgroundColorContainer {
-    background-color: var(--secondColor);
+    background-color: #b8e1ba;
     margin-top:20px;
     margin-bottom:20px;
     padding-top:10px;

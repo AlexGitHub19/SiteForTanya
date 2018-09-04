@@ -15,13 +15,13 @@
 .image {
     max-width: 100%;
     max-height: 150px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(140, 120, 120, 0.38);
     cursor: pointer;
 }
 
 
 #setNameContainer {
-    background-color: var(--secondColor);
+    background-color: #b8e1ba;
     margin-top:20px;
     margin-bottom:20px;
     padding-top:10px;

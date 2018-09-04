@@ -60,7 +60,7 @@
 .image {
     max-width: 100%;
     max-height: 150px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px rgba(140, 120, 120, 0.38);
     cursor: pointer;
 }
 
