@@ -112,6 +112,14 @@ a:focus {
     .imageContainer {
         display: none;
     }
+
+    .shortDescription {
+        padding-top: 0px;
+    }
+
+    .dateContainer {
+        position:unset;
+    }
 }
 
 
