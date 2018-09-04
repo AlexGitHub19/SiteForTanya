@@ -19,6 +19,7 @@
     }
 
         .main-menu ul li{
+            position: relative;
             display: inline-block;
             vertical-align: middle;
             margin-right: 60px;
@@ -58,9 +59,10 @@
          text-decoration: none;
     }
 
-#menu-ckecked {
+.menu-ckecked {
     position:absolute;
-    top:55px;
+    left:0;
+    bottom: -1px;
     width:23px;
     height:3px;
     background: #b8e1ba;
@@ -206,7 +208,7 @@
 }
 
 @media (max-width:912px){
-    .main-menu, #menu-ckecked {
+    .main-menu,  .menu-ckecked {
         display:none;
     }
 

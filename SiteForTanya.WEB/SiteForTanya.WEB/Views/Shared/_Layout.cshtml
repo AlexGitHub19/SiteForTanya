@@ -29,16 +29,16 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-menu">
             <div>
                 <ul>
-                    <li><a href="/Work" id ="menu-item-Work" class="menu-item">Work</a></li>
-                    <li><a href="/About" id ="menu-item-About" class="menu-item">About</a></li>
+                    <li><a href="/Work" id ="menu-item-Work" class="menu-item">Work</a><span class="menu-ckecked menu-ckecked-work"></span> </li>
+                    <li><a href="/About" id ="menu-item-About" class="menu-item">About</a><span class="menu-ckecked menu-ckecked-about"></span></li>
                     <li><a href="/" class="menu-item-logotip"><img src="~/Content/Images/CaptionLarge.jpg"></a></li>                    
-                    <li><a href="/Blog" id ="menu-item-Blog" class="menu-item">Blog</a></li>
-                    <li><a href="/Contacts" id ="menu-item-Contacts" class="menu-item">Contacts</a></li>
+                    <li><a href="/Blog" id ="menu-item-Blog" class="menu-item">Blog</a><span class="menu-ckecked menu-ckecked-blog"></span></li>
+                    <li><a href="/Contacts" id ="menu-item-Contacts" class="menu-item">Contacts</a><span class="menu-ckecked menu-ckecked-contacts"></span></li>
                 </ul>
             </div>                           
         </div>
     </div>
-    <span id="menu-ckecked"></span>
+    @*<span id="menu-ckecked"></span>*@
     <div class="logotip"><a href="/" class="menu-item-logotip"><img class="logotip-image-large" src="~/Content/Images/CaptionLarge.jpg"></a></div>
     <div class="pageName">illustration</div>
     <div id="nav-icon">
@@ -60,8 +60,7 @@
                         {
 
                              <text>
-                                $('#menu-ckecked').css('left', $('#menu-item-Work').offset().left);
-                                $('#menu-ckecked').animate({
+                                $('.menu-ckecked-work').animate({
                                     'opacity': '1'
                                 }, 700);
                              </text>
@@ -69,8 +68,7 @@
                         else if (controllerName == "Contacts")
                         {
                              <text>
-                                $('#menu-ckecked').css('left', $('#menu-item-Contacts').offset().left);
-                                $('#menu-ckecked').animate({
+                                $('.menu-ckecked-contacts').animate({
                                     'opacity': '1'
                                 }, 700);
                              </text>
@@ -78,8 +76,7 @@
                         else if (controllerName == "Blog")
                         {
                             <text>
-                                $('#menu-ckecked').css('left', $('#menu-item-Blog').offset().left);
-                                $('#menu-ckecked').animate({
+                                $('.menu-ckecked-blog').animate({
                                     'opacity': '1'
                                 }, 700);
                              </text>
@@ -87,8 +84,7 @@
                         else if (controllerName == "About")
                         {
                             <text>
-                                $('#menu-ckecked').css('left', $('#menu-item-About').offset().left);
-                                $('#menu-ckecked').animate({
+                                $('.menu-ckecked-about').animate({
                                     'opacity': '1'
                                 }, 700);
                              </text>
@@ -134,35 +130,7 @@
                                 left: -windowWidth * 0.78
                             }, 0);
 
-                        }
-
-                         @{
-                            if (controllerName == "Work")
-                            {
-
-                                <text>
-                                   $('#menu-ckecked').css('left', $('#menu-item-Work').offset().left);
-                                </text>
-                            }
-                            else if (controllerName == "Contacts")
-                            {
-                                <text>
-                                     $('#menu-ckecked').css('left', $('#menu-item-Contacts').offset().left);
-                                </text>
-                            }
-                            else if (controllerName == "Blog")
-                            {
-                                <text>
-                                    $('#menu-ckecked').css('left', $('#menu-item-Blog').offset().left);
-                                </text>
-                            }
-                                else if (controllerName == "About")
-                            {
-                                <text>
-                                    $('#menu-ckecked').css('left', $('#menu-item-About').offset().left);
-                                </text>
-                            }
-                        }
+                        }                       
 
                     });
 
