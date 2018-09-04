@@ -15,6 +15,13 @@
    margin-top:15px;    
 }
 
+.paginationElement {
+    display: inline-block;
+    vertical-align:central;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 #inputGoToPage {
     width: 50px;
     display: inline;
@@ -23,8 +30,8 @@
 }
 
 .paginationBtn {
-    margin-right:3px;
-    margin-left:3px;
+    margin-right:8px;
+    margin-left:8px;
 }
 
 #prevBtn {
@@ -36,8 +43,5 @@
 }
 
 .current {
-    background-color:#b8e1ba; 
+    color:#b8e1ba; 
 }
-    .current:hover {
-        background-color: #b8e1ba; 
-    }

@@ -4,36 +4,36 @@
 
     if (totalItemsCount > itemsCountOnPage)
     {
-        html += '<button id="prevBtn" class="my-btn btn"><i class="fa fa-angle-double-left" aria-hidden="true"></i></button>';
+        html += '<div id="prevBtn" class="paginationElement"><i class="prevBtn fa fa-angle-double-left" aria-hidden="true"></i></div>';
 
         var buttonsCount = getButtonsCount(totalItemsCount, itemsCountOnPage);
 
         if (buttonsCount <= 5)
         {
             for (var i = 1; i <= buttonsCount; i++) {
-                html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                html += '<div id="paginationBtn-' + i + '" class="paginationElement paginationBtn">' + i + '</div>';
             }
         }
         else
         {
             if (pageNumber <= 3) {
                 for (var i = 1; i <= 5; i++) {
-                    html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                    html += '<div id="paginationBtn-' + i + '" class="paginationElement paginationBtn">' + i + '</div>';
                 }
             }
             else if (pageNumber >= buttonsCount - 1) {
                 for (var i = buttonsCount - 4; i <= buttonsCount; i++) {
-                    html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                    html += '<div id="paginationBtn-' + i + '" class="paginationElement paginationBtn">' + i + '</div>';
                 }
             }
             else {
                 for (var i = pageNumber - 2; i <= (parseInt(pageNumber) + parseInt(2)) ; i++) {
-                    html += '<button id="paginationBtn-' + i + '" class="my-btn btn paginationBtn">' + i + '</button>';
+                    html += '<div id="paginationBtn-' + i + '" class="paginationElement paginationBtn">' + i + '</div>';
                 }
             }
         }
 
-        html += '<button id="nextBtn" class="my-btn btn"><i class="fa fa-angle-double-right" aria-hidden="true"></i></button>';
+        html += '<div id="nextBtn" class="paginationElement"><i class="fa fa-angle-double-right" aria-hidden="true"></i></div>';
         if (buttonsCount > 5) {
             html += '<div id = "goToPageContainer"><label id="gotoLabel">GO TO</label><input id="inputGoToPage" type="text" class="form-control"><label id="ofLabel">OF ' + buttonsCount + '</label></div>';
         }

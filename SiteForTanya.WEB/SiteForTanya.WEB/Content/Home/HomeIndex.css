@@ -110,7 +110,7 @@
 }
 
     .smallScale:hover {
-        -webkit-transform: scale(11);
+        -webkit-transform: scale(1);
         -moz-transform: scale(1);
         -ms-transform: scale(1);
         -o-transform: scale(1);
@@ -132,14 +132,6 @@
         -o-transform: scale(0.9);
         transform: scale(0.9);
 }
-
-/*.scale:hover{
-        -webkit-transform: scale(0.9);
-        -moz-transform: scale(1);
-        -ms-transform: scale(1);
-        -o-transform: scale(1);
-        transform: scale(0.9);
-}*/
 
 .center-element {
     margin-left: 4px;
