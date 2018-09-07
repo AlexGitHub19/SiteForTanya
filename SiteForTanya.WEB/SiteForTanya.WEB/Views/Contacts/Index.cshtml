@@ -2,20 +2,41 @@
     <link type="text/css" rel="stylesheet" href="~/Content/Contacts/ContactsIndex.css" />
 }
 
-<div class="text">If you want to offer cooperation, ask a question or just to chat - send me a letter to this email: </div>
+<div class="row content">
+    <div class="col-sm-5 col-md-5 col-lg-5 sendEmailContainer" style="text-align:center">
+        <div class="sendEmailForm">
+            <input id="name-input" type="text" class="form-control" placeholder="Name" autocomplete="off"/>
+            <input id="email-input" type="email" class="form-control" placeholder="Email" autocomplete="off"/>
+            <textarea id="message-textarea" rows="4" class="form-control" placeholder="Your message" autocomplete="off"></textarea>
+            <button id="sendBtn" class="btn" type="button">Send</button>
+            <div id="fountainG">
+                <div id="fountainG_1" class="fountainG"></div>
+                <div id="fountainG_2" class="fountainG"></div>
+                <div id="fountainG_3" class="fountainG"></div>
+                <div id="fountainG_4" class="fountainG"></div>
+                <div id="fountainG_5" class="fountainG"></div>
+                <div id="fountainG_6" class="fountainG"></div>
+                <div id="fountainG_7" class="fountainG"></div>
+                <div id="fountainG_8" class="fountainG"></div>
+            </div>
+            <p id="sucessSendingMessage">Message is send</p>
+            <p id="failSendingMessage">Fail while sending</p>
+        </div>
+    </div>
+    <div class="col-sm-7 col-md-7 col-lg-7 textContainer">
+        <p>If you want to offer cooperation, ask a question, or just to chat, feel free to get in touch.</p>
+        <p>I am always interested to hear of new opportunities.</p>
+        <p>Just fill the form belowor send a letter to email:</p>
 
-<h2 class="email">tetianapavliuchenko@gmail.com</h2>
+        <p class="email">tetianapavliuchenko@gmail.com</p>
 
-<div class="socials">
-    <div style="font-size: 16px;"><p>Also you can find me in social networks:</p></div>
-    <div class="buttonsContainer">
-        <a href="https://www.instagram.com/tanya_pavluchenko_/" target="_blank"><img class="scale normalScale" src="~/Content/Images/instagramLogo.jpg"></a>
-        <a href="https://www.facebook.com/tanya.tkachuk.18" target="_blank"><img class="scale normalScale center-element" src="~/Content/Images/FacebookLogo.jpg"></a>
-        <a href="https://creativemarket.com/Pikovit" target="_blank"><img class="scale smallScale" src="~/Content/Images/CreativeMarketLogo.jpg"></a>
+        <div class="buttonsContainer">
+            <a href="https://www.instagram.com/tanya_pavluchenko_/" target="_blank"><img class="scale normalScale" src="~/Content/Images/instagramLogo.jpg"></a>
+            <a href="https://www.facebook.com/tanya.tkachuk.18" target="_blank"><img class="scale normalScale center-element" src="~/Content/Images/FacebookLogo.jpg"></a>
+            <a href="https://creativemarket.com/Pikovit" target="_blank"><img class="scale smallScale" src="~/Content/Images/CreativeMarketLogo.jpg"></a>
+        </div>
+    </div>
 </div>
-</div>
-
-<div class="imageContainer"><img class="cactusImage" src="~/Content/Images/ContactsCactus.jpg" /></div> 
 
 <script>
 
@@ -25,5 +46,61 @@
                 $(element).css('opacity', '1');
             }, 100 * index);
         });
+
+        $('#sendBtn').on('click', function (e) {
+
+            $('#sendBtn').css('display', 'none');
+            $('#fountainG').css('display', 'block');
+            var name = $('#name-input').val().trim();
+            var email = $('#email-input').val().trim();
+            var text = $('#message-textarea').val().trim();
+            if (name == '') {
+                alert('please fill name!');
+                e.preventDefault();
+                return;
+            } else if (email == '') {
+                alert('please fill email!');
+                e.preventDefault();
+                return;
+            } else if (text == '') {
+                alert('please fill text!');
+                e.preventDefault();
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("SendEmail", "Contacts")',
+                data: { name: name, email: email, text: text },
+                async: true,
+                success: function (result) {
+                    if (result.result == 'False') {
+                        $('#fountainG').css('display', 'none');
+                        $('#failSendingMessage').css('display', 'block');
+                        setTimeout(function () {
+                            $('#failSendingMessage').css('display', 'none');
+                            $('#sendBtn').css('display', 'inline-block');
+                            $('#name-input').val('');
+                            $('#email-input').val('');
+                            $('#message-textarea').val('');
+                        }, 2000);
+                    }
+                    else {
+                        $('#fountainG').css('display', 'none');
+                        $('#sucessSendingMessage').css('display', 'block');
+                        setTimeout(function () {
+                            $('#sucessSendingMessage').css('display', 'none');
+                            $('#sendBtn').css('display', 'inline-block');
+                            $('#name-input').val('');
+                            $('#email-input').val('');
+                            $('#message-textarea').val('');
+                        }, 2000);
+                    }
+                }
+            });
+
+
+        });
+
     });
 </script>

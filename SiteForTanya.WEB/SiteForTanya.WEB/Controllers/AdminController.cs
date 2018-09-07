@@ -423,24 +423,17 @@ namespace SiteForTanya.WEB.Controllers
                 string resultTags = String.Empty;
                 if (!String.IsNullOrEmpty(setTags))
                 {
-                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(';');
+                    Char[] separators = { ',', ';', ' ' };
+                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(separators);
                     for (int i = 0; i < tagsList.Length; i++)
                     {
+                        if (tagsList[i] == "")
+                        {
+                            continue;
+                        }
                         string tag = tagsList[i].Trim().ToLower();
-                        if (tag.Contains(' '))
-                        {
-                            string[] splittedTags = tag.Split(' ');
-                            for (int j = 0; j < splittedTags.Length; j++)
-                            {
-                                resultTags += splittedTags[j].Trim();
-                                resultTags += ";";
-                            }
-                        }
-                        else
-                        {
-                            resultTags += tag;
-                            resultTags += ";";
-                        }
+                        resultTags += tag;
+                        resultTags += ";";
                     }
                 }
 
@@ -506,24 +499,17 @@ namespace SiteForTanya.WEB.Controllers
                 string resultTags = String.Empty;
                 if (!String.IsNullOrEmpty(setTags))
                 {
-                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(';');
+                    Char[] separators = { ',', ';', ' ' };
+                    string[] tagsList = DeleteLastSemicolon(setTags.Trim()).Split(separators);
                     for (int i = 0; i < tagsList.Length; i++)
                     {
-                        string tag = tagsList[i].Trim().ToLower();
-                        if (tag.Contains(' '))
+                        if (tagsList[i] == "")
                         {
-                            string[] splittedTags = tag.Split(' ');
-                            for (int j = 0; j < splittedTags.Length; j++)
-                            {
-                                resultTags += splittedTags[j].Trim();
-                                resultTags += ";";
-                            }
+                            continue;
                         }
-                        else
-                        {
-                            resultTags += tag;
-                            resultTags += ";";
-                        }                                               
+                        string tag = tagsList[i].Trim().ToLower();
+                        resultTags += tag;
+                        resultTags += ";";
                     }
                 }
 
@@ -681,24 +667,17 @@ namespace SiteForTanya.WEB.Controllers
                                 if (basicTag != null)
                                 {
                                     foundTags = Encoding.Unicode.GetString(basicTag.Value).Replace("\0", string.Empty);
-                                    string[] tagsList = DeleteLastSemicolon(foundTags.Trim()).Split(';');
+                                    Char[] separators = { ',', ';', ' '};
+                                    string[] tagsList = DeleteLastSemicolon(foundTags.Trim()).Split(separators);
                                     for (int i = 0; i < tagsList.Length; i++)
                                     {
+                                        if(tagsList[i] == "")
+                                        {
+                                            continue;
+                                        }
                                         string tag = tagsList[i].Trim().ToLower();
-                                        if (tag.Contains(' '))
-                                        {
-                                            string[] splittedTags = tag.Split(' ');
-                                            for (int j = 0; j < splittedTags.Length; j++)
-                                            {
-                                                resultTags += splittedTags[j].Trim();
-                                                resultTags += ";";
-                                            }
-                                        }
-                                        else
-                                        {
-                                            resultTags += tag;
-                                            resultTags += ";";
-                                        }
+                                        resultTags += tag;
+                                        resultTags += ";";
                                     }
                                 }
                             }

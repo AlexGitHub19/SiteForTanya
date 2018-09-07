@@ -32,7 +32,7 @@
 .closeAlertBtn {
     position: absolute;
     top:0;
-    right: 0;
+    right: 15px;
     margin: 5px;
     cursor: pointer;
     z-index:100;

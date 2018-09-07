@@ -379,6 +379,7 @@
     <Content Include="Views\Admin\Exceptions.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Contacts\Exception.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,9 +8,12 @@
 .relativeClass {
     display:inline-block;
     position: relative;
-    background-color:black;
     border-radius:3px;
 }
+
+    .relativeClass:hover {
+            background-color:black;
+    }
 
 .image {
     max-width: 100%;
