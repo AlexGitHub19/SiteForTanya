@@ -11,19 +11,28 @@
     border-radius:3px;
 }
 
-    .relativeClass:hover {
-            background-color:black;
-    }
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.4s;
+    cursor: pointer;
+    border-radius: 3px;
+    -webkit-transition: opacity 0.6s;
+    -moz-transition:  opacity 0.6s;
+    -ms-transition:  opacity 0.6s;
+    -o-transition:  opacity 0.6s;
+	transition: opacity 0.6s;
+}
 
 .image {
     max-width: 100%;
     max-height:100%;
     box-shadow: 0 0 10px rgba(140, 120, 120, 0.38);
-    -webkit-transition: opacity 0.35s;
-    -moz-transition:  opacity 0.35s;
-    -ms-transition:  opacity 0.35s;
-    -o-transition:  opacity 0.35s;
-	transition: opacity 0.35s;
     border-radius:3px;
 }
 
@@ -83,7 +92,8 @@
 	transform: translate3d(0,100px,0);
 }
 
-.relativeClass:hover {
+.relativeClass:hover .overlay {
+    opacity:0.8;
     cursor:pointer;
 }
 
@@ -99,10 +109,6 @@
     -o-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
 }
-.relativeClass:hover .image {
-    opacity:0.2;
-}
-
 
 @media (max-width:500px) {
 
