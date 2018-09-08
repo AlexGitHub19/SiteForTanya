@@ -10,9 +10,11 @@
     <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <a href="~/Work/Sets" style="display:block">
             <div class="item item-left">
-                <img id="projectsImage" src="~/Content/Images/WorkProjectsImage.jpg" alt="image cant be loaded">
-                <div class="item-content">
-                    <h3 class="text">SETS</h3>
+                <img src="~/Content/Images/WorkProjectsImageLarge.jpg" class="projectsImage workProjectsImageLarge" alt="image cant be loaded">
+                <img src="~/Content/Images/WorkProjectsImageMiddle.jpg" class="projectsImage workProjectsImageMiddle" alt="image cant be loaded">
+                <img src="~/Content/Images/WorkProjectsImageSmall.jpg" class="projectsImage workProjectsImageSmall" alt="image cant be loaded">
+                <div class="item-content-sets">
+                    <h3 class="text">PRODUCTS</h3>
                 </div>
             </div>
         </a>
@@ -20,8 +22,10 @@
     <div class="no-padding col-lg-6 col-md-6 col-sm-6 col-xs-12">
         <a href="~/Work/Images" style="display:block">
             <div class="item item-right">
-                <img id="imagesImage" src="~/Content/Images/WorkSingleImages.jpg" alt="image cant be loaded">
-                <div class="item-content">
+                <img src="~/Content/Images/WorkSingleImagesLarge.jpg" class="imagesImage workSingleImagesLarge" alt="image cant be loaded">
+                <img src="~/Content/Images/WorkSingleImagesMiddle.jpg" class="imagesImage workSingleImagesMiddle" alt="image cant be loaded">
+                <img src="~/Content/Images/WorkSingleImagesSmall.jpg" class="imagesImage workSingleImagesSmall" alt="image cant be loaded">
+                <div class="item-content-images">
                     <h3 class="text">IMAGES</h3>
                 </div>
             </div>
@@ -34,29 +38,34 @@
 
     $(document).ready(function () {
 
-        var projectsImage = document.getElementById("projectsImage");
-        projectsImage.addEventListener("load", showProjectsImg(), false);
-        function showProjectsImg() {
+        var projectsImages = document.getElementsByClassName("projectsImage");
+        for (var i = 0; i < projectsImages.length; i++) {
+            projectsImages[i].addEventListener("load", showProjectsImg(projectsImages[i]), false);
+        }
+
+        function showProjectsImg(element) {
             //$('#projectsImage').css('opacity', '1');
             centerBodyContent();
-            $('#projectsImage').animate({
+            $(element).animate({
                 'opacity': '1'
             }, 700, function () {
-                $('#projectsImage+.item-content').animate({
+                $('.item-content-sets').animate({
                     'opacity': '1'
                 }, 700);
             });
         };
 
-        var imagesImage = document.getElementById("imagesImage");
-        imagesImage.addEventListener("load", showImageImg(), false);
-        function showImageImg() {
+        var imagesImages = document.getElementsByClassName("imagesImage");
+        for (var i = 0; i < imagesImages.length; i++) {
+            imagesImages[i].addEventListener("load", showImageImg(imagesImages[i]), false);
+        }
+
+        function showImageImg(element) {
             centerBodyContent();
-            //$('#imagesImage').css('opacity', '1');
-            $('#imagesImage').animate({
+            $(element).animate({
                 'opacity': '1'
             }, 700, function () {
-                $('#imagesImage+.item-content').animate({
+                $('.item-content-images').animate({
                     'opacity': '1'
                 }, 700);
             });
@@ -75,6 +84,8 @@
         //$('.body-content').css('height', bodyHeight - 25);
        // $('.item').css('height', bodyHeight - 25);
         //alert($(window).height());
+        console.log('windowHeight' + windowHeight);
+        console.log('bodyHeight' + bodyHeight);
         var windowWidth = $(window).width();
         if (windowWidth > 767) {
             var bodyContentHeight = $('.body-content').height();

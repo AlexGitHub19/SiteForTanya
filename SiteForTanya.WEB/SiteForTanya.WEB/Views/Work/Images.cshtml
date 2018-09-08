@@ -377,16 +377,14 @@
             if (isImageWidthBiggerThanWindow) {
                 axis += "x";
             }
-            if (axis != "") {
-                $(element).draggable({
-                    disabled: false,
-                    axis: axis,
-                    stop: function () {
-                        returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
-                    },
-                    scroll: false
-                });
-            }
+            $(element).draggable({
+                disabled: false,
+                axis: axis,
+                stop: function () {
+                    returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
+                },
+                scroll: false
+            });
             $(element).toggleClass('scaleClass');
             $(element).css('transform', 'scale(2)');
             $(element).css('cursor', '-webkit-grab');

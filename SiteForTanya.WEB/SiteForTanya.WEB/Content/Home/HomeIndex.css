@@ -32,11 +32,8 @@
     padding:0px;
 }
 
-.mainImageLargeContainer, .mainImageMiddleContainer, .mainImageSmallContainer {
-    width:100%;
-}
 
-.mainImageMiddleContainer, .mainImageSmallContainer {
+.mainImageXLargeContainer, .mainImageLargeContainer, .mainImageMiddleContainer, .mainImageSmallContainer {
     display: none;
 }
 
@@ -76,7 +73,7 @@
 
 #mobile-pfoto {
     height: 200px;
-    margin: 0px 10px 10px 0;
+    margin: 0px 10px 0 0;
     float: left;
 }
 
@@ -138,15 +135,19 @@
 }
 
 
-/*@media (max-width:1005px) {
-    #myPfoto {
-        height: 300px;
+@media (max-width:2000px) {
+    .mainImageLargeContainer {
+        display: block;
     }
-}*/
+
+    .mainImageSmallContainer, .mainImageMiddleContainer, .mainImageXLargeContainer {
+        display: none;
+    }
+}
+
 
 @media (max-width:1120px) {
     .cactusImageContainer {
-        /*width:100%;*/
         display: none;
     }
 
@@ -183,12 +184,12 @@
     }
 }
 
-@media (max-width:740px) {
+@media (max-width:738px) {
     .mainImageMiddleContainer {
         display: block;
     }
 
-    .mainImageLargeContainer {
+    .mainImageSmallContainer, .mainImageLargeContainer, .mainImageXLargeContainer {
         display: none;
     }
 }
@@ -203,7 +204,16 @@
         display: block;
     }
 
-    .mainImageMiddleContainer {
+    .mainImageMiddleContainer, .mainImageLargeContainer, .mainImageXLargeContainer {
         display: none;
     }
 }
+
+
+
+@media (min-width:2001px) {
+    .mainImageXLargeContainer {
+        display: block;
+    }
+}
+
