@@ -73,6 +73,7 @@
     });
 
     $(window).resize(function () {
+        console.log('resize');
         centerBodyContent();
     });
 
@@ -85,7 +86,7 @@
        // $('.item').css('height', bodyHeight - 25);
         //alert($(window).height());
         console.log('windowHeight' + windowHeight);
-        console.log('bodyHeight' + bodyHeight);
+        //console.log('bodyHeight' + bodyHeight);
         var windowWidth = $(window).width();
         if (windowWidth > 767) {
             var bodyContentHeight = $('.body-content').height();

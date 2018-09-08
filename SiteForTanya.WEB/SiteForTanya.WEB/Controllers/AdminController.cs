@@ -718,7 +718,7 @@ namespace SiteForTanya.WEB.Controllers
                                 resizedImage.Save(Server.MapPath("~/Content/Images/Images/MiddleImages/") + fileName);
                             }
 
-                            newHeight = 180;
+                            newHeight = 200;
                             newWidth = (int)(newHeight / proportion);
                             resizedImage = changeMainImageSize(savedImage.FullName, (int)newHeight, newWidth);
                             if (resizedImage != null)

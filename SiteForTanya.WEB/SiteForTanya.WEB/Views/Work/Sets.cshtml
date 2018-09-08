@@ -62,6 +62,20 @@
             });
         });
 
+        $('#itemSeacher').on('keypress', '#searchInput', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $('#pagination').fadeOut();
+                $('html').animate({
+                    scrollTop: 0
+                }, 500, function () {
+                    $('#existingSets').fadeOut(400, function () {
+                        getSetNamesFromServer(1);
+                    });
+                });
+            }
+        });
+
 
         function getSetNamesFromServer(pageNumber) {
             $('#pagination').fadeOut();

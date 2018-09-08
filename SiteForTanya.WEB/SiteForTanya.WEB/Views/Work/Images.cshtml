@@ -63,6 +63,20 @@
             });
         });
 
+        $('#itemSeacher').on('keypress', '#searchInput', function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $('#pagination').fadeOut();
+                $('html').animate({
+                    scrollTop: 0
+                }, 500, function () {
+                    $('#existingImages').fadeOut(400, function () {
+                        getImageNamesFromServer(1);
+                    });
+                });
+            }
+        });
+
         function getImageNamesFromServer(pageNumber)
         {
             $('#pagination').fadeOut();
