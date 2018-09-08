@@ -413,7 +413,11 @@ namespace SiteForTanya.WEB.Controllers
                         {
                             mainImageChanged = true;
                             mainImageName = image.Name;
-                            changeMainImageSizeAndSaveToSetFolder(setPath + "/" + image.Name, image.FullName, 300, 450);
+                            Bitmap resizedImage =  changeMainImageSizeAndSaveToSetFolder(image.FullName, 300, 450);
+                            if (resizedImage != null)
+                            {
+                                resizedImage.Save(setPath + "/" + image.Name);
+                            }
                         }
                     }
 
@@ -488,7 +492,12 @@ namespace SiteForTanya.WEB.Controllers
                     else if (fileName == "ImageMainImage")
                     {
                         mainImageName = image.Name;
-                        changeMainImageSizeAndSaveToSetFolder(setPath + "/" + image.Name, image.FullName, 300, 450);
+                        Bitmap resizedImage =  changeMainImageSizeAndSaveToSetFolder(image.FullName, 300, 450);
+                        if (resizedImage != null)
+                        {
+                            resizedImage.Save(setPath + "/" + image.Name);
+                        }
+
                     }
                 }
 
@@ -549,17 +558,19 @@ namespace SiteForTanya.WEB.Controllers
             }
         }
 
-        private void changeMainImageSizeAndSaveToSetFolder(string newPath, string tempPath, int newHeight, int newWidth)
+        private Bitmap changeMainImageSizeAndSaveToSetFolder(string tempPath, int newHeight, int newWidth)
         {
             Image image = Image.FromFile(tempPath);
+            Bitmap newImage = null;
             using (image)
             {
-                Bitmap newImage = new Bitmap(newWidth, newHeight);
+                newImage = new Bitmap(newWidth, newHeight);
                 Graphics g = Graphics.FromImage(newImage);
                 g.InterpolationMode = InterpolationMode.High;
                 g.DrawImage(image, 0, 0, newWidth, newHeight);
-                newImage.Save(newPath);
             }
+
+            return newImage;
         }
 
         [HttpPost]
