@@ -128,32 +128,21 @@
             }
 
             var html = '';
-            var count = 0;
-            while (count < result.sets.length) {
-                var endValue = count + 2;
-                if (count + 2 > result.sets.length) {
-                    endValue = result.sets.length;
-                }
-                var setArray = new Array(0);
-                for (var i = count; i < endValue; i++) {
-                    setArray.push(result.sets[i]);
-                }
-                html += '<div class="row existingItemsRow">';
-                for (var i = 0; i < setArray.length; i++) {
-                    var id = setArray[i].setName;
-                    html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 setContainer">' +
-                        '<div class="relativeClass clearfix">' +
-                        '<img src="/Content/Images/Sets/' + setArray[i].setName + '/' + setArray[i].mainImageName + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
-                        '<a href="/Admin/Set?name=' + setArray[i].setName + '"><div class ="setName"><h2>' + setArray[i].setName + '</h2><p>View Set</p></div></a>' +
-                        '<div id="setInfo-' + id + '" class ="setInfo"><i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
-                        '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i></div>' +
-                        '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:80px"></i></div>' +
-                        '</div>' +
-                        '</div>';
-                }
-                html += '</div>';
-                count += 2;
+            html += '<div class="row existingItemsRow">';
+            for (var i = 0; i < result.sets.length; i++) {
+                var id = result.sets[i].setName;
+                html += '<div id="' + id + '" class="col-xs-12 col-sm-6 col-md-6 col-lg-4 setContainer">' +
+                    '<div class="relativeClass clearfix">' +
+                    '<div class="overlay"></div>' +
+                    '<img src="/Content/Images/Sets/' + result.sets[i].setName + '/' + result.sets[i].mainImageName + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                    '<a href="/Admin/Set?name=' + result.sets[i].setName + '"><div class ="setName"><h2>' + result.sets[i].setName + '</h2><p>View Product</p></div></a>' +
+                    '<div id="setInfo-' + id + '" class ="setInfo"><i id="deleteSetBtn-' + id + '" class="fa fa-trash-o deleteSetBtn" style="font-size:23px;" aria-hidden="true"></i>' +
+                    '<i id="settingsSetBtn-' + id + '" class="fa fa-cog settingsSetBtn" aria-hidden="true" style="font-size:23px;"></i></div>' +
+                    '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:80px"></i></div>' +
+                    '</div>' +
+                    '</div>';
             }
+            html += '</div>';
             $('#existingSets').html(html);
             $('#existingSets').css('display', 'block');
         }

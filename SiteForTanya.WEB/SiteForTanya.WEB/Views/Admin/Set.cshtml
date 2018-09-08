@@ -5,7 +5,6 @@
 
 @section scripts {
     <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
-    <link type="text/css" rel="stylesheet" href="~/Content/SetShowingStyle.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 }
@@ -14,9 +13,6 @@
 
 
 <script type="text/javascript">
-    var canShowZoomedImage = false;
-    var isZoomedImageAlreadyLoaded = false;
-
     $(document).ready(function () {
         var imageContainersData = [];
         var imageContainers = $('.imageContainer');
@@ -98,19 +94,7 @@
                     '<div class="zoomedImageContainer">' +
                         '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
                     '</div>' +
-                '</div>').ready(function () {
-                    canShowZoomedImage = true;
-                    if (isZoomedImageAlreadyLoaded) {
-                        $('.zoomedImage').css('transform', 'scale(1)');
-                        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                            $('.zoomMenu').css('opacity', '0.3');
-                            $('.resizeBtn').animate({ 'opacity': '1' });
-                            $('.closeImageBtn').animate({ 'opacity': '1' });
-                        });
-                    }
-
-                    $('body').css('overflow', 'hidden');
-                });
+                '</div>');
         });
 
         $('body').on('click', '.zoomedImageContainer', function (e) {
@@ -153,15 +137,13 @@
     };
 
     function zoomedImgLoaded(img) {
-        isZoomedImageAlreadyLoaded = true;
-        if (canShowZoomedImage) {
-            $('.zoomedImage').css('transform', 'scale(1)');
-            $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                $('.zoomMenu').css('opacity', '0.3');
-                $('.resizeBtn').animate({ 'opacity': '1' });
-                $('.closeImageBtn').animate({ 'opacity': '1' });
-            });
-        }
+        $('body').css('overflow', 'hidden');
+        $('.zoomedImage').css('transform', 'scale(1)');
+        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
+            $('.zoomMenu').css('opacity', '0.3');
+            $('.resizeBtn').animate({ 'opacity': '1' });
+            $('.closeImageBtn').animate({ 'opacity': '1' });
+        });
     };
 
     function returnImage(elem, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow) {
@@ -213,8 +195,6 @@
         }
 
         $('body').css('overflow', 'overlay');
-        canShowZoomedImage = false;
-        isZoomedImageAlreadyLoaded = false;
     }
 
     function scaleImage(element) {
@@ -232,16 +212,14 @@
             if (isImageWidthBiggerThanWindow) {
                 axis += "x";
             }
-            if (axis != "") {
-                $(element).draggable({
-                    disabled: false,
-                    axis: axis,
-                    stop: function () {
-                        returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
-                    },
-                    scroll: false
-                });
-            }
+            $(element).draggable({
+                disabled: false,
+                axis: axis,
+                stop: function () {
+                    returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
+                },
+                scroll: false
+            });
             $(element).toggleClass('scaleClass');
             $(element).css('transform', 'scale(2)');
             $(element).css('cursor', '-webkit-grab');
