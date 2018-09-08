@@ -65,8 +65,6 @@
 <div id="pagination"></div>
 
 <script type="text/javascript">
-    var canShowZoomedImage = false;
-    var isZoomedImageAlreadyLoaded = false;
 
     $(document).ready(function () {
 
@@ -148,7 +146,9 @@
                 var borderClass = result.imageInfos[i].hasTags ? "" : "warningBorder";
                 var id = result.imageInfos[i].name.substring(0, result.imageInfos[i].name.indexOf('.'));
                 html += '<div id="' + id + '" class="col-xs-12 col-sm-4 col-md-3 col-lg-3 imageContainer">' +
-                    '<div class="relativeClass clearfix"><img src="/Content/Images/Images/' + result.imageInfos[i].name + '" class="image ' + borderClass + '" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                    '<div class="relativeClass clearfix">' +
+                    '<img src="/Content/Images/Images/SmallImages/' + result.imageInfos[i].name + '" class="image smallImage' + borderClass + '" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                    '<img src="/Content/Images/Images/MiddleImages/' + result.imageInfos[i].name + '" class="image middleImage' + borderClass + '" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
                     '<div id="deleteImageInfo-' + id + '" class ="deleteImageInfo"><i id="deleteImageBtn-' + id + '" class="fa fa-trash-o deleteImageBtn" style="font-size:23px;" aria-hidden="true"></i></div>' +
                     '<div id ="blackoutAnimation-' + id + '" class ="blackoutAnimation"></div>' +
                     '<div id ="deletingAnimation-' + id + '" class ="deletingAnimation"><i class="fa fa-spinner fa-spin" style="font-size:60px"></i></div>' +
@@ -318,6 +318,7 @@
                     for (var x = 0; x < files.length; x++) {
                         data.append("file" + x, files[x]);                        
                     }
+                    $('#resultInfo').html('');
                     $('#images').html('');
                     $('#images').css('display', 'none');
                     $('#loading').css('display', 'block');
@@ -414,7 +415,7 @@
 
         $('.body-content').on('click', '.blackoutAnimation', function (e) {
             var image = $(this).parent().find('img').first();
-            var src = $(image).attr('src');
+            var src = calculateSrcForLargeImage($(image).attr('src'));
 
             $('body').append('<div class="zoomContainer">' +
                     '<div class="overlay"></div>' +
@@ -423,20 +424,17 @@
                     '<div class="zoomedImageContainer">' +
                         '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
                     '</div>' +
-                '</div>').ready(function () {
-                    canShowZoomedImage = true;
-                    if (isZoomedImageAlreadyLoaded) {
-                        $('.zoomedImage').css('transform', 'scale(1)');
-                        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                            $('.zoomMenu').css('opacity', '0.3');
-                            $('.resizeBtn').animate({ 'opacity': '1' });
-                            $('.closeImageBtn').animate({ 'opacity': '1' });
-                        });
-                    }
-
-                    $('body').css('overflow', 'hidden');
-                });
+                '</div>');
         });
+
+        function calculateSrcForLargeImage(src) {
+            if (src.indexOf('SmallImage') !== -1) {
+                return src.replace('SmallImage', 'LargeImage');
+            }
+            else {
+                return src.replace('MiddleImage', 'LargeImage');
+            }
+        }
 
         $('body').on('click', '.zoomedImageContainer', function (e) {
             removeZoomContainer();
@@ -513,8 +511,6 @@
         }
 
         $('body').css('overflow', 'overlay');
-        canShowZoomedImage = false;
-        isZoomedImageAlreadyLoaded = false;
     }
 
     function scaleImage(element) {
@@ -532,16 +528,14 @@
             if (isImageWidthBiggerThanWindow) {
                 axis += "x";
             }
-            if (axis != "") {
-                $(element).draggable({
-                    disabled: false,
-                    axis: axis,
-                    stop: function () {
-                        returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
-                    },
-                    scroll: false
-                });
-            }
+            $(element).draggable({
+                disabled: false,
+                axis: axis,
+                stop: function () {
+                    returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
+                },
+                scroll: false
+            });
             $(element).toggleClass('scaleClass');
             $(element).css('transform', 'scale(2)');
             $(element).css('cursor', '-webkit-grab');
@@ -578,15 +572,13 @@
     };
 
     function zoomedImgLoaded(img) {
-        isZoomedImageAlreadyLoaded = true;
-        if (canShowZoomedImage) {
-            $('.zoomedImage').css('transform', 'scale(1)');
-            $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                $('.zoomMenu').css('opacity', '0.3');
-                $('.resizeBtn').animate({ 'opacity': '1' });
-                $('.closeImageBtn').animate({ 'opacity': '1' });
-            });
-        }
+        $('body').css('overflow', 'hidden');
+        $('.zoomedImage').css('transform', 'scale(1)');
+        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
+            $('.zoomMenu').css('opacity', '0.3');
+            $('.resizeBtn').animate({ 'opacity': '1' });
+            $('.closeImageBtn').animate({ 'opacity': '1' });
+        });
     };
 
     var buttonsCount = 0;

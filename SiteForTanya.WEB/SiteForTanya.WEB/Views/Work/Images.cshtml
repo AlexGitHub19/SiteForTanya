@@ -48,9 +48,6 @@
 
 <script type="text/javascript">
 
-    var canShowZoomedImage = false;
-    var isZoomedImageAlreadyLoaded = false;
-
     $(document).ready(function () {
 
         getImageNamesFromServer(1);
@@ -127,7 +124,8 @@
             for (var i = 0; i < result.imageInfos.length; i++) {
                 var id = result.imageInfos[i].name.substring(0, result.imageInfos[i].name.indexOf('.'));
                 html += '<div id="' + id + '" class="col-xs-12 col-sm-4 col-md-3 col-lg-3 imageContainer">' +
-                    '<img src="/Content/Images/Images/' + result.imageInfos[i].name + '" class="image" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                    '<img src="/Content/Images/Images/SmallImages/' + result.imageInfos[i].name + '" class="image smallImage" alt="image cant be loaded" onload="imgLoaded(this)"/>' +
+                    '<img src="/Content/Images/Images/MiddleImages/' + result.imageInfos[i].name + '" class="image middleImage" alt="image cant be loaded" onload="imgLoaded(this)"/>' + 
                     '</div>';
             }
             html += '</div>';
@@ -265,7 +263,7 @@
 
 
         $('.body-content').on('click', '.image', function (e) {
-            var src = $(this).attr('src');
+            var src = calculateSrcForLargeImage($(this).attr('src'));
             $('body').append('<div class="zoomContainer">' +
                     '<div class="overlay"></div>' +
                     '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
@@ -273,20 +271,17 @@
                     '<div class="zoomedImageContainer">' +
                         '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
                     '</div>' +
-                '</div>').ready(function () {
-                    canShowZoomedImage = true;
-                    if (isZoomedImageAlreadyLoaded) {
-                        $('.zoomedImage').css('transform', 'scale(1)');
-                        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                            $('.zoomMenu').css('opacity', '0.3');
-                            $('.resizeBtn').animate({ 'opacity': '1' });
-                            $('.closeImageBtn').animate({ 'opacity': '1' });
-                        });
-                    }
-
-                    $('body').css('overflow', 'hidden');
-                });
+                '</div>');
         });
+
+        function calculateSrcForLargeImage(src) {
+            if (src.indexOf('SmallImage') !== -1) {
+                return src.replace('SmallImage', 'LargeImage');
+            }
+            else {
+                return src.replace('MiddleImage', 'LargeImage');
+            }
+        }
 
         $('body').on('click', '.zoomedImageContainer', function (e) {
             removeZoomContainer();
@@ -365,8 +360,6 @@
         }
 
         $('body').css('overflow', 'overlay');
-        canShowZoomedImage = false;
-        isZoomedImageAlreadyLoaded = false;
     }
 
     function scaleImage(element) {
@@ -431,15 +424,13 @@
     };
 
     function zoomedImgLoaded(img) {
-        isZoomedImageAlreadyLoaded = true;
-        if (canShowZoomedImage) {
-            $('.zoomedImage').css('transform', 'scale(1)');
-            $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
-                $('.zoomMenu').css('opacity', '0.3');
-                $('.resizeBtn').animate({ 'opacity': '1' });
-                $('.closeImageBtn').animate({ 'opacity': '1' });
-            });
-        }
+        $('body').css('overflow', 'hidden');
+        $('.zoomedImage').css('transform', 'scale(1)');
+        $('.overlay').animate({ 'opacity': '0.9' }, 600, function () {
+            $('.zoomMenu').css('opacity', '0.3');
+            $('.resizeBtn').animate({ 'opacity': '1' });
+            $('.closeImageBtn').animate({ 'opacity': '1' });
+        });
     };
 
     var buttonsCount = 0;

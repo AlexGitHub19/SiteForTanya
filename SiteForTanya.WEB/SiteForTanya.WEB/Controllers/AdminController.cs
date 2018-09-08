@@ -413,7 +413,7 @@ namespace SiteForTanya.WEB.Controllers
                         {
                             mainImageChanged = true;
                             mainImageName = image.Name;
-                            Bitmap resizedImage =  changeMainImageSizeAndSaveToSetFolder(image.FullName, 300, 450);
+                            Bitmap resizedImage =  changeMainImageSize(image.FullName, 300, 450);
                             if (resizedImage != null)
                             {
                                 resizedImage.Save(setPath + "/" + image.Name);
@@ -492,7 +492,7 @@ namespace SiteForTanya.WEB.Controllers
                     else if (fileName == "ImageMainImage")
                     {
                         mainImageName = image.Name;
-                        Bitmap resizedImage =  changeMainImageSizeAndSaveToSetFolder(image.FullName, 300, 450);
+                        Bitmap resizedImage =  changeMainImageSize(image.FullName, 300, 450);
                         if (resizedImage != null)
                         {
                             resizedImage.Save(setPath + "/" + image.Name);
@@ -558,7 +558,7 @@ namespace SiteForTanya.WEB.Controllers
             }
         }
 
-        private Bitmap changeMainImageSizeAndSaveToSetFolder(string tempPath, int newHeight, int newWidth)
+        private Bitmap changeMainImageSize(string tempPath, int newHeight, int newWidth)
         {
             Image image = Image.FromFile(tempPath);
             Bitmap newImage = null;
@@ -653,7 +653,6 @@ namespace SiteForTanya.WEB.Controllers
                 string resultString = "Files are seccessfully uploaded";
                 string resultType = "success";
 
-                bool isImgInfoModified = false;
                 Repository<ImagesInfo> imageInfoRepository = new Repository<ImagesInfo>();
 
                 ImagesInfo imgInfo = imageInfoRepository.GetList().First();
@@ -700,16 +699,40 @@ namespace SiteForTanya.WEB.Controllers
                             }
                         }
 
-                        upload.SaveAs(Server.MapPath("~/Content/Images/Images/" + fileName));
+                        string imagePath = Server.MapPath("~/Content/Images/Images/LargeImages/" + fileName);
+                        upload.SaveAs(imagePath);
+                        imageInfoRepository.Update(imgInfo);
+
+                        FileInfo savedImage = new FileInfo(Server.MapPath("~/Content/Images/Images/LargeImages/" + fileName));
+                        if (savedImage.Exists)
+                        {
+                            Image imageFromPath = Image.FromFile(imagePath);
+                            double height = imageFromPath.Height;
+                            double width = imageFromPath.Width;
+                            double proportion = height / width;
+                            double newHeight = 600;
+                            int newWidth = (int)(newHeight / proportion);
+                            Bitmap resizedImage = changeMainImageSize(savedImage.FullName, (int)newHeight, newWidth);
+                            if (resizedImage != null)
+                            {
+                                resizedImage.Save(Server.MapPath("~/Content/Images/Images/MiddleImages/") + fileName);
+                            }
+
+                            newHeight = 180;
+                            newWidth = (int)(newHeight / proportion);
+                            resizedImage = changeMainImageSize(savedImage.FullName, (int)newHeight, newWidth);
+                            if (resizedImage != null)
+                            {
+                                resizedImage.Save(Server.MapPath("~/Content/Images/Images/SmallImages/") + fileName);
+                            }
+
+
+                        }
+
+
                         ImageEntity image = new ImageEntity { Name = fileName, Tags = resultTags != string.Empty ? DeleteLastSemicolon(resultTags) : null, AddingTime = DateTime.Now };
                         imageRepository.Create(image);
-                        isImgInfoModified = true;
                     }
-                }
-
-                if (isImgInfoModified)
-                {
-                    imageInfoRepository.Update(imgInfo);
                 }
 
                 return Json(new { type = resultType, resultString = resultString });

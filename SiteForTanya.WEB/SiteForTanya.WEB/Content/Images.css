@@ -46,6 +46,10 @@
     display:inline-block;
 }
 
+.middleImage {
+    display: none;
+}
+
 @media (max-width:767px) {
 
    .image {
@@ -60,6 +64,17 @@
 
     .imageContainer {
         height: unset;
+    }
+}
+
+@media (max-width:767px) {
+
+   .middleImage {
+        display: unset;
+    }
+
+    .smallImage {
+        display:none;
     }
 }
 
