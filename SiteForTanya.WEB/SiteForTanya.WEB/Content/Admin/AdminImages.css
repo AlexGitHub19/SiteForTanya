@@ -116,6 +116,15 @@
     box-shadow: 0 0 10px red;
 }
 
+.image {
+       -webkit-transform: unset;
+        -moz-transform: unset;
+        -ms-transform: unset;
+        -o-transform: unset;
+        transform: unset;
+        top: unset;
+    }
+
 @media (max-width:600px) {
 
    #resultInfo {
