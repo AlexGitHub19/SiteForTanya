@@ -46,9 +46,15 @@
             <label id="blogTextLabel">Text: </label>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <textarea id="text" name="blogText" rows="20" class="form-control" placeholder="Enter blog item Text" autocomplete="off">@Model.Text</textarea>
+            <textarea id="blogText" name="blogText" rows="20" class="form-control" placeholder="Enter blog item Text" autocomplete="off">@Model.Text</textarea>
         </div>
     </div>
+
+    <div id="resultViewContainer">
+        <div id="resultView"></div>
+    </div>
+
+    <input id="resultHtml" type="text" name="resultHtml" />
 
     <input id="saveButton" class="my-btn btn" type="submit" value="Save blog item" />
 
@@ -56,6 +62,13 @@
 
 <script>
     $(document).ready(function () {
+
+        $('#resultView').html($('#blogText').val())
+
+        $('.body-content').on('input', '#blogText', function (e) {
+            var html = $(this).val();
+            $('#resultView').html(html);
+        });
 
         $('#imageblackout').css('display', 'block');
 
@@ -74,7 +87,7 @@
 
         $('#saveButton').on('click', function (e) {
 
-            if ($('#text').val() == '') {
+            if ($('#blogText').val() == '') {
                 e.preventDefault();
                 alert("Blog text can't be empty!");
                 return;
@@ -89,7 +102,15 @@
                 alert("Blog name can't be empty!");
                 return;
             }
+
+            var html = $('#blogText').val();
+            var encodedHtml = encodeHtml(html);
+            $('#resultHtml').val(encodedHtml);
         });
 
     });
+
+    function encodeHtml(string) {
+        return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    };
 </script>

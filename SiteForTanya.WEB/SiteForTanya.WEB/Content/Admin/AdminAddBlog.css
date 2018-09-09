@@ -64,6 +64,23 @@
     cursor: pointer;
 }
 
+#resultViewContainer {
+    width: 100%;
+    margin-top: 40px;
+    padding: 0 15px 30px 15px;
+}
+
+#resultView {
+    width: 100%;
+    min-height:100px;
+    box-shadow: 0 0 10px rgba(140, 120, 120, 0.38);
+    text-align: start;
+}
+
+#resultHtml {
+    display: none;
+}
+
 @media (max-width:768px){
     .blogInfolabel {
         text-align: center;

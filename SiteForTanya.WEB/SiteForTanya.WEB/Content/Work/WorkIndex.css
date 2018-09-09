@@ -60,6 +60,7 @@
 
 @media (max-width:2000px) {
     .workProjectsImageMiddle, .workSingleImagesMiddle {
+        display: block;
         display: unset;
     }
 
@@ -70,6 +71,7 @@
 
 @media (max-width:1460px) {
     .workProjectsImageSmall, .workSingleImagesSmall {
+        display: block;
         display: unset;
     }
 
@@ -102,6 +104,7 @@
 
 @media (min-width:2001px) {
     .workProjectsImageLarge, .workSingleImagesLarge {
+        display: block;
         display: unset;
     }
 

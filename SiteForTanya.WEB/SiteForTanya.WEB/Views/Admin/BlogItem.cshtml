@@ -9,4 +9,6 @@
 
 <div id="bacgroundColorContainer">@Model.Name</div>
 
-<div class="blogText">@Model.Text</div>
+<div id="blogText">
+    @Html.Raw(Model.Text)
+</div>

@@ -154,12 +154,12 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult AddBlog(string blogName, string blogShortDescription, string blogText, HttpPostedFileBase inputImage)
+        public ActionResult AddBlog(string blogName, string blogShortDescription, string resultHtml, HttpPostedFileBase inputImage)
         {
             try
             {
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
-                BlogEntity blogEntity = new BlogEntity { Name = blogName.Trim(), Text = blogText, ShortDescription = blogShortDescription, AddingTime = DateTime.Now };
+                BlogEntity blogEntity = new BlogEntity { Name = blogName.Trim(), Text = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">"), ShortDescription = blogShortDescription, AddingTime = DateTime.Now };
                 blogRepository.Create(blogEntity);
 
                 string fileName = null;
@@ -204,14 +204,14 @@ namespace SiteForTanya.WEB.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveChangingBlog(int id, string blogName, string shortDescription, string blogText, HttpPostedFileBase inputImage)
+        public ActionResult SaveChangingBlog(int id, string blogName, string shortDescription, string resultHtml, HttpPostedFileBase inputImage)
         {
             try
             {
                 Repository<BlogEntity> blogRepository = new Repository<BlogEntity>();
                 BlogEntity blogEntity = blogRepository.GetList().First(b => b.Id == id);
                 blogEntity.Name = blogName;
-                blogEntity.Text = blogText;
+                blogEntity.Text = resultHtml.Replace("&lt;", "<").Replace("&gt;", ">");
                 blogEntity.ShortDescription = shortDescription;
 
                 if (inputImage != null)

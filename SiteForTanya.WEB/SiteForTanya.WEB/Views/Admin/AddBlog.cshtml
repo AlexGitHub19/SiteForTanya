@@ -51,13 +51,25 @@
         </div>
     </div>
 
+    <div id="resultViewContainer">
+        <div id="resultView"></div>
+    </div>
+
     <input id="saveButton" class="my-btn btn" type="submit" value="Save blog item" />
+
+    <input id="resultHtml" type="text" name="resultHtml" />
 }
 
 
 
 <script>
     $(document).ready(function () {
+
+
+        $('.body-content').on('input', '#blogText', function (e) {
+            var html = $(this).val();
+            $('#resultView').html(html);
+        });
 
         $('#downloaImageBtnBeforeAdding').click(function (e) {
             $("#inputImage").click();
@@ -114,6 +126,10 @@
                         else if ($('#blogText').val() == '') {
                             e.preventDefault();
                             alert("Blog text can't be empty!");
+                        } else {
+                            var html = $('#blogText').val();
+                            var encodedHtml = encodeHtml(html);
+                            $('#resultHtml').val(encodedHtml);
                         }
                     }
                 }               
@@ -122,4 +138,8 @@
         });
 
     });
+
+    function encodeHtml(string) {
+        return string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    };
 </script>
