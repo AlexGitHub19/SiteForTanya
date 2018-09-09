@@ -1,6 +1,7 @@
-﻿@model SiteForTanya.WEB.Models.WorkViewModels.SetVewModel
+﻿@model SiteForTanya.WEB.Models.WorkViewModels.SetViewModel
 
 @section scripts {
+    <link type="text/css" rel="stylesheet" href="~/Content/Loading.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/SetStyle.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/ScaleImage.css" />
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
@@ -8,7 +9,22 @@
 
 <div id="setNameContainer">@Model.Name</div>
 
+<div id="loadingAnimation">
+    <div id="fountainG">
+        <div id="fountainG_1" class="fountainG"></div>
+        <div id="fountainG_2" class="fountainG"></div>
+        <div id="fountainG_3" class="fountainG"></div>
+        <div id="fountainG_4" class="fountainG"></div>
+        <div id="fountainG_5" class="fountainG"></div>
+        <div id="fountainG_6" class="fountainG"></div>
+        <div id="fountainG_7" class="fountainG"></div>
+        <div id="fountainG_8" class="fountainG"></div>
+    </div>
+</div>
+
 <script type="text/javascript">
+    var imagesAlreadyLoadedCount = 0;
+
     $(document).ready(function () {
         var imageContainersData = [];
         var imageContainers = $('.imageContainer');
@@ -127,12 +143,14 @@
     });
 
     function imgLoaded(img) {
-        alert('s');
-        if ($('#getSetNamesFromServerLoadingAnimation').css('display') != 'none')
-        {
-            $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+        imagesAlreadyLoadedCount++;
+        var totalImageCount = @Model.ImagesCount;
+        if (imagesAlreadyLoadedCount == totalImageCount) {
+            $('#loadingAnimation').css('display', 'none');
+            $('#setHtmlContainer').css('display', 'block');
+            $('#setHtmlContainer').animate({ 'opacity': '1' });
         }
-        $(img).parent().fadeIn(600);
+
     };
 
     function zoomedImgLoaded(img) {
@@ -232,4 +250,6 @@
 
 </script>
 
-@Html.Raw(Model.Html)
+<div id="setHtmlContainer">
+    @Html.Raw(Model.Html)
+</div>

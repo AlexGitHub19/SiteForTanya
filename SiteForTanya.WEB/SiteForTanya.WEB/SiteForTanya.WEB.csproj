@@ -217,7 +217,7 @@
     <Compile Include="Models\ImageViewModel.cs" />
     <Compile Include="Models\LoginViewModels\LoginViewModel.cs" />
     <Compile Include="Models\SetProcessor.cs" />
-    <Compile Include="Models\WorkViewModels\SetVewModel.cs" />
+    <Compile Include="Models\WorkViewModels\SetViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

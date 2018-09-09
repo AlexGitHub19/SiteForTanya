@@ -30,6 +30,14 @@
     font-family:insigne-Ainslie-NorReg, Arial, sans-serif;
 }
 
+#loadingAnimation {
+    display: block;
+}
+
+#setHtmlContainer {
+    display: none;
+    opacity: 0;
+}
 
 @media (max-width:767px){
     .imageContainer {

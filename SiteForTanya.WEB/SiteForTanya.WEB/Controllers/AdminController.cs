@@ -14,6 +14,7 @@ using SiteForTanya.Models;
 using SiteForTanya.DAL.EntityFramework;
 using System.Web;
 using SiteForTanya.WEB.Models.AspNetIdentity;
+using System.Text.RegularExpressions;
 
 namespace SiteForTanya.WEB.Controllers
 {
@@ -78,7 +79,8 @@ namespace SiteForTanya.WEB.Controllers
                 }
 
                 ViewBag.Title = "Set " + name;
-                SetVewModel vm = new SetVewModel { Name = name, Html = set.HtmlWithoutNotResultElements };
+                int imageCount = new Regex("imgLoaded").Matches(set.HtmlWithoutNotResultElements).Count;
+                SetViewModel vm = new SetViewModel { Name = name, Html = set.HtmlWithoutNotResultElements, ImagesCount = imageCount };
                 return View(vm);
             }
             catch (Exception ex)

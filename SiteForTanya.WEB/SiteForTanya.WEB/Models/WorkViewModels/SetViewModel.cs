@@ -5,9 +5,10 @@ using System.Web;
 
 namespace SiteForTanya.WEB.Models.WorkViewModels
 {
-    public class SetVewModel
+    public class SetViewModel
     {
         public string Name { get; set; }
         public string Html { get; set; }
+        public int ImagesCount { get; set; }
     }
 }
