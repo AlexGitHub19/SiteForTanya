@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<div id="getSetNamesFromServerLoadingAnimation">
+<div id="loadingAnimation">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
@@ -98,7 +98,7 @@
 
                     function showIfNotAllImagesAreLoaded() {
                         var areNotDisplayed = false;
-                        $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+                        $('#loadingAnimation').css('display', 'none');
                         var imageContainers = $('#existingSets').find('.setContainer');
                         imageContainers.each(function (index, element) {
                             if ($(element).css('display') == 'none')
@@ -117,13 +117,13 @@
         }
 
         function showLoadingAnimation() {
-            $('#getSetNamesFromServerLoadingAnimation').css('display', 'block');
+            $('#loadingAnimation').css('display', 'block');
         }
 
         function fillSets(result) {
             if (result.setsCount == 0)
             {
-                $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+                $('#loadingAnimation').css('display', 'none');
                 $('#existingSets').html('<h4 style="margin-top:50px;">No sets are found by this search criteria</h4>');
                 $('#existingSets').css('display', 'block');
                 return;
@@ -275,7 +275,7 @@
         loadedBeginNumber++;
         if (loadedBeginNumber == loadedEndNumber) {
             var imageContainers = $('#existingSets').find('.setContainer');
-            $('#getSetNamesFromServerLoadingAnimation').css('display', 'none');
+            $('#loadingAnimation').css('display', 'none');
             imageContainers.each(function (index, element) {
                 if (index == imageContainers.length - 1) {
                     $(element).delay(100 * index).fadeIn(600, function () {

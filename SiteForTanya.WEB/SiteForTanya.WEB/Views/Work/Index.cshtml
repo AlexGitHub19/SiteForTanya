@@ -72,8 +72,7 @@
         };
     });
 
-    $(window).resize(function () {
-        console.log('resize');
+    $(window).resize(function () {;
         centerBodyContent();
     });
 
@@ -81,18 +80,12 @@
     {
         var windowHeight = $(document).height();
         var bodyHeight = windowHeight - 100;
-        // alert("bodyHeight" + bodyHeight + 'body-content' + $('.body-content').height());
-        //$('.body-content').css('height', bodyHeight - 25);
-       // $('.item').css('height', bodyHeight - 25);
-        //alert($(window).height());
-        console.log('windowHeight' + windowHeight);
-        //console.log('bodyHeight' + bodyHeight);
+
         var windowWidth = $(window).width();
         if (windowWidth > 767) {
             var bodyContentHeight = $('.body-content').height();
             if (bodyHeight > bodyContentHeight) {
                 var marging = (bodyHeight - bodyContentHeight) / 2;
-                //alert('bodyHeight ' + bodyHeight + ' bodyContentHeight: ' + bodyContentHeight);
                 if (marging > 80)
                 {
                     marging = 80;

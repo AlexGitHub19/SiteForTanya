@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div id="getImageNamesFromServerLoadingAnimation">
+<div id="loadingAnimation">
     <div id="fountainG">
         <div id="fountainG_1" class="fountainG"></div>
         <div id="fountainG_2" class="fountainG"></div>
@@ -100,7 +100,7 @@
 
                     function showIfNotAllImagesAreLoaded() {
                         var areNotDisplayed = false;
-                        $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
+                        $('#loadingAnimation').css('display', 'none');
                         var imageContainers = $('#existingImages').find('.imageContainer');
                         imageContainers.each(function (index, element) {
                             if ($(element).css('display') == 'none') {
@@ -120,14 +120,14 @@
 
         function showLoadingAnimation()
         {
-            $('#getImageNamesFromServerLoadingAnimation').css('display','block');
+            $('#loadingAnimation').css('display', 'block');
         }
 
         function fillImages(result)
         {
             if (result.imageCount == 0)
             {
-                $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
+                $('#loadingAnimation').css('display', 'none');
                 $('#existingImages').html('<h4 style="margin-top:50px;">No images are found by this search criteria</h4>');
                 $('#existingImages').css('display', 'block');
                 return;
@@ -439,7 +439,7 @@
         loadedBeginNumber++;
         if (loadedBeginNumber == loadedEndNumber) {
             var imageContainers = $('#existingImages').find('.imageContainer');
-            $('#getImageNamesFromServerLoadingAnimation').css('display', 'none');
+            $('#loadingAnimation').css('display', 'none');
             imageContainers.each(function (index, element) {
                 if (index == imageContainers.length - 1) {
                     $(element).delay(100 * index).fadeIn(600, function () {

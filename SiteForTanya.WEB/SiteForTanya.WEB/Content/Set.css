@@ -43,11 +43,6 @@
     margin-right: 30px;
 }
 
-#getSetNamesFromServerLoadingAnimation {
-    margin-top:130px;
-    margin-bottom:130px;
-    display:none;
-}
 
 .setName {
     position: absolute;
@@ -108,12 +103,4 @@
     -ms-transform: translate3d(0,0,0); 
     -o-transform: translate3d(0,0,0);
 	transform: translate3d(0,0,0);
-}
-
-@media (max-width:500px) {
-
-    #getSetNamesFromServerLoadingAnimation {
-        margin-top: 80px;
-        margin-bottom: 80px;
-    }
 }
