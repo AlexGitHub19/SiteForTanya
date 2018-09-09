@@ -65,16 +65,14 @@
         -o-transform: none;
         transform: none;
         top: unset;
+        cursor: unset;
     }
 
     .imageContainer {
         height: unset;
     }
-}
 
-@media (max-width:767px) {
-
-   .middleImage {
+    .middleImage {
         display: unset;
     }
 

@@ -225,6 +225,10 @@
             if (element.length > 0) {
                 removeScale(element.first());
             }
+
+            var zoomed = $('.zoomContainer');
+            if (zoomed.length > 0) {
+            }
         });
 
         $(window).click(function (e) {
@@ -277,15 +281,18 @@
 
 
         $('.body-content').on('click', '.image', function (e) {
-            var src = calculateSrcForLargeImage($(this).attr('src'));
-            $('body').append('<div class="zoomContainer">' +
-                    '<div class="overlay"></div>' +
-                    '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
-                    '<div class="zoomMenu"></div>' +
-                    '<div class="zoomedImageContainer">' +
-                        '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
-                    '</div>' +
-                '</div>');
+            var windowWidth = document.body.offsetWidth;
+            if (windowWidth > 767) {
+                var src = calculateSrcForLargeImage($(this).attr('src'));
+                $('body').append('<div class="zoomContainer">' +
+                        '<div class="overlay"></div>' +
+                        '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
+                        '<div class="zoomMenu"></div>' +
+                        '<div class="zoomedImageContainer">' +
+                            '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
+                        '</div>' +
+                    '</div>');
+            }
         });
 
         function calculateSrcForLargeImage(src) {
@@ -377,36 +384,48 @@
     }
 
     function scaleImage(element) {
-        if ($(element).hasClass('scaleClass')) {
-            removeScale(element);
-        }
-        else {
-            var isImageWidthBiggerThanWindow = $(element).width() * 2 > $(window).width();
-            var isImageHeightBiggerThanWindow = $(element).height() * 2 > $(window).height();
+        var windowHeight = $(window).height();
+        if (windowHeight < 1501) {
+            if ($(element).hasClass('scaleClass')) {
+                removeScale(element);
+            }
+            else {
+                var isImageWidthBiggerThanWindow = $(element).width() * 2 > $(window).width();
+                var isImageHeightBiggerThanWindow = $(element).height() * 2 > $(window).height();
 
-            var axis = "";
-            if (isImageHeightBiggerThanWindow) {
-                axis += "y";
+                var axis = "";
+                if (isImageHeightBiggerThanWindow) {
+                    axis += "y";
+                }
+                if (isImageWidthBiggerThanWindow) {
+                    axis += "x";
+                }
+                $(element).draggable({
+                    disabled: false,
+                    axis: axis,
+                    stop: function () {
+                        returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
+                    },
+                    scroll: false
+                });
+                $(element).toggleClass('scaleClass');
+                if (windowHeight < 1001) {
+                    $(element).css('transform', 'scale(2)');
+                }
+                else if (windowHeight < 1301) {
+                    $(element).css('transform', 'scale(1.5)');
+                }
+                else if (windowHeight < 1501) {
+                    $(element).css('transform', 'scale(1.3)');
+                }
+                $(element).css('cursor', '-webkit-grab');
+                $(element).css('cursor', '-moz-grab');
+                $(element).css('cursor', 'grab');
+                $('.resizeBtn').removeClass('fa-search-plus');
+                $('.resizeBtn').addClass('fa-search-minus');
             }
-            if (isImageWidthBiggerThanWindow) {
-                axis += "x";
-            }
-            $(element).draggable({
-                disabled: false,
-                axis: axis,
-                stop: function () {
-                    returnImage(element, isImageWidthBiggerThanWindow, isImageHeightBiggerThanWindow);
-                },
-                scroll: false
-            });
-            $(element).toggleClass('scaleClass');
-            $(element).css('transform', 'scale(2)');
-            $(element).css('cursor', '-webkit-grab');
-            $(element).css('cursor', '-moz-grab');
-            $(element).css('cursor', 'grab');
-            $('.resizeBtn').removeClass('fa-search-plus');
-            $('.resizeBtn').addClass('fa-search-minus');
         }
+        
     }
 
 

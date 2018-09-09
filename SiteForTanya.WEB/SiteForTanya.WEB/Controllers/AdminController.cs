@@ -699,36 +699,71 @@ namespace SiteForTanya.WEB.Controllers
                             }
                         }
 
-                        string imagePath = Server.MapPath("~/Content/Images/Images/LargeImages/" + fileName);
+                        string imagePath = Server.MapPath("~/Content/Images/Images/LargeImages/Temp" + fileName);
                         upload.SaveAs(imagePath);
                         imageInfoRepository.Update(imgInfo);
 
-                        FileInfo savedImage = new FileInfo(Server.MapPath("~/Content/Images/Images/LargeImages/" + fileName));
-                        if (savedImage.Exists)
+                        //FileInfo savedImage = new FileInfo(Server.MapPath("~/Content/Images/Images/LargeImages/" + fileName));
+                        double height;
+                        double width;
+                        double proportion;
+                        double newHeight;
+                        int newWidth;
+
+
+                        using (Image imageFromPath = Image.FromFile(imagePath))
                         {
-                            Image imageFromPath = Image.FromFile(imagePath);
-                            double height = imageFromPath.Height;
-                            double width = imageFromPath.Width;
-                            double proportion = height / width;
-                            double newHeight = 600;
-                            int newWidth = (int)(newHeight / proportion);
-                            Bitmap resizedImage = changeMainImageSize(savedImage.FullName, (int)newHeight, newWidth);
+                            height = imageFromPath.Height;
+                            width = imageFromPath.Width;
+                            proportion = height / width;
+                            newHeight = 2000;
+                            newWidth = (int)(newHeight / proportion);
+                            if (newWidth > 5120)
+                            {
+                                newWidth = 5120;
+                                newHeight = (int)(newWidth * proportion);
+                            }
+                            Bitmap resizedImage = changeMainImageSize(imagePath, (int)newHeight, newWidth);
+
+                            if (resizedImage != null)
+                            {
+                                resizedImage.Save(Server.MapPath("~/Content/Images/Images/LargeImages/") + fileName);
+                            }
+                        }
+
+                        using (Image imageFromPath = Image.FromFile(imagePath))
+                        {
+                            newHeight = 600;
+                            newWidth = (int)(newHeight / proportion);
+                            if (newWidth > 5120)
+                            {
+                                newWidth = 5120;
+                                newHeight = (int)(newWidth * proportion);
+                            }
+                            Bitmap resizedImage = changeMainImageSize(imagePath, (int)newHeight, newWidth);
                             if (resizedImage != null)
                             {
                                 resizedImage.Save(Server.MapPath("~/Content/Images/Images/MiddleImages/") + fileName);
                             }
+                        }
 
+                        using (Image imageFromPath = Image.FromFile(imagePath))
+                        {
                             newHeight = 200;
                             newWidth = (int)(newHeight / proportion);
-                            resizedImage = changeMainImageSize(savedImage.FullName, (int)newHeight, newWidth);
+                            if (newWidth > 5120)
+                            {
+                                newWidth = 5120;
+                                newHeight = (int)(newWidth * proportion);
+                            }
+                            Bitmap resizedImage = changeMainImageSize(imagePath, (int)newHeight, newWidth);
                             if (resizedImage != null)
                             {
                                 resizedImage.Save(Server.MapPath("~/Content/Images/Images/SmallImages/") + fileName);
                             }
-
-
                         }
 
+                        System.IO.File.Delete(imagePath);
 
                         ImageEntity image = new ImageEntity { Name = fileName, Tags = resultTags != string.Empty ? DeleteLastSemicolon(resultTags) : null, AddingTime = DateTime.Now };
                         imageRepository.Create(image);
@@ -786,10 +821,17 @@ namespace SiteForTanya.WEB.Controllers
                 if (image != null)
                 {
                     imageRepository.Delete(image.Id);
-                    string strFileFullPath = Server.MapPath("~/Content/Images/Images/" + image.Name);
-                    if (System.IO.File.Exists(strFileFullPath))
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/Images/Images/LargeImages/" + image.Name)))
                     {
-                        System.IO.File.Delete(strFileFullPath);
+                        System.IO.File.Delete(Server.MapPath("~/Content/Images/Images/LargeImages/" + image.Name));
+                    }
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/Images/Images/MiddleImages/" + image.Name)))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/Images/Images/MiddleImages/" + image.Name));
+                    }
+                    if (System.IO.File.Exists(Server.MapPath("~/Content/Images/Images/SmallImages/" + image.Name)))
+                    {
+                        System.IO.File.Delete(Server.MapPath("~/Content/Images/Images/SmallImages/" + image.Name));
                     }
 
                     return Json(new { result = "Success" }, JsonRequestBehavior.AllowGet);

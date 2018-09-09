@@ -86,15 +86,18 @@
 
 
         $('.body-content').on('click', '.image', function (e) {
-            var src = $(this).attr('src');
-            $('body').append('<div class="zoomContainer">' +
-                    '<div class="overlay"></div>' +
-                    '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
-                    '<div class="zoomMenu"></div>' +
-                    '<div class="zoomedImageContainer">' +
-                        '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
-                    '</div>' +
-                '</div>');
+            var windowWidth = document.body.offsetWidth;
+            if (windowWidth > 767) {
+                var src = $(this).attr('src');
+                $('body').append('<div class="zoomContainer">' +
+                        '<div class="overlay"></div>' +
+                        '<i class="fa fa-search-plus resizeBtn" style="font-size:20px;" aria-hidden="true"></i><i class="fa fa-times closeImageBtn" style="font-size:26px;" aria-hidden="true"></i>' +
+                        '<div class="zoomMenu"></div>' +
+                        '<div class="zoomedImageContainer">' +
+                            '<img src="' + src + '" alt="image cant be loaded" class="zoomedImage" onload="zoomedImgLoaded(this)"/>' +
+                        '</div>' +
+                    '</div>');
+            }
         });
 
         $('body').on('click', '.zoomedImageContainer', function (e) {

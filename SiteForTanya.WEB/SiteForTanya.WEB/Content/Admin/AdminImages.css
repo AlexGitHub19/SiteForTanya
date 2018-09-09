@@ -125,9 +125,17 @@
         top: unset;
     }
 
+@media (max-width:767px) {
+
+    .blackoutAnimation {
+        cursor:unset;
+    }
+}
+
 @media (max-width:600px) {
 
    #resultInfo {
        margin-top:40px;
     }
 }
+

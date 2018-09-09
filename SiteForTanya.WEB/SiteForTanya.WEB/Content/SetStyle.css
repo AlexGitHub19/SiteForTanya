@@ -31,9 +31,13 @@
 }
 
 
-@media (max-width:768px){
+@media (max-width:767px){
     .imageContainer {
         margin-bottom:30px;
+    }
+
+    .image {
+        cursor: unset;
     }
 
 }
