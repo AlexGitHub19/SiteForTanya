@@ -407,7 +407,25 @@ namespace SiteForTanya.WEB.Controllers
                             {
                                 imageWithSameName.Delete();
                             }
-                            image.MoveTo(setPath + "/" + image.Name);
+                            using (Image imageFromPath = Image.FromFile(image.FullName))
+                            {
+                                double height = imageFromPath.Height;
+                                double width = imageFromPath.Width;
+                                double proportion = height / width;
+                                double newHeight = 1000;
+                                int newWidth = (int)(newHeight / proportion);
+                                if (newWidth > 5120)
+                                {
+                                    newWidth = 3000;
+                                    newHeight = (int)(newWidth * proportion);
+                                }
+                                Bitmap resizedImage = changeMainImageSize(image.FullName, (int)newHeight, newWidth);
+
+                                if (resizedImage != null)
+                                {
+                                    resizedImage.Save(setPath + "/" + image.Name);
+                                }
+                            }
                         }
                         else if (fileName == "ImageMainImage")
                         {
@@ -487,7 +505,25 @@ namespace SiteForTanya.WEB.Controllers
                     string fileName = image.Name.Substring(0, image.Name.LastIndexOf('.'));
                     if (resultHtmlWithoutNotResultElements.Contains(fileName))
                     {
-                        image.MoveTo(setPath + "/" + image.Name);
+                        using (Image imageFromPath = Image.FromFile(image.FullName))
+                        {
+                            double height = imageFromPath.Height;
+                            double width = imageFromPath.Width;
+                            double proportion = height / width;
+                            double newHeight = 1000;
+                            int newWidth = (int)(newHeight / proportion);
+                            if (newWidth > 5120)
+                            {
+                                newWidth = 3000;
+                                newHeight = (int)(newWidth * proportion);
+                            }
+                            Bitmap resizedImage = changeMainImageSize(image.FullName, (int)newHeight, newWidth);
+
+                            if (resizedImage != null)
+                            {
+                                resizedImage.Save(setPath + "/" + image.Name);
+                            }
+                        }
                     }
                     else if (fileName == "ImageMainImage")
                     {
